@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Note - KuGuider</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
+  <!-- Firebase Compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f7fb;
+      color: #222;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #4a90e2;
+    }
+    form {
+      background: white;
+      padding: 2rem;
+      max-width: 500px;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1.2rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    button:hover {
+      background-color: #357ac9;
+    }
+    .alert {
+      display: none;
+      background: #4a90e2;
+      color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1.5rem;
+      max-width: 500px;
+      margin-inline: auto;
+      text-align: center;
+      font-size: 1rem;
+      animation: fadeInOut 4s ease forwards;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Add New Note</h1>
+
+  <form id="addNoteForm">
+    <label for="subject">Subject Name</label>
+    <input type="text" id="subject" required placeholder="e.g. Python Programming">
+
+    <label for="semester">Semester</label>
+    <select id="semester" required>
+      <option value="">-- Select Semester --</option>
+      <option value="Semester 1">Semester 1</option>
+      <option value="Semester 2">Semester 2</option>
+      <option value="Semester 3">Semester 3</option>
+      <option value="Semester 4">Semester 4</option>
+      <option value="Semester 5">Semester 5</option>
+      <option value="Semester 6">Semester 6</option>
+    </select>
+
+    <label for="fileURL">File URL</label>
+    <input type="text" id="fileURL" required placeholder="e.g. https://...">
+
+    <button type="submit">
+      <span class="material-icons">upload</span> Add Note
+    </button>
+  </form>
+
+  <div class="alert" id="alertBox">✅ Note added successfully!</div>
+
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+      authDomain: "kuguider.firebaseapp.com",
+      projectId: "kuguider",
+      storageBucket: "kuguider.appspot.com",
+      messagingSenderId: "483181223164",
+      appId: "1:483181223164:web:e35d8ace05364b4d2d8b79"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const form = document.getElementById('addNoteForm');
+    const alertBox = document.getElementById('alertBox');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const subject = document.getElementById('subject').value.trim();
+      const semester = document.getElementById('semester').value.trim();
+      const fileURL = document.getElementById('fileURL').value.trim();
+
+      if (!subject || !semester || !fileURL) return;
+
+      try {
+        await db.collection('notes').add({
+          subject,
+          semester,
+          fileName: fileURL.split('/').pop(),
+          fileURL,
+          uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        form.reset();
+        alertBox.innerText = '✅ Note added successfully!';
+        alertBox.style.display = 'block';
+        setTimeout(() => alertBox.style.display = 'none', 4000);
+      } catch (err) {
+        console.error("❌ Firestore error:", err);
+        alertBox.innerText = '❌ Error: ' + err.message;
+        alertBox.style.display = 'block';
+        setTimeout(() => alertBox.style.display = 'none', 4000);
+      }
+    });
+  </script>
+</body>
+</html>
