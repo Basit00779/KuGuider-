@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin-panel.html
+Disallow: /add-notes.html
+Disallow: /add-papers.html
+Allow: /index.html
+Allow: /notes.html
+Allow: /papers.html
+
+Sitemap: https://kuguider.netlify.app/sitemap.xml
