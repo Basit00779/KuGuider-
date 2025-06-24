@@ -392,13 +392,17 @@
       return;
     }
     papers.forEach(paper => {
+      const title = paper.title || "Untitled";
+      const semester = paper.semester || "Unknown Semester";
+      const fileURL = paper.fileURL || "#";
+
       const card = document.createElement("div");
       card.className = "note-card";
       card.setAttribute("data-aos", "fade-up");
       card.innerHTML = `
-        <h3>${paper.title}</h3>
-        <p>${paper.semester}</p>
-        <a href="${paper.fileURL}" target="_blank">
+        <h3>${title}</h3>
+        <p>${semester}</p>
+        <a href="${fileURL}" target="_blank">
           <span class="material-icons" style="font-size: 18px;">download</span>Download
         </a>`;
       papersList.appendChild(card);
@@ -407,7 +411,14 @@
 
   db.collection("papers").orderBy("uploadedAt", "desc").get()
     .then(snapshot => {
-      papersData = snapshot.docs.map(doc => doc.data());
+      papersData = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          title: data.title || "Untitled",
+          semester: data.semester || "Unknown Semester",
+          fileURL: data.fileURL || "#"
+        };
+      });
       loaderOverlay.style.display = "none";
       displayPapers(papersData);
     })
@@ -422,10 +433,14 @@
   function filterPapers() {
     const subjectVal = document.getElementById("searchSubject").value.toLowerCase();
     const semesterVal = document.getElementById("searchSemester").value;
-    const filtered = papersData.filter(paper =>
-      paper.title.toLowerCase().includes(subjectVal) &&
-      (semesterVal === "" || paper.semester === semesterVal)
-    );
+
+    const filtered = papersData.filter(paper => {
+      const title = (paper.title || "").toLowerCase();
+      const semester = paper.semester || "";
+      return title.includes(subjectVal) &&
+             (semesterVal === "" || semester === semesterVal);
+    });
+
     displayPapers(filtered);
   }
 
