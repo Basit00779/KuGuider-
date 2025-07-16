@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - KuGuider</title>
+  <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <style>
+    :root {
+      --radius: 10px;
+       --primary: linear-gradient(90deg, hsla(192, 95%, 50%, 1) 0%, hsla(225, 89%, 47%, 1) 100%);
+      --nav-bg-light: #f0f4ff ;
+      --nav-bg-dark: #111;
+      --bg-light: linear-gradient(to bottom right, #f0f4ff, #ffffff);
+      --bg-dark: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      --text-light: #fff;
+      --text-dark: #000;
+      --card-light: #fff;
+      --card-dark: #1e1e1e;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+    html[data-theme="dark"] {
+      --bg-light: var(--bg-dark);
+      --text-dark: var(--text-light);
+      --card-light: var(--card-dark);
+      --nav-bg-light: var(--nav-bg-dark);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: var(--bg-light);
+      color: var(--text-dark);
+    }
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 2rem 1rem 3rem;
+      text-align: center;
+    }
+    .header-img {
+      width: 200px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10%;
+      margin-bottom: 1rem;
+    }
+    nav {
+      background: var(--nav-bg-light);
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.5rem;
+      flex-wrap: wrap;
+    }
+    nav a {
+      background: #ffffff;
+      color: #212121;
+      padding: 0.7rem 1.2rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    nav a.active {
+      background: var(--primary);
+      color: white;
+    }
+    .logout-btn {
+      background-color: #ff4d4d !important;
+      color: white !important;
+    }
+    .container {
+      padding: 2rem 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card-light);
+      padding: 1rem;
+      width: 20rem;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 10px var(--shadow);
+    }
+    .card h2 {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .btn {
+      background:var(--primary);
+      color: white;
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+    }
+    .custom-alert {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      width: 270px;
+      z-index: 11111;
+      transform: translateX(-50%);
+      background-color:#4a90e2 ;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      display: none;
+      z-index: 9999;
+      align-items: center;
+      justify-content: space-around;
+      
+    }
+    .custom-alert.show { display: flex; animation: fadeInOut 3s ease-in-out forwards; }
+    @keyframes fadeInOut {
+      0% {opacity: 0;} 10% {opacity: 1;} 90% {opacity: 1;} 100% {opacity: 0;}
+    }
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .modal-content h3 {
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+    .modal-content input,
+    .modal-content select {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .modal-content .actions {
+      display: flex;
+      justify-content: space-between; 
+    }
+    .modal-content .btn.cancel {
+      background: #999;
+      width: 40%;
+    }
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      
+    }
+    
+    .footer-links{
+      display: flex;
+      justify-content: start;
+      margin-bottom: 15px;
+    }
+    
+    .footer-links span{
+      font-size: 1rem;
+      font-weight: bold;
+      text-align: end;
+      line-height: 2;
+    }
+    
+    .footer-links ul{
+      padding: 20px 2.2rem;
+    }
+    
+    .footer-links li{
+      list-style: none;
+      color: #fff;
+      line-height: 2;
+      text-decoration-line: none;
+    }
+    
+    .footer-links a{
+      text-decoration-line: none;
+      line-height: 2;
+    }
+    
+    
+  </style>
+</head>
+<body>
+  <header>
+    <img src="/notes/file_0000000042b861fd808de615ad3ddea5.png" alt="Admin" class="header-img" />
+  </header>
+  <nav>
+    <a href="index.html"><span class="material-icons">home</span>Home</a>
+    <a href="admin-panel.html" class="active"><span class="material-icons">dashboard</span>Dashboard</a>
+    <a href="#" class="logout-btn" onclick="logoutUser()"><span class="material-icons">logout</span>Logout</a>
+  </nav>
+
+  <section class="container">
+    <div class="card">
+      <h2>Notes Management</h2>
+      <p style="font-size: 1rem;">View, edit, or delete added Notes</p>
+      <button style="display: flex; align-items: center;" onclick="document.getElementById('notesModal').style.display='flex'" class="btn"><span class="material-icons">article</span> &nbsp Manage Notes</button>
+    </div>
+    <div class="card">
+      <h2>Papers Management</h2>
+      <p>Upload and organize Papers</p>
+      <button style="display: flex; align-items: center;" onclick="document.getElementById('papersModal').style.display='flex'" class="btn"><span class="material-icons">article</span> &nbsp Manage Papers</button>
+    </div>
+  </section>
+
+  <!-- Notes Modal -->
+  <div class="modal" id="notesModal">
+    <div class="modal-content">
+      <h3>Add Note</h3>
+      <input type="text" id="noteSubject" placeholder="Subject Name">
+      <select id="noteSemester">
+        <option value="">-- Select Semester --</option>
+        <option>Semester 1</option>
+        <option>Semester 2</option>
+        <option>Semester 3</option>
+        <option>Semester 4</option>
+        <option>Semester 5</option>
+        <option>Semester 6</option>
+      </select>
+      <input type="text" id="noteURL" placeholder="File URL">
+      <div class="actions">
+        <button class="btn" style="width: 55%;" onclick="submitNote()">Submit</button>
+        <button class="btn cancel" onclick="document.getElementById('notesModal').style.display='none'">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Papers Modal -->
+  <div class="modal" id="papersModal">
+    <div class="modal-content">
+      <h3>Add Paper</h3>
+      <input type="text" id="paperTitle" placeholder="Paper Title">
+      <select id="paperSemester">
+        <option value="">-- Select Semester --</option>
+        <option>Semester 1</option>
+        <option>Semester 2</option>
+        <option>Semester 3</option>
+        <option>Semester 4</option>
+        <option>Semester 5</option>
+        <option>Semester 6</option>
+      </select>
+      <input type="text" id="paperURL" placeholder="File URL">
+      <div class="actions">
+        <button class="btn" style="width: 55%; onclick="submitPaper()">Submit</button>
+        <button class="btn cancel" onclick="document.getElementById('papersModal').style.display='none'">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="custom-alert" id="logoutAlert"><i class="fas fa-circle-info"></i><span></span></div>
+  <footer>
+    <div class="footer-links">
+      <ul>
+    <span>Social-links</span>
+    <a href="https://whatsapp.com/channel/0029Vb671B2It5rqAsKI3W3t"><li><i class="fa-brands fa-lg fa-whatsapp" style="color:#ffffff;"></i> Whatsapp</li></a>
+    <a href="#"><li><i class="fa-brands fa-telegram fa-lg" style="color: #ffffff;"></i> Telegram</li></a>
+    <a href="#"><li><i class="fa-brands fa-instagram fa-lg" style="color: #ffffff;"></i> Instagram</li></a>
+    <a href="#"><li><i class="fa-brands fa-facebook fa-lg" style="color: #ffffff;"></i> Facebook</li></a>
+  </ul>
+  
+  <ul>
+    <span>Nav-links</span>
+     <a href="index.html"><li><i class="fa-solid fa-house fa-lg" style="color: #ffffff;"></i> About</li></a>
+    <a href="notes.html"><li><i class="fa-solid fa-file fa-lg" style="color: #ffffff;"></i> Notes</li></a>
+    <a href="papers.html"><li><i class="fa-solid fa-file fa-lg" style="color: #ffffff;"></i> Papers</li></a>
+  </ul>
+  </div>
+  
+  &copy; 2025 Basif Shafi Wani. Admin Panel.
+  </footer>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+      authDomain: "kuguider.firebaseapp.com",
+      projectId: "kuguider",
+      storageBucket: "kuguide&& r.appspot.com",
+      messagingSenderId: "483181223164",
+      appId: "1:483181223164:web:e35d8ace05364b4d2d8b79"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        showCustomAlert("logoutAlert", "Unauthorized access!");
+        setTimeout(() => { window.location.href = "index.html"; }, 2000);
+      }
+    });
+
+    function logoutUser() {
+      firebase.auth().signOut().then(() => {
+        showCustomAlert("logoutAlert", "Logged out successfully!");
+        setTimeout(() => { window.location.href = "index.html"; }, 1000);
+      }).catch((error) => {
+        showCustomAlert("logoutAlert", "Error: " + error.message);
+      });
+    }
+
+    function showCustomAlert(id, message) {
+      const box = document.getElementById(id);
+      box.querySelector("span").textContent = message;
+      box.classList.add("show");
+      setTimeout(() => box.classList.remove("show"), 3000);
+    }
+
+    function submitNote() {
+      const subject = document.getElementById("noteSubject").value.trim();
+      const semester = document.getElementById("noteSemester").value;
+      const fileURL = document.getElementById("noteURL").value.trim();
+
+      if (!subject || !semester || !fileURL) {
+        showCustomAlert("logoutAlert", "Please fill all note fields.");
+        return;
+      }
+
+      db.collection("notes").add({
+        subject,
+        semester,
+        fileURL,
+        fileName: fileURL.split("/").pop(),
+        uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        showCustomAlert("logoutAlert", "Note added successfully!");
+        document.getElementById("notesModal").style.display = "none";
+      }).catch((err) => {
+        showCustomAlert("logoutAlert", "Error: " + err.message);
+      });
+    }
+
+    function submitPaper() {
+      const title = document.getElementById("paperTitle").value.trim();
+      const semester = document.getElementById("paperSemester").value;
+      const fileURL = document.getElementById("paperURL").value.trim();
+
+      if (!title || !semester || !fileURL) {
+        showCustomAlert("logoutAlert", "Please fill all paper fields.");
+        return;
+      }
+
+      db.collection("papers").add({
+        title,
+        semester,
+        fileURL,
+        fileName: fileURL.split("/").pop(),
+        uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        showCustomAlert("logoutAlert", "Paper added successfully!");
+        document.getElementById("papersModal").style.display = "none";
+      }).catch((err) => {
+        showCustomAlert("logoutAlert", "Error: " + err.message);
+      });
+    }
+  </script>
+</body>
+</html>
