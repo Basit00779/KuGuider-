@@ -472,7 +472,7 @@
     const subjectVal = document.getElementById("searchSubject").value.toLowerCase();
     const semesterVal = document.getElementById("searchSemester").value;
     const filtered = papersData.filter(paper =>
-      paper.subject.toLowerCase().includes(subjectVal) &&
+      paper.title.toLowerCase().includes(subjectVal) &&
       (semesterVal === "" || paper.semester === semesterVal)
     );
     displayPapers(filtered);
