@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
+  <!-- Meta Tags for Social Sharing -->
+  <meta property="og:title" content="KuGuider - Smart Resource Portal">
+  <meta property="og:description" content="Access notes, papers, and academic resources instantly.">
+  <meta property="og:image" content="https://kuguider.netlify.app/file_0000000042b861fd808de615ad3ddea5.png">
+  <meta property="og:url" content="https://kuguider.netlify.app">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <!-- Browser Address Bar Color (Mobile) -->
+  <meta name="theme-color" content="#4a90e2" />
+  <meta name="msapplication-navbutton-color" content="#4a90e2" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#4a90e2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chat - KuGuider</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --primary:#0084ff; --text-dark:#333; --text-light:#fff;
+  --bg-light:#f0f2f5; --bg-dark:#1c1c1c;
+  --bubble-own:#0084ff; --bubble-other:#e5e5ea; --radius:20px;
+}
+body{margin:0;padding:0;font-family:'Poppins',sans-serif;background:var(--bg-light);color:var(--text-dark);display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+body.dark{background:var(--bg-dark);color:var(--text-light);}
+
+
+/* Chat container */
+#chatContainer{flex:1;margin-top:0px;margin-bottom:80px;width:100%;max-width:500px;align-self:center;padding:0.8rem;display:flex;flex-direction:column;overflow-y:auto;background:var(--bg-light);}
+body.dark #chatContainer{background:#121212;}
+
+/* Messages */
+#chatMessages{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;flex:1;}
+#chatMessages li{display:flex;margin:0.4rem 0;max-width:80%;word-break:break-word;position:relative;}
+#chatMessages li.own{align-self:flex-end;flex-direction:row-reverse;}
+#chatMessages li .bubble{padding:0.7rem 1rem;border-radius:20px;display:flex;flex-direction:column;font-size:0.95rem;line-height:1.3rem;position:relative;cursor:pointer;}
+#chatMessages li.own .bubble{background:var(--bubble-own);color:#fff;border-bottom-right-radius:5px;}
+#chatMessages li.other .bubble{background:var(--bubble-other);color:#000;border-bottom-left-radius:5px;}
+#chatMessages li .avatar{width:32px;height:32px;border-radius:50%;margin:0 0.5rem;object-fit:cover;}
+#chatMessages li .name{font-weight:600;font-size:0.8rem;margin-bottom:0.2rem;}
+
+/* Inline menu */
+.inlineMenu{position:absolute;top:-35px;right:0;background:#fff;border:1px solid #ccc;border-radius:8px;display:flex;z-index:10;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,0.2);}
+.inlineMenu button{border:none;background:none;color:#477EE7;padding:5px 10px;cursor:pointer;font-size:0.85rem;}
+.inlineMenu button:hover{background:#eee;}
+body.dark .inlineMenu{background:#222;color:#fff;}
+body.dark .inlineMenu button:hover{background:#333;}
+
+/* Typing indicator */
+#typingIndicator{display:none;align-items:center;margin:0.3rem 0;font-size:0.9rem;color:#555;}
+#typingIndicator .dot{height:8px;width:8px;margin:0 2px;background:#888;border-radius:50%;display:inline-block;animation: blink 1.4s infinite both;}
+#typingIndicator .dot:nth-child(2){animation-delay:0.2s;}
+#typingIndicator .dot:nth-child(3){animation-delay:0.4s;}
+@keyframes blink{0%,80%,100%{transform:scale(0);}40%{transform:scale(1);}}
+
+/* Input */
+#chatInputContainer{position:fixed;bottom:10px;left:10px;right:10px;display:flex;align-items:center;padding:0.6rem 0.6rem;background:#fff;border-radius:50px;box-shadow:0 5px 15px rgba(0,0,0,0.15);z-index:100;max-width:500px;margin:auto;}
+body.dark #chatInputContainer{background:#222;}
+#chatInput{flex:1;border:none;outline:none;padding:1rem 1rem;font-size:0.95rem;border-radius:50px;background:#f0f0f0;margin-right:0.5rem;}
+body.dark #chatInput{background:#333;color:#fff;}
+#sendBtn{width:45px;height:45px;border-radius:50%;border:none;background:var(--primary);color:#fff;display:flex;justify-content:center;align-items:center;font-size:1.2rem;cursor:pointer;transition:0.2s;}
+#sendBtn:hover{transform:scale(1.1);}
+
+/* Modal popup */
+#confirmModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:none;justify-content:center;align-items:center;z-index:200;}
+#confirmModal .modalContent{background:#fff;padding:1rem 1.5rem;border-radius:10px;max-width:300px;text-align:center;}
+#confirmModal .modalContent p{margin-bottom:1rem;}
+#confirmModal .modalContent button{margin:0 0.5rem;padding:0.5rem 1rem;border:none;border-radius:8px;cursor:pointer;font-weight:600;}
+#confirmModal .modalContent .cancelBtn{background:#ccc;}
+#confirmModal .modalContent .okBtn{background:var(--primary);color:#fff;}
+body.dark #confirmModal .modalContent{background:#222;color:#fff;}
+body.dark #confirmModal .modalContent .cancelBtn{background:#555;}
+body.dark #confirmModal .modalContent .okBtn{background:#0084ff;}
+@media(max-width:500px){.topbar .logo img{height:30px;width:30px;}#chatContainer{padding:0.5rem;}#chatInputContainer{padding:0.2rem 0.5rem;}#chatInput{padding:0.6rem 0.8rem;font-size:0.9rem;}#sendBtn{width:40px;height:40px;font-size:1rem;}}
+
+/* Loading Overlay */
+#loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: #555;
+  z-index: 150;
+}
+body.dark #loadingOverlay {
+  background: rgba(0,0,0,0.8);
+  color: #ddd;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+<nav style="height: 60px; background: #fff; width: 100%; display: flex; flex-direction: row; align-items: center;">
+  <div  class="left-nav" style="margin-left: 20px; width: 85%;">
+    <h3>Group Chat</h3>
+  </div>
+  
+  <div class="right-nav" >
+     <i onclick="location.href='notes.html'" class="fa-solid fa-xmark fa-lg" style="color: #000000; cursor: pointer;"></i>
+  </div>
+</nav>
+  
+<div id="chatContainer">
+  <div id="loadingOverlay">
+    <div class="loader"></div>
+    <span>Loading chat...</span>
+  </div>
+  <ul id="chatMessages"></ul>
+  <div id="typingIndicator">
+    <span>Someone is typing</span>
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+</div>
+
+<div id="chatInputContainer">
+  <input type="text" id="chatInput" placeholder="Type a message...">
+  <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+</div>
+
+<div id="confirmModal">
+  <div class="modalContent">
+    <p>Delete this message?</p>
+    <button class="cancelBtn">Cancel</button>
+    <button class="okBtn">Delete</button>
+  </div>
+</div>
+
+<audio id="msgSound" src="/notification.wav" preload="auto"></audio>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-auth-compat.js"></script>
+
+<script>
+const firebaseConfig={apiKey:"AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",authDomain:"kuguider.firebaseapp.com",projectId:"kuguider"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(), db=firebase.firestore();
+
+const chatMessages=document.getElementById("chatMessages");
+const chatInput=document.getElementById("chatInput");
+const sendBtn=document.getElementById("sendBtn");
+const darkModeToggle=document.getElementById("darkModeToggle");
+const msgSound=document.getElementById("msgSound");
+const typingIndicator=document.getElementById("typingIndicator");
+const confirmModal=document.getElementById("confirmModal");
+const cancelBtn=confirmModal.querySelector(".cancelBtn");
+const okBtn=confirmModal.querySelector(".okBtn");
+
+let currentUserName="", currentUserPhoto="https://www.w3schools.com/howto/img_avatar.png";
+let editDocId=null, deleteDocId=null;
+
+
+
+// Auth
+auth.onAuthStateChanged(user=>{if(!user) window.location.href="login.html"; else{currentUserName=user.displayName||"Anonymous"; if(user.photoURL) currentUserPhoto=user.photoURL; loadChat();}});
+
+// Typing
+chatInput.addEventListener("input",()=>{chatInput.value.trim()!==""?db.collection("typing").doc("status").set({name:currentUserName}):db.collection("typing").doc("status").delete();});
+
+// Send
+function sendMessage(){
+  const msg=chatInput.value.trim();
+  if(!msg) return;
+  if(editDocId){
+    db.collection("chat").doc(editDocId).update({message:msg});
+    editDocId=null;
+  }else{
+    db.collection("chat").add({name:currentUserName,photo:currentUserPhoto,message:msg,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  }
+  chatInput.value=""; db.collection("typing").doc("status").delete();
+}
+
+// Remove menus
+function removeMenus(){document.querySelectorAll(".inlineMenu").forEach(m=>m.remove());}
+
+// Show edit/delete menu
+function showMenu(li,docId){
+  removeMenus();
+  if(!li.classList.contains("own")) return;
+  const menu=document.createElement("div"); menu.className="inlineMenu";
+  const editBtn=document.createElement("button"); editBtn.textContent="Edit";
+  editBtn.onclick=()=>{
+    const bubble=li.querySelector(".bubble");
+    const nameSpan=bubble.querySelector(".name");
+    const messageText=bubble.textContent.replace(nameSpan.textContent,"").trim();
+    chatInput.value=messageText;
+    chatInput.focus(); editDocId=docId; removeMenus();
+  };
+  const delBtn=document.createElement("button"); delBtn.textContent="Delete";
+  delBtn.onclick=()=>{
+    deleteDocId=docId; confirmModal.style.display="flex"; removeMenus();
+  };
+  menu.appendChild(editBtn); menu.appendChild(delBtn); li.appendChild(menu);
+}
+
+// Modal buttons
+cancelBtn.onclick=()=>{confirmModal.style.display="none"; deleteDocId=null;};
+okBtn.onclick=()=>{if(deleteDocId){db.collection("chat").doc(deleteDocId).delete();}confirmModal.style.display="none"; deleteDocId=null;};
+
+const loadingOverlay = document.getElementById("loadingOverlay");
+
+function loadChat() {
+  loadingOverlay.style.display = "flex"; // Show loading initially
+  db.collection("chat").orderBy("createdAt").onSnapshot(snapshot => {
+    loadingOverlay.style.display = "none"; // Hide when data arrives
+    chatMessages.innerHTML = "";
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const li = document.createElement("li");
+      li.className = data.name === currentUserName ? "own" : "other";
+      li.onclick = () => showMenu(li, doc.id);
+      const avatar = `<img class="avatar" src="${data.photo||'https://www.w3schools.com/howto/img_avatar.png'}">`;
+      li.innerHTML = `${avatar}<div class="bubble"><span class="name">${data.name}</span>${data.message}</div>`;
+      chatMessages.appendChild(li);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
+    if (snapshot.docChanges().some(change => change.type === "added")) msgSound.play();
+  });
+  
+  db.collection("typing").doc("status").onSnapshot(doc => {
+    if (doc.exists && doc.data().name !== currentUserName) { typingIndicator.style.display = "flex"; }
+    else typingIndicator.style.display = "none";
+  });
+}
+sendBtn.addEventListener("click",sendMessage);
+chatInput.addEventListener("keypress",(e)=>{if(e.key==="Enter") sendMessage();});
+document.addEventListener("click",e=>{if(!e.target.closest(".bubble")) removeMenus();});
+</script>
+
+</body>
+</html>

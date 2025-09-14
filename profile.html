@@ -1,9 +1,8 @@
-<!-- Save this as view-papers.html -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-    <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
+  <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
   <!-- Meta Tags for Social Sharing -->
   <meta property="og:title" content="KuGuider - Smart Resource Portal">
   <meta property="og:description" content="Access notes, papers, and academic resources instantly.">
@@ -15,16 +14,11 @@
   <meta name="theme-color" content="#4a90e2" />
   <meta name="msapplication-navbutton-color" content="#4a90e2" />
   <meta name="apple-mobile-web-app-status-bar-style" content="#4a90e2" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>All Papers - KuGuider</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-auth-compat.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-  <style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Profile - KuGuider</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+<style>
     :root {
       --radius: 10px;
       --primary: linear-gradient(90deg, hsla(192, 95%, 50%, 1) 0%, hsla(225, 89%, 47%, 1) 100%);
@@ -108,71 +102,7 @@
       background: var(--primary);
       color: white;
     }
-    h1 {
-      text-align: center;
-      margin: 2rem 0 1rem;
-      font-size: 1.4rem;
-      color: var(--primary);
-    }
-    .search-bar {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin: 1.5rem auto 2rem;
-      flex-wrap: wrap;
-      max-width: 90%;
-    }
-    .search-bar input,
-    .search-bar select {
-      padding: 0.7rem 1rem;
-      border-radius: var(--radius);
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      width: 220px;
-    }
-    .notes-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 0.5rem;
-      padding: 1rem;
-      max-width: 100%;
-    }
-    .note-card {
-      background: var(--card-light);
-      backdrop-filter: blur(6px);
-      border-radius: var(--radius);
-      padding: 1.2rem;
-      max-width:20rem;
-      margin: 10px;
-      transition: transform 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .note-card:hover {
-      transform: scale(1.02);
-    }
-    .note-card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.4rem;
-    }
-    .note-card p {
-      font-size: 0.95rem;
-      margin-bottom: 0.6rem;
-    }
-    .note-card a {
-      background: var(--primary);
-      color: white;
-      width: 60%;
-      padding: 0.7rem 0.8rem;
-      border-radius: var(--radius);
-      font-size: 0.85rem;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
+    
     .loader-overlay {
       position: fixed;
       top: 0;
@@ -208,7 +138,39 @@
       100% { transform: rotate(360deg); }
     }
 
-    footer {
+/* Profile card */
+.profile-card{margin:100px 0;width:350px;padding:2rem;border-radius:15px;text-align:center;}
+body.dark .profile-card{color:#fff;}
+.profile-card img{width:100px;height:100px;border-radius:50%;object-fit:cover;margin-bottom:1rem;}
+.profile-card h2{margin:0.5rem 0;}
+.profile-card p{margin:0.3rem 0;color:#555;}
+body.dark .profile-card p{color:#ccc;}
+#editProfileBtn{margin-top:1rem;padding:0.6rem 1.2rem;background:var(--primary);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;transition:0.2s;}
+#editProfileBtn:hover{opacity:0.9;}
+
+/* Edit profile modal */
+#editProfileModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:none;justify-content:center;align-items:center;z-index:100;}
+#editProfileModal .modalContent{background:#fff;padding:1.5rem;border-radius:10px;max-width:300px;text-align:center;position:relative;}
+body.dark #editProfileModal .modalContent{background:#222;color:#fff;}
+#editProfileModal input[type="text"]{width:100%;padding:0.6rem 0.8rem;margin-bottom:1rem;border-radius:8px;border:1px solid #ccc;}
+body.dark #editProfileModal input[type="text"]{background:#333;color:#fff;border:1px solid #555;}
+#editProfileModal button{padding:0.5rem 1rem;margin:0 0.5rem;border:none;border-radius:8px;cursor:pointer;font-weight:600;}
+#saveProfileBtn{background:var(--primary);color:#fff;}
+#cancelProfileBtn{background:#ccc;}
+body.dark #cancelProfileBtn{background:#555;}
+
+/* Custom popup */
+#customPopup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:none;justify-content:center;align-items:center;z-index:200;}
+#customPopup .popupContent{background:#fff;padding:1.5rem;border-radius:10px;text-align:center;max-width:300px;animation:fadeIn 0.3s;}
+body.dark #customPopup .popupContent{background:#222;color:#fff;}
+#customPopup p{margin-bottom:1rem; color: #4a90e2;}
+#customPopup button{padding:0.5rem 1rem;margin:0 0.5rem;border:none;border-radius:8px;cursor:pointer;font-weight:600;}
+#popupOk{background:var(--primary);color:#fff;}
+#popupCancel{background:#ccc;}
+body.dark #popupCancel{background:#555;}
+@keyframes fadeIn{0%{opacity:0;transform:scale(0.9);}100%{opacity:1;transform:scale(1);}}
+
+footer {
       background: var(--primary);
       color: white;
       text-align: center;
@@ -216,8 +178,8 @@
       font-size: 0.9rem;
       
     }
-
-    .modal {
+    
+      .modal {
       display: none;
       position: fixed;
       z-index: 2000;
@@ -286,17 +248,16 @@
       gap: 0.5rem;
       justify-content: center;
     }
-  </style>
+</style>
 </head>
 <body>
-
 <div class="theme-toggle" onclick="toggleTheme()">
   <i class="fa-solid fa-sun" style="color: #4a90e2;"></i>
 </div>
 
 <div class="loader-overlay" id="loaderOverlay">
   <div class="loader-spinner"></div>
-  <div class="loader-text">Loading papers...</div>
+    <div class="loader-text">Loading profile...</div>
 </div>
 
 <div class="header-logo">
@@ -306,10 +267,10 @@
 <nav>
   <div class="nav-links">
     <a href="notes.html"><i class="fa-solid fa-file-lines"></i><span>Notes</span></a>
-    <a href="papers.html" class="active"><i class="fa-solid fa-file-pdf"></i><span>Papers</span></a>
+    <a href="papers.html"><i class="fa-solid fa-file-pdf"></i><span>Papers</span></a>
     <a href="chat.html" class="active"><i class="fa-solid fa-comments" style="color: white;"></i><span style="color: white;">Chat</span></a>
     
-    <a href="profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+    <a href="profile.html" class="active"><i class="fa-solid fa-user"></i><span>Profile</span></a>
     
     <a href="#" onclick="document.getElementById('adminModal').style.display='block'" style="background:#ff4d4d; color:white;">
       <i class="fa-solid fa-lock"></i><span>Admin Login</span>
@@ -317,22 +278,35 @@
   </div>
 </nav>
 
-<h1 data-aos="fade-up">All Papers</h1>
 
-<div class="search-bar" data-aos="fade-up" data-aos-delay="100">
-  <input type="text" id="searchSubject" placeholder="Search by Subject">
-  <select id="searchSemester">
-    <option value="">All Semesters</option>
-    <option value="Semester 1">Semester 1</option>
-    <option value="Semester 2">Semester 2</option>
-    <option value="Semester 3">Semester 3</option>
-    <option value="Semester 4">Semester 4</option>
-    <option value="Semester 5">Semester 5</option>
-    <option value="Semester 6">Semester 6</option>
-  </select>
+<div class="profile-card">
+  <img src="https://www.w3schools.com/howto/img_avatar.png" id="profileAvatar" alt="User Avatar">
+  <h2 id="profileName">Username</h2>
+  <p>ID: <span id="profileID">12345</span></p>
+  <button id="editProfileBtn">Edit Profile</button>
 </div>
 
-<div class="notes-container" id="papersList"></div>
+<div id="editProfileModal">
+  <div class="modalContent">
+    <h3>Edit Name</h3>
+    <input type="text" id="editName" placeholder="Enter new name">
+    <div>
+      <button id="saveProfileBtn">Save</button>
+      <button id="cancelProfileBtn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Popup -->
+<div id="customPopup">
+  <div class="popupContent">
+    <p>Are you sure?</p>
+    <div>
+      <button id="popupOk">Yes</button>
+      <button id="popupCancel">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <!-- Admin Modal -->
 <div id="adminModal" class="modal">
@@ -347,36 +321,97 @@
 </div>
 
 <div id="toastAlert" class="toast-alert"></div>
-
 <footer>
   Made with ❤️ by <a style="text-decoration: underline ; color: white ;" href="https://basifshafi.netlify.app/">Basif Shafi Wani.</a>
   </footer>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init();</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-auth-compat.js"></script>
+
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
-    authDomain: "kuguider.firebaseapp.com",
-    projectId: "kuguider"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-  const auth = firebase.auth();
+const firebaseConfig={
+  apiKey:"AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+  authDomain:"kuguider.firebaseapp.com",
+  projectId:"kuguider"
+};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
 
-  const papersList = document.getElementById("papersList");
-  const loaderOverlay = document.getElementById("loaderOverlay");
+// Elements
+const profileName=document.getElementById("profileName");
+const profileID=document.getElementById("profileID");
+const editProfileBtn=document.getElementById("editProfileBtn");
+const editProfileModal=document.getElementById("editProfileModal");
+const editName=document.getElementById("editName");
+const saveProfileBtn=document.getElementById("saveProfileBtn");
+const cancelProfileBtn=document.getElementById("cancelProfileBtn");
+const darkModeToggle=document.getElementById("darkModeToggle");
 
-  function showAlert(message, type = "info") {
-    const toast = document.getElementById("toastAlert");
-    let icon = "info";
-    if (type === "success") icon = "check_circle";
-    else if (type === "error") icon = "error";
-    toast.innerHTML = `<span class="material-icons">${icon}</span>${message}`;
-    toast.style.visibility = "visible";
-    setTimeout(() => toast.style.visibility = "hidden", 3000);
+// Custom popup
+const customPopup=document.getElementById("customPopup");
+const popupOk=document.getElementById("popupOk");
+const popupCancel=document.getElementById("popupCancel");
+
+
+
+const loaderOverlay = document.getElementById("loaderOverlay");
+
+// Show loader at the start
+loaderOverlay.style.display = "flex";
+
+// Hide loader once user data is loaded
+auth.onAuthStateChanged(user => {
+  if (!user) {
+    window.location.href = "login.html";
+  } else {
+    profileName.textContent = user.displayName || "Anonymous";
+    profileID.textContent = user.uid.substring(0, 8);
+    loaderOverlay.style.display = "none"; // Hide the loader after loading
   }
+});
 
+// Edit profile
+editProfileBtn.onclick = () => {
+  editName.value = profileName.textContent;
+  editProfileModal.style.display="flex";
+};
+cancelProfileBtn.onclick = () => { editProfileModal.style.display="none"; };
+
+// Save profile with custom popup
+saveProfileBtn.onclick = () => { customPopup.style.display="flex"; };
+popupCancel.onclick = () => { customPopup.style.display="none"; };
+popupOk.onclick = () => {
+  customPopup.style.display="none";
+  const user = auth.currentUser;
+  if(!user) return;
+  const newName = editName.value.trim();
+  if(newName==="") return alert("Name cannot be empty");
+  user.updateProfile({displayName:newName})
+      .then(()=>{ profileName.textContent=newName; editProfileModal.style.display="none"; })
+      .catch(err=>alert(err.message));
+      
+};
+
+function toggleTheme() {
+  const root = document.documentElement;
+  const newTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  root.setAttribute("data-theme", newTheme);
+  localStorage.setItem("theme", newTheme);
+  if (newTheme === "dark") {
+    loaderOverlay.classList.add("dark");
+  } else {
+    loaderOverlay.classList.remove("dark");
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      document.documentElement.setAttribute("data-theme", savedTheme);
+      if (savedTheme === "dark") loaderOverlay.classList.add("dark");
+    }
+  });
+  
   function loginAdmin() {
     const email = document.getElementById("adminEmail").value;
     const password = document.getElementById("adminPassword").value;
@@ -387,72 +422,6 @@
       })
       .catch(() => showAlert("Invalid Email or Password!", "error"));
   }
-
-  let papersData = [];
-
-  function displayPapers(papers) {
-    papersList.innerHTML = '';
-    if (papers.length === 0) {
-      papersList.innerHTML = '<p style="text-align:center;">No matching papers found.</p>';
-      return;
-    }
-    papers.forEach(paper => {
-      const card = document.createElement("div");
-      card.className = "note-card";
-      card.setAttribute("data-aos", "fade-up");
-      card.innerHTML = `
-        <h3>${paper.title}</h3>
-        <p>${paper.semester}</p>
-        <a href="${paper.fileURL}" target="_blank">
-          <span class="material-icons" style="font-size: 18px;">download</span>Download
-        </a>`;
-      papersList.appendChild(card);
-    });
-  }
-
-  db.collection("papers").orderBy("uploadedAt", "desc").get()
-    .then(snapshot => {
-      papersData = snapshot.docs.map(doc => doc.data());
-      loaderOverlay.style.display = "none";
-      displayPapers(papersData);
-    })
-    .catch(() => {
-      loaderOverlay.style.display = "none";
-      papersList.innerHTML = '<p>Error loading papers.</p>';
-    });
-
-  document.getElementById("searchSubject").addEventListener("input", filterPapers);
-  document.getElementById("searchSemester").addEventListener("change", filterPapers);
-
-  function filterPapers() {
-    const subjectVal = document.getElementById("searchSubject").value.toLowerCase();
-    const semesterVal = document.getElementById("searchSemester").value;
-    const filtered = papersData.filter(paper =>
-      paper.title.toLowerCase().includes(subjectVal) &&
-      (semesterVal === "" || paper.semester === semesterVal)
-    );
-    displayPapers(filtered);
-  }
-
-  function toggleTheme() {
-    const root = document.documentElement;
-    const newTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    root.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-    if (newTheme === "dark") {
-      loaderOverlay.classList.add("dark");
-    } else {
-      loaderOverlay.classList.remove("dark");
-    }
-  }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      document.documentElement.setAttribute("data-theme", savedTheme);
-      if (savedTheme === "dark") loaderOverlay.classList.add("dark");
-    }
-  });
 </script>
 </body>
 </html>

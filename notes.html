@@ -94,7 +94,7 @@
       gap: 0.7rem;
     }
     nav a {
-      background: #ffffff;
+      background: #fff;
       color: #212121;
       padding: 0.6rem 1rem;
       border-radius: var(--radius);
@@ -217,36 +217,7 @@
       
     }
     
-    .footer-links{
-      display: flex;
-      justify-content: start;
-      margin-bottom: 15px;
-    }
-    
-    .footer-links span{
-      font-size: 1rem;
-      font-weight: bold;
-      text-align: end;
-      line-height: 2;
-    }
-    
-    .footer-links ul{
-      padding: 20px 2.2rem;
-    }
-    
-    .footer-links li{
-      list-style: none;
-      color: #fff;
-      line-height: 2;
-      text-decoration-line: none;
-    }
-    
-    .footer-links a{
-      text-decoration-line: none;
-      line-height: 2;
-    }
-    
-    
+
 
     .modal {
       display: none;
@@ -336,11 +307,14 @@
 
 <nav>
   <div class="nav-links">
-    <a href="index.html"><span class="material-icons">home</span><span>About</span></a>
-    <a href="notes.html" class="active"><span class="material-icons">article</span><span>Notes</span></a>
-    <a href="papers.html"><span class="material-icons">article</span><span>Papers</span></a>
+    <a href="notes.html" class="active"><i class="fa-solid fa-file-lines"></i><span>Notes</span></a>
+    <a href="papers.html"><i class="fa-solid fa-file-pdf"></i><span>Papers</span></a>
+    <a href="chat.html" class="active"><i class="fa-solid fa-comments" style="color: white;" ></i><span style="color: white;">Chat</span></a>
+    
+    <a href="profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+    
     <a href="#" onclick="document.getElementById('adminModal').style.display='block'" style="background:#ff4d4d; color:white;">
-      <span class="material-icons">lock</span><span>Admin Login</span>
+      <i class="fa-solid fa-lock"></i><span>Admin Login</span>
     </a>
   </div>
 </nav>
@@ -377,24 +351,7 @@
 <div id="toastAlert" class="toast-alert"></div>
 
 <footer>
-    <div class="footer-links">
-      <ul>
-    <span>Follow Us</span>
-    <a href="https://whatsapp.com/channel/0029Vb671B2It5rqAsKI3W3t"><li><i class="fa-brands fa-lg fa-whatsapp" style="color: #ffffff;"></i> Whatsapp</li></a>
-    <a href="#"><li><i class="fa-brands fa-telegram fa-lg" style="color: #ffffff;"></i> Telegram</li></a>
-    <a href="#"><li><i class="fa-brands fa-instagram fa-lg" style="color: #ffffff;"></i> Instagram</li></a>
-    <a href="#"><li><i class="fa-brands fa-facebook fa-lg" style="color: #ffffff;"></i> Facebook</li></a>
-  </ul>
-  
-  <ul>
-    <span>Quick Links</span>
-     <a href="index.html"><li><i class="fa-solid fa-house fa-lg" style="color: #ffffff;"></i> About</li></a>
-    <a href="notes.html"><li><i class="fa-solid fa-file fa-lg" style="color: #ffffff;"></i> Notes</li></a>
-    <a href="papers.html"><li><i class="fa-solid fa-file fa-lg" style="color: #ffffff;"></i> Papers</li></a>
-  </ul>
-  </div>
-  
-  &copy; 2025 Basif Shafi Wani. All rights reserved.
+  Made with ❤️ by <a style="text-decoration: underline ; color: white ;" href="https://basifshafi.netlify.app/">Basif Shafi Wani.</a>
   </footer>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
