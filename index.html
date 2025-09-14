@@ -312,14 +312,14 @@
               setTimeout(() => window.location.href = "notes.html", 1500);
             });
         })
-        .catch(err => showToast(message));
+        .catch(err => showToast("Email not in correct format ! "));
     } else {
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
           showToast("Login successful!");
           setTimeout(() => window.location.href = "notes.html", 1500);
         })
-        .catch(err => showToast(message));
+        .catch(err => showToast("Invalid email or password ! "));
     }
   });
 
