@@ -139,7 +139,7 @@
     }
 
 /* Profile card */
-.profile-card{margin:100px 0;width:350px;padding:2rem;border-radius:15px;text-align:center;}
+.profile-card{margin:50px 0;width:350px;padding:2rem;border-radius:15px;text-align:center;}
 body.dark .profile-card{color:#fff;}
 .profile-card img{width:100px;height:100px;border-radius:50%;object-fit:cover;margin-bottom:1rem;}
 .profile-card h2{margin:0.5rem 0;}
@@ -297,16 +297,6 @@ footer {
   </div>
 </div>
 
-<!-- Custom Popup -->
-<div id="customPopup">
-  <div class="popupContent">
-    <p>Are you sure?</p>
-    <div>
-      <button id="popupOk">Yes</button>
-      <button id="popupCancel">Cancel</button>
-    </div>
-  </div>
-</div>
 
 <!-- Admin Modal -->
 <div id="adminModal" class="modal">
@@ -347,12 +337,6 @@ const saveProfileBtn=document.getElementById("saveProfileBtn");
 const cancelProfileBtn=document.getElementById("cancelProfileBtn");
 const darkModeToggle=document.getElementById("darkModeToggle");
 
-// Custom popup
-const customPopup=document.getElementById("customPopup");
-const popupOk=document.getElementById("popupOk");
-const popupCancel=document.getElementById("popupCancel");
-
-
 
 const loaderOverlay = document.getElementById("loaderOverlay");
 
@@ -362,7 +346,7 @@ loaderOverlay.style.display = "flex";
 // Hide loader once user data is loaded
 auth.onAuthStateChanged(user => {
   if (!user) {
-    window.location.href = "login.html";
+    window.location.href = "index.html";
   } else {
     profileName.textContent = user.displayName || "Anonymous";
     profileID.textContent = user.uid.substring(0, 8);
@@ -378,10 +362,7 @@ editProfileBtn.onclick = () => {
 cancelProfileBtn.onclick = () => { editProfileModal.style.display="none"; };
 
 // Save profile with custom popup
-saveProfileBtn.onclick = () => { customPopup.style.display="flex"; };
-popupCancel.onclick = () => { customPopup.style.display="none"; };
-popupOk.onclick = () => {
-  customPopup.style.display="none";
+saveProfileBtn.onclick = () => { 
   const user = auth.currentUser;
   if(!user) return;
   const newName = editName.value.trim();

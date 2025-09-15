@@ -30,35 +30,35 @@ body.dark{background:var(--bg-dark);color:var(--text-light);}
 
 
 /* Chat container */
-#chatContainer{flex:1;margin:40px 0px 60px 0px;;width:100%;max-width:500px; align-self:center;padding:0.8rem;display:flex;flex-direction:column;overflow-y:auto;background:var(--bg-light);}
-body.dark #chatContainer{background:#212121;}
+#chatContainer{flex:1;margin-top:0px;margin-bottom:80px;width:100%;max-width:500px;align-self:center;padding:0.8rem;display:flex;flex-direction:column;overflow-y:auto;background:var(--bg-light);}
+body.dark #chatContainer{background:#121212;}
 
 /* Messages */
-#chatMessages{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;flex:1;}
+#chatMessages{list-style:none;margin:1.3rem 0rem;padding:0;display:flex;flex-direction:column;flex:1;}
 #chatMessages li{display:flex;margin:0.4rem 0;max-width:80%;word-break:break-word;position:relative;}
 #chatMessages li.own{align-self:flex-end;flex-direction:row-reverse;}
-#chatMessages li .bubble{padding:0.7rem 1rem; border-radius:20px;display:flex;flex-direction:column;font-size:0.95rem;line-height:1.3rem;position:relative;cursor:pointer;}
+#chatMessages li .bubble{padding:0.5rem 1rem;border-radius:20px;display:flex;flex-direction:column;font-size:0.95rem;line-height:1.3rem;position:relative;cursor:pointer;}
 #chatMessages li.own .bubble{background:var(--bubble-own);color:#fff;border-bottom-right-radius:5px;}
 #chatMessages li.other .bubble{background:var(--bubble-other);color:#000;border-bottom-left-radius:5px;}
-#chatMessages li .avatar{width:32px;height:32px;border-radius:50%;margin:0 0.5rem;object-fit:cover;}
-#chatMessages li .name{font-weight:600;font-size:0.8rem;margin-bottom:0.2rem;}
+#chatMessages li .avatar{width:32px;height:32px;border-radius:50%;margin:0 0.2rem;object-fit:cover;}
+#chatMessages li .name{font-weight:600;font-size:0.8rem;margin-bottom:0.1rem; padding: 0;}
 
 /* Inline menu */
-.inlineMenu{position:absolute;top:-35px;right:0;background:#fff;border:1px solid #ccc;border-radius:8px;display:flex;z-index:10;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,0.2);}
+.inlineMenu{position:absolute;top:-35px;right:0;background:#fff;border:1px solid #ccc;border-radius:8px;display:flex;z-index:500;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,0.2);}
 .inlineMenu button{border:none;background:none;color:#477EE7;padding:5px 10px;cursor:pointer;font-size:0.85rem;}
 .inlineMenu button:hover{background:#eee;}
 body.dark .inlineMenu{background:#222;color:#fff;}
 body.dark .inlineMenu button:hover{background:#333;}
 
 /* Typing indicator */
-#typingIndicator{display:none;align-items:center;margin:0rem 0;font-size:0.9rem;color:#555;}
+#typingIndicator{display:none;align-items:center;margin:0.3rem 0;font-size:0.9rem;color:#555;}
 #typingIndicator .dot{height:8px;width:8px;margin:0 2px;background:#888;border-radius:50%;display:inline-block;animation: blink 1.4s infinite both;}
 #typingIndicator .dot:nth-child(2){animation-delay:0.2s;}
 #typingIndicator .dot:nth-child(3){animation-delay:0.4s;}
 @keyframes blink{0%,80%,100%{transform:scale(0);}40%{transform:scale(1);}}
 
 /* Input */
-#chatInputContainer{position:fixed;bottom:5px;left:10px;right:10px;display:flex;align-items:center;padding:0.6rem 0.6rem;background:#fff;border-radius:50px;box-shadow:0 5px 15px rgba(0,0,0,0.15);z-index:100;max-width:500px;margin:auto;}
+#chatInputContainer{position:fixed;bottom:5px;left:10px;right:10px;display:flex;align-items:center;padding:0.3rem 0.3rem;background:#fff;border-radius:50px;box-shadow:0 5px 15px rgba(0,0,0,0.15);z-index:100;max-width:500px;margin:auto;}
 body.dark #chatInputContainer{background:#222;}
 #chatInput{flex:1;border:none;outline:none;padding:1rem 1rem;font-size:0.95rem;border-radius:50px;background:#f0f0f0;margin-right:0.5rem;}
 body.dark #chatInput{background:#333;color:#fff;}
@@ -67,7 +67,7 @@ body.dark #chatInput{background:#333;color:#fff;}
 
 /* Modal popup */
 #confirmModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:none;justify-content:center;align-items:center;z-index:200;}
-#confirmModal .modalContent{background:#fff;padding:1rem 1.5rem;border-radius:10px;max-width:300px;text-align:center;}
+#confirmModal .modalContent{background:#fff;padding:1rem 1.5rem;border-radius:10px;width:300px;text-align:center;}
 #confirmModal .modalContent p{margin-bottom:1rem;}
 #confirmModal .modalContent button{margin:0 0.5rem;padding:0.5rem 1rem;border:none;border-radius:8px;cursor:pointer;font-weight:600;}
 #confirmModal .modalContent .cancelBtn{background:#ccc;}
@@ -116,13 +116,9 @@ body.dark #loadingOverlay {
 </head>
 <body>
 
-<nav style="height: 60px; background: #fff; width: 100%; display: flex; position:fixed; z-index:555; flex-direction: row; align-items: center;">
-  <div  class="left-nav" style="margin: 0px 0px 0px 20px; width: 85%; display:flex; flex-direction: column; ">
-    <h3 style="margin:0px;">Group Chat</h3>
-    <div id="typingIndicator" style="margin:0px">
-    <span style="margin:0px;">Someone is typing</span>
-    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-    </div>
+<nav style="height: px; background: #fff; width: 100%; display: flex; flex-direction: row; align-items: center;">
+  <div  class="left-nav" style="margin-left: 20px; width: 85%;">
+    <h3>Group Chat</h3>
   </div>
   
   <div class="right-nav" >
@@ -136,7 +132,10 @@ body.dark #loadingOverlay {
     <span>Loading chat...</span>
   </div>
   <ul id="chatMessages"></ul>
-  
+  <div id="typingIndicator">
+    <span>Someone is typing</span>
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
 </div>
 
 <div id="chatInputContainer">
@@ -179,7 +178,7 @@ let editDocId=null, deleteDocId=null;
 
 
 // Auth
-auth.onAuthStateChanged(user=>{if(!user) window.location.href="login.html"; else{currentUserName=user.displayName||"Anonymous"; if(user.photoURL) currentUserPhoto=user.photoURL; loadChat();}});
+auth.onAuthStateChanged(user=>{if(!user) window.location.href="index.html"; else{currentUserName=user.displayName||"Anonymous"; if(user.photoURL) currentUserPhoto=user.photoURL; loadChat();}});
 
 // Typing
 chatInput.addEventListener("input",()=>{chatInput.value.trim()!==""?db.collection("typing").doc("status").set({name:currentUserName}):db.collection("typing").doc("status").delete();});
