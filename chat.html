@@ -70,8 +70,8 @@ body.dark #chatInput{background:#333;color:#fff;}
 #confirmModal .modalContent{background:#fff;padding:1rem 1.5rem;border-radius:10px;width:300px;text-align:center;}
 #confirmModal .modalContent p{margin-bottom:1rem;}
 #confirmModal .modalContent button{margin:0 0.5rem;padding:0.5rem 1rem;border:none;border-radius:8px;cursor:pointer;font-weight:600;}
-#confirmModal .modalContent .cancelBtn{background:#ccc;}
-#confirmModal .modalContent .okBtn{background:var(--primary);color:#fff;}
+#confirmModal .modalContent .cancelBtn{background:var(--primary); color: #fff;}
+#confirmModal .modalContent .okBtn{background:red;color:#fff;}
 body.dark #confirmModal .modalContent{background:#222;color:#fff;}
 body.dark #confirmModal .modalContent .cancelBtn{background:#555;}
 body.dark #confirmModal .modalContent .okBtn{background:#0084ff;}
@@ -119,6 +119,10 @@ body.dark #loadingOverlay {
 <nav style="height: px; background: #fff; width: 100%; display: flex; flex-direction: row; align-items: center;">
   <div  class="left-nav" style="margin-left: 20px; width: 85%;">
     <h3>Group Chat</h3>
+    <div id="typingIndicator" style="margin: 0;">
+    <span>Someone is typing</span>
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
   </div>
   
   <div class="right-nav" >
@@ -132,10 +136,7 @@ body.dark #loadingOverlay {
     <span>Loading chat...</span>
   </div>
   <ul id="chatMessages"></ul>
-  <div id="typingIndicator">
-    <span>Someone is typing</span>
-    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-  </div>
+
 </div>
 
 <div id="chatInputContainer">

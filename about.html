@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
+  <!-- Meta Tags for Social Sharing -->
+  <meta property="og:title" content="KuGuider - Smart Resource Portal">
+  <meta property="og:description" content="Access notes, papers, and academic resources instantly.">
+  <meta property="og:image" content="https://kuguider.netlify.app/file_0000000042b861fd808de615ad3ddea5.png">
+  <meta property="og:url" content="https://kuguider.netlify.app">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <!-- Browser Address Bar Color (Mobile) -->
+  <meta name="theme-color" content="#4a90e2" />
+  <meta name="msapplication-navbutton-color" content="#4a90e2" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#4a90e2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - KuGuider</title>
+
+  <!-- Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <style>
+    :root {
+      --radius: 10px;
+      --primary: linear-gradient(90deg, #00c6ff, #0072ff);
+      --nav-bg-light: #f0f4ff;
+      --nav-bg-dark: #131313;
+      --bg-light: linear-gradient(to left, #eef2f3, #ffffff);
+      --bg-dark: linear-gradient(to right, #171717, #1A1110);
+      --text-light: #fff;
+      --text-dark: #000;
+      --card-light: #fff;
+      --card-dark: #1e1e1e;
+    }
+    html[data-theme="dark"] {
+      --bg-light: var(--bg-dark);
+      --text-dark: var(--text-light);
+      --card-light: var(--card-dark);
+      --nav-bg-light: var(--nav-bg-dark);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: var(--bg-light);
+      color: var(--text-dark);
+      padding-bottom: 4rem;
+      height: 100vh;
+    }
+    .theme-toggle {
+      position: fixed;
+      right: 1rem;
+      top: 1rem;
+      height: 37px;
+      width: 37px;
+      background: #fff;
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-logo {
+      background: var(--primary);
+      color: white;
+      padding: 2rem 1rem 3rem;
+      text-align: center;
+    }
+    .header-logo img {
+      width: 200px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+    nav {
+      background: var(--nav-bg-light);
+      padding: 0.75rem;
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.7rem;
+    }
+    nav a {
+      background: #ffffff;
+      color: #212121;
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: background 0.3s, color 0.3s;
+    }
+    nav a.active {
+      background: var(--primary);
+      color: white;
+    }
+    .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 3000;
+      transition: background 0.3s;
+    }
+    .loader-overlay.dark {
+      background: rgba(0, 0, 0, 0.85);
+    }
+    .loader-spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #4a90e2;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+    .loader-text {
+      font-size: 1.1rem;
+      color: #4a90e2;
+      font-weight: bold;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .carousel {
+      position: relative;
+      width: 300px;
+      max-width: 800px;
+      height: 250px;
+      margin: 60px auto;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0.4px 0.4px 2.5px rgba(64, 60, 60, 0.42);
+    }
+    .carousel-images {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      
+    }
+    .carousel-images img {
+      width: 100%;
+      object-fit: contain;
+      object-position: center;
+      margin-top: 50px;
+      
+    }
+    .carousel-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+    .carousel-buttons button {
+      background-color: rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      color: #fff;
+      padding: 10px;
+      height: 35px;
+      width: 35px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .carousel-buttons button:hover {
+      background-color: rgba(0,0,0,0.7);
+    }
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease, visibility 0.3s;
+      z-index: 1000;
+    }
+    .popup.show {
+      visibility: visible;
+      opacity: 1;
+    }
+    .popup-content {
+      background-color: #fff;
+      padding: 20px 25px;
+      border-radius: 12px;
+      width: 320px;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .popup-content .heading {
+      margin-bottom: 15px;
+      color: black;
+    }
+    .popup-content p {
+      margin-bottom: 20px;
+      color: #555;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 40px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .btn.telegram {
+      background:var(--primary);
+    }
+    .btn.whatsapp {
+      background:var(--primary);
+    }
+  
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: #999;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .close-btn:hover {
+      color: #333;
+    }
+    
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin: 0;
+      
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="theme-toggle" onclick="toggleTheme()">
+    <i class="fa-solid fa-sun" style="color: #4a90e2;"></i>
+  </div>
+
+  <div class="loader-overlay" id="loaderOverlay">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Loading about...</div>
+  </div>
+
+  <div class="header-logo">
+    <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider Logo">
+  </div>
+
+  <nav>
+    <div class="nav-links">
+     <a href="about.html" class="active"><i class="fa-solid fa-address-card"></i><span>About</span></a>
+      <a href="notes.html"><i class="fa-solid fa-file-lines"></i><span>Notes</span></a>
+      <a href="papers.html"><i class="fa-solid fa-file-pdf"></i><span>Papers</span></a>
+    <a href="chat.html" style="background: red;"><i class="fa-solid fa-comments" style="color: #fff;"></i><span style="color: #fff;">Chat</span></a>
+      <a href="profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+
+    </div>
+  </nav>
+
+  <!-- Carousel Section -->
+  <div class="carousel">
+    <div class="carousel-images" id="carouselImages">
+      <img src="/InShot_20250916_202940352.png" alt="Learn Better" />
+      <img src="/InShot_20250916_204937937.png" alt="Expert Guidance" />
+      <img src="/InShot_20250916_210112750.png" alt="Success Together" />
+    </div>
+    <div class="carousel-buttons">
+      <button id="prev">&#10094;</button>
+      <button id="next">&#10095;</button>
+    </div>
+  </div>
+
+  <!-- Popup Modal -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <button class="close-btn" id="closePopup"><i class="fa-solid fa-xmark fa-lg"></i></button>
+      <h3 class="heading">Join Our Community!</h3>
+      <p>Connect with fellow learners on Telegram and WhatsApp for updates and resources.</p>
+      <a href="https://t.me/kuguider" target="_blank" class="btn telegram"><i class="fa-brands fa-telegram fa-lg" style="color: #74C0FC;"></i> Telegram</a>
+      <a href="https://whatsapp.com/channel/0029Vb671B2It5rqAsKI3W3t" target="_blank" class="btn whatsapp"> <i class="fa-brands fa-whatsapp fa-lg" style="color: #00ff00;"></i> WhatsApp</a>
+    </div>
+  </div>
+  
+  <footer>
+  Made with ❤️ by <a style="text-decoration: underline ; color: white ;" href="https://basifshafi.netlify.app/">Basif Shafi Wani.</a>
+  </footer>
+
+  <!-- Firebase and Scripts -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+      authDomain: "kuguider.firebaseapp.com",
+      projectId: "kuguider"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Authentication Check
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        window.location.href = "index.html";
+      } else {
+        document.getElementById("loaderOverlay").style.display = "none";
+      }
+    });
+
+    
+    function toggleTheme() {
+      const root = document.documentElement;
+      const loaderOverlay = document.getElementById("loaderOverlay");
+      const newTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+      if (newTheme === "dark") {
+        loaderOverlay.classList.add("dark");
+      } else {
+        loaderOverlay.classList.remove("dark");
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme");
+      const loaderOverlay = document.getElementById("loaderOverlay");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        if (savedTheme === "dark") {
+          loaderOverlay.classList.add("dark");
+        }
+      }
+    });
+
+    // Carousel
+    const carouselImages = document.getElementById('carouselImages');
+    const images = carouselImages.querySelectorAll('img');
+    let index = 0;
+
+    document.getElementById('prev').addEventListener('click', () => {
+      index = (index > 0) ? index - 1 : images.length - 1;
+      updateCarousel();
+    });
+
+    document.getElementById('next').addEventListener('click', () => {
+      index = (index + 1) % images.length;
+      updateCarousel();
+    });
+
+    function updateCarousel() {
+      carouselImages.style.transform = `translateX(${-index * 100}%)`;
+    }
+
+    // Popup
+    const popup = document.getElementById('popup');
+    const closePopup = document.getElementById('closePopup');
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        popup.classList.add('show');
+      }, 3000);
+    });
+    closePopup.addEventListener('click', () => {
+      popup.classList.remove('show');
+    });
+  </script>
+</body>
+</html>

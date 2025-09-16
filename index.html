@@ -309,15 +309,15 @@
             })
             .then(() => {
               showToast("Signup successful!");
-              setTimeout(() => window.location.href = "notes.html", 1500);
+              setTimeout(() => window.location.href = "about.html", 1500);
             });
         })
-        .catch(err => showToast("Plese fill the email adress in correct format."));
+        .catch(err => showToast("Already registered or invaild email."));
     } else {
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
           showToast("Login successful!");
-          setTimeout(() => window.location.href = "notes.html", 1500);
+          setTimeout(() => window.location.href = "about.html", 1500);
         })
         .catch(err => showToast("Invaild user email or password"));
     }

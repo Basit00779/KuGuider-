@@ -156,19 +156,9 @@ body.dark #editProfileModal .modalContent{background:#222;color:#fff;}
 body.dark #editProfileModal input[type="text"]{background:#333;color:#fff;border:1px solid #555;}
 #editProfileModal button{padding:0.5rem 1rem;margin:0 0.5rem;border:none;border-radius:8px;cursor:pointer;font-weight:600;}
 #saveProfileBtn{background:var(--primary);color:#fff;}
-#cancelProfileBtn{background:#ccc;}
+#cancelProfileBtn{background:red;color: #fff;}
 body.dark #cancelProfileBtn{background:#555;}
 
-/* Custom popup */
-#customPopup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:none;justify-content:center;align-items:center;z-index:200;}
-#customPopup .popupContent{background:#fff;padding:1.5rem;border-radius:10px;text-align:center;max-width:300px;animation:fadeIn 0.3s;}
-body.dark #customPopup .popupContent{background:#222;color:#fff;}
-#customPopup p{margin-bottom:1rem; color: #4a90e2;}
-#customPopup button{padding:0.5rem 1rem;margin:0 0.5rem;border:none;border-radius:8px;cursor:pointer;font-weight:600;}
-#popupOk{background:var(--primary);color:#fff;}
-#popupCancel{background:#ccc;}
-body.dark #popupCancel{background:#555;}
-@keyframes fadeIn{0%{opacity:0;transform:scale(0.9);}100%{opacity:1;transform:scale(1);}}
 
 footer {
       background: var(--primary);
@@ -179,75 +169,7 @@ footer {
       
     }
     
-      .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-    }
-    .modal-content {
-      background-color: #4a90e2;
-      margin: 10% auto;
-      padding: 1.5rem;
-      border-radius: var(--radius);
-      max-width: 320px;
-      position: relative;
-    }
-    .modal-content input {
-      width: 100%;
-      padding: 0.6rem;
-      margin: 0.5rem 0;
-      border-radius: var(--radius);
-      border: none;
-      
-    }
-    .modal-content button {
-      width: 100%;
-      padding: 0.6rem;
-      background-color: #ff4d4d;
-      color: white;
-      border: none;
-      border-radius: var(--radius);
-      font-size: 1rem;
-      margin-top: 10px;
-      cursor: pointer;
-    }
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 24px;
-      font-weight: thin;
-      color: white;
-      cursor: pointer;
-    }
-    .admin-h2 {
-      color: white;
-      font-size: 1.6rem;
-    }
-    .toast-alert {
-      visibility: hidden;
-      position: fixed;
-      top: 15px;
-      left: 50%;
-      width: 300px;
-      transform: translateX(-50%);
-      background: #4a90e2;
-      color: #fff;
-      padding: 1rem;
-      border-radius: 10px;
-      z-index: 5000;
-      text-align: center;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      justify-content: center;
-    }
+
 </style>
 </head>
 <body>
@@ -264,20 +186,16 @@ footer {
   <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider Logo">
 </div>
 
-<nav>
-  <div class="nav-links">
-    <a href="notes.html"><i class="fa-solid fa-file-lines"></i><span>Notes</span></a>
-    <a href="papers.html"><i class="fa-solid fa-file-pdf"></i><span>Papers</span></a>
-    <a href="chat.html" class="active"><i class="fa-solid fa-comments" style="color: white;"></i><span style="color: white;">Chat</span></a>
-    
-    <a href="profile.html" class="active"><i class="fa-solid fa-user"></i><span>Profile</span></a>
-    
-    <a href="#" onclick="document.getElementById('adminModal').style.display='block'" style="background:#ff4d4d; color:white;">
-      <i class="fa-solid fa-lock"></i><span>Admin Login</span>
-    </a>
-  </div>
-</nav>
-
+  <nav>
+    <div class="nav-links">
+      <a href="about.html"><i class="fa-solid fa-address-card"></i><span>About</span></a>
+      <a href="notes.html"><i class="fa-solid fa-file-lines"></i><span>Notes</span></a>
+      <a href="papers.html"><i class="fa-solid fa-file-pdf"></i><span>Papers</span></a>
+      <a href="chat.html" style="background:red;"><i class="fa-solid fa-comments" style="color: #fff;"></i><span style="color: #fff;">Chat</span></a>
+      <a href="profile.html" class="active"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+      
+    </div>
+  </nav>
 
 <div class="profile-card">
   <img src="https://www.w3schools.com/howto/img_avatar.png" id="profileAvatar" alt="User Avatar">
@@ -298,19 +216,7 @@ footer {
 </div>
 
 
-<!-- Admin Modal -->
-<div id="adminModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="document.getElementById('adminModal').style.display='none'">&times;</span>
-    <h2 class="admin-h2">Admin Login</h2>
-    <hr style="width: 9rem; margin-bottom: 0.9rem; height: 2.5px; background: #ff4d4d; border: none;" />
-    <input type="email" id="adminEmail" placeholder="Email">
-    <input type="password" id="adminPassword" placeholder="Password">
-    <button onclick="loginAdmin()">Login</button>
-  </div>
-</div>
 
-<div id="toastAlert" class="toast-alert"></div>
 <footer>
   Made with ❤️ by <a style="text-decoration: underline ; color: white ;" href="https://basifshafi.netlify.app/">Basif Shafi Wani.</a>
   </footer>
@@ -393,16 +299,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
   
-  function loginAdmin() {
-    const email = document.getElementById("adminEmail").value;
-    const password = document.getElementById("adminPassword").value;
-    auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        showAlert("Login successful!", "success");
-        setTimeout(() => window.location.href = "admin-panel.html", 1500);
-      })
-      .catch(() => showAlert("Invalid Email or Password!", "error"));
-  }
+  
 </script>
 </body>
 </html>
