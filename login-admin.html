@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login</title>
+  
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  
+  <style>
+    :root {
+      --radius: 8px;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    
+    .login-container {
+      background-color: #4a90e2;
+      width: 300px;
+      max-width: 350px;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      color: white;
+      text-align: center;
+    }
+    
+    .login-container h2 {
+      margin-bottom: 1rem;
+    }
+    
+    .login-container hr {
+      width: 9rem;
+      height: 2.5px;
+      background: #ff4d4d;
+      border: none;
+      margin: 0 auto 1rem;
+    }
+    
+    .login-container input {
+      width: 90%;
+      padding: 0.6rem;
+      margin: 0.5rem 0;
+      border-radius: var(--radius);
+      border: none;
+      font-size: 1rem;
+    }
+    
+    .login-container button {
+      width: 95%;
+      padding: 0.6rem;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    
+    .login-container button:hover {
+      background-color: #e60000;
+    }
+    
+    .toast-alert {
+      visibility: hidden;
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #4a90e2;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      z-index: 5000;
+      text-align: center;
+      font-size: 1rem;
+      min-width: 200px;
+      max-width: 90%;
+    }
+    
+    @media (max-width: 400px) {
+      .login-container {
+        padding: 1rem;
+      }
+      
+      .login-container h2 {
+        font-size: 1.4rem;
+      }
+      
+      .login-container input,
+      .login-container button {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container" data-aos="zoom-in">
+    <h2>Admin Login</h2>
+    <hr />
+    <input type="email" id="adminEmail" placeholder="Email" />
+    <input type="password" id="adminPassword" placeholder="Password" />
+    <button onclick="loginAdmin()">Login</button>
+  </div>
+  
+  <div id="toastAlert" class="toast-alert"></div>
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  
+  <!-- AOS Animation Script -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+      authDomain: "kuguider.firebaseapp.com",
+      projectId: "kuguider"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    
+    function showAlert(message) {
+      const toast = document.getElementById("toastAlert");
+      toast.textContent = message;
+      toast.style.visibility = "visible";
+      setTimeout(() => toast.style.visibility = "hidden", 3000);
+    }
+    
+    function loginAdmin() {
+      const email = document.getElementById("adminEmail").value.trim();
+      const password = document.getElementById("adminPassword").value.trim();
+      if (!email || !password) {
+        showAlert("Please fill in all fields!");
+        return;
+      }
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          showAlert("Login successful!");
+          setTimeout(() => window.location.href = "adminpanel.html", 1500);
+        })
+        .catch((error) => {
+          console.error(error);
+          showAlert("Invalid Email or Password!");
+        });
+    }
+  </script>
+</body>
+
+</html>

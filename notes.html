@@ -52,8 +52,12 @@
     body {
       background: var(--bg-light);
       color: var(--text-dark);
-      padding-bottom: 4rem;
-      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height:;
     }
     .theme-toggle {
       position: fixed;
@@ -73,6 +77,7 @@
     .header-logo {
       background: linear-gradient(to right, #4a90e2, #007bff);
       color: white;
+      width: 100%;
       padding: 2rem 1rem 3rem;
       text-align: center;
     }
@@ -86,6 +91,11 @@
     nav {
       background: var(--nav-bg-light);
       padding: 0.75rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
     .nav-links {
       display: flex;
@@ -129,6 +139,14 @@
       border: 1px solid #ccc;
       font-size: 1rem;
       width: 220px;
+    }
+
+    .notesbox{
+      height: ;
+      width: 90%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .notes-container {
       display: grid;
@@ -209,11 +227,19 @@
     }
 
     footer {
+      width: 100%;
       background: var(--primary);
       color: white;
       text-align: center;
       padding: 1rem;
       font-size: 0.9rem;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      bottom: 0;
       
     }
     
@@ -263,11 +289,14 @@
   </select>
 </div>
 
-<div class="notes-container" id="notesList"></div>
+
+<div class="notesbox">
+  <div class="notes-container" id="notesList"></div>
+</div>
 
 
 <footer>
-  Made with ❤️ by <a style="text-decoration: underline ; color: white ;" href="https://basifshafi.netlify.app/">Basif Shafi Wani.</a>
+  Made with ❤️ by &nbsp; <a style="text-decoration: underline ; color: white ;" href="https://basifshafi.netlify.app/">Basif Shafi Wani.</a>
   </footer>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

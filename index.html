@@ -23,44 +23,62 @@
     :root {
       --radius: 10px;
       --primary: linear-gradient(90deg, #00c6ff, #0072ff);
-      --text-dark: #212121;
+      --nav-bg-light: #f0f4ff;
+      --nav-bg-dark: #131313;
+      --bg-light: linear-gradient(to left, #eef2f3, #ffffff);
+      --bg-dark: linear-gradient(to right, #171717, #1A1110);
       --text-light: #fff;
-      --bg-light: #f5f5f5;
-      --bg-dark: #121212;
+      --text-dark: #000;
+      --card-light: #fff;
+      --card-dark: #1e1e1e;
     }
-    body {
-      font-family: 'Poppins', sans-serif;
+    html[data-theme="dark"] {
+      --bg-light: var(--bg-dark);
+      --text-dark: var(--text-light);
+      --card-light: var(--card-dark);
+      --nav-bg-light: var(--nav-bg-dark);
+    }
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      text-align: center;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
       background: var(--bg-light);
       color: var(--text-dark);
-      transition: background 0.3s, color 0.3s;
+      width: 100%;
+      height: 100vh;
     }
-    body.dark {
-      background: var(--bg-dark);
-      color: var(--text-light);
+    .theme-toggle {
+      position: fixed;
+      right: 1rem;
+      top: 1rem;
+      height: 37px;
+      width: 37px;
+      background: #fff;
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .header-logo {
       background: var(--primary);
       color: white;
-      padding: 1.5rem 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      padding: 2rem 1rem 3rem;
+      text-align: center;
     }
     .header-logo img {
-      width: 150px;
-      object-fit: contain;
+      width: 200px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
     }
-    .dark-mode-toggle {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #fff;
-    }
+   
     .form-container {
       max-width: 400px;
       margin: 2rem auto;
@@ -71,7 +89,7 @@
       justify-content: center;
       align-items: center;
       border-radius: var(--radius);
-      transition: max-height 0.3s ease;
+      transition: 0.3s ease;
     }
     h2 {
       margin-bottom: 1rem;
@@ -89,21 +107,22 @@
       position: relative;
       width: 100%;
       margin-bottom: 1rem;
+      margin-left: 10%;
     }
     .password-wrapper input {
       width: 90%;
-      padding-right: 0.8rem;
+      
     }
     .password-wrapper .fa-eye {
       position: absolute;
-      right: 10px;
-      top: 35%;
+      right: 50px;
+      top: 40%;
       transform: translateY(-50%);
       cursor: pointer;
       color: #0072ff;
     }
     button {
-      width: 100%;
+      width: 90%;
       padding: 0.8rem;
       border: none;
       border-radius: var(--radius);
@@ -139,6 +158,23 @@
       visibility: visible;
       animation: fadeInOut 3s forwards;
     }
+
+    footer {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      bottom: 0;
+      
+    }
     @keyframes fadeInOut {
       0% { opacity: 0; transform: translateY(-20px); }
       10% { opacity: 1; transform: translateY(0); }
@@ -152,10 +188,13 @@
 </head>
 <body>
 
-<div class="header-logo">
-  <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider Logo">
-</div>
-<i class="fas fa-moon dark-mode-toggle" id="darkModeToggle" title="Toggle Dark Mode"></i>
+<div class="theme-toggle" onclick="toggleTheme()">
+    <i class="fa-solid fa-sun" style="color: #4a90e2;"></i>
+  </div>
+
+  <div class="header-logo">
+    <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider Logo">
+  </div>
 
 <div class="form-container" id="formContainer">
   <h2 id="formTitle">Login</h2>
@@ -166,12 +205,16 @@
     <i class="fas fa-eye" id="togglePassword"></i>
   </div>
   <button id="actionBtn">Login</button>
-  <button class="link-btn" id="toggleForm">Don't have an account? Signup</button>
+  <button class="link-btn" id="toggleForm" style=" text-decoration: none; margin: 5px 0px;">Don't have an account <a href="#" style="color: #0072ff;">Login</a></button>
   <button class="link-btn" id="forgotPassword">Forgot Password?</button>
-  <button class="link-btn" id="backToLogin" style="display:none;">Back to Login</button>
+  <button class="link-btn" id="backToLogin" style="display:none; text-decoration: none;">Back to <a href="#" style="color: #0072ff;">Login</a></button>
 </div>
 
 <div id="toast" class="toast"></div>
+
+  <footer>
+  Made with ❤️ by  &nbsp;<a style="text-decoration: underline ; color: white ;" href="https://basifshafi.netlify.app/">Basif Shafi Wani.</a>
+  </footer>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -187,6 +230,17 @@
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const db = firebase.firestore();
+
+  // Authentication if user logged in redirect to about page
+
+  auth.onAuthStateChanged(user => {
+      if (user) {
+        window.location.href = "about.html";
+      } else {
+        document.getElementById("loaderOverlay").style.display = "none";
+      }
+    });
+
 
   // DOM Elements
   const formTitle = document.getElementById("formTitle");
@@ -222,6 +276,7 @@
       toggleForm.style.display = "none";
       forgotPassword.style.display = "none";
       backToLogin.style.display = "block";
+      
     } else {
       nameInput.style.display = isSignup ? "block" : "none";
       passwordInput.parentElement.style.display = "block";
@@ -230,12 +285,30 @@
       toggleForm.style.display = "block";
       forgotPassword.style.display = "block";
       backToLogin.style.display = "none";
+      
     }
   }
 
+  let toggle=0;
+  toggleForm.addEventListener("click",function(){
+   if(toggle==0){
+     toggleForm.innerHTML=`Already have an account <a href="#" style="color: #0072ff;">Login</a>`
+      toggle=1
+
+   }
+
+   else{
+     toggleForm.innerHTML=`Don't have an account <a href="#" style="color: #0072ff;">Signup</a>  `
+     toggle=0
+
+   }
+  })
+
   toggleForm.addEventListener("click", () => {
     isSignup = !isSignup;
+     
     updateForm();
+   
   });
 
   forgotPassword.addEventListener("click", () => {
@@ -256,23 +329,23 @@
   });
 
   // Dark mode toggle
-  function setDarkMode(enabled) {
-    if(enabled) {
-      document.body.classList.add("dark");
-      localStorage.setItem("darkMode", "true");
-      darkModeToggle.classList.replace("fa-moon","fa-sun");
-    } else {
-      document.body.classList.remove("dark");
-      localStorage.setItem("darkMode", "false");
-      darkModeToggle.classList.replace("fa-sun","fa-moon");
-    }
-  }
-  darkModeToggle.addEventListener("click", () => {
-    setDarkMode(!document.body.classList.contains("dark"));
-  });
-  // Load dark mode preference
-  if(localStorage.getItem("darkMode") === "true") setDarkMode(true);
 
+  function toggleTheme() {
+    const root = document.documentElement;
+    const newTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+    
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      document.documentElement.setAttribute("data-theme", savedTheme);
+      if (savedTheme === "dark") loaderOverlay.classList.add("dark");
+    }
+  });
+  
   // Action button
   actionBtn.addEventListener("click", () => {
     const name = nameInput.value.trim();
