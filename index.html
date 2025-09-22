@@ -47,8 +47,13 @@
     body {
       background: var(--bg-light);
       color: var(--text-dark);
-      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
       height: 100vh;
+      width: 100%;
+      margin: 0;
     }
     .theme-toggle {
       position: fixed;
@@ -68,6 +73,7 @@
     .header-logo {
       background: var(--primary);
       color: white;
+      width: 100%;
       padding: 2rem 1rem 3rem;
       text-align: center;
     }
@@ -83,7 +89,7 @@
       max-width: 400px;
       margin: 2rem auto;
       background: none;
-      padding: 1.5rem;
+      padding: 2rem 1.2rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -92,7 +98,7 @@
       transition: 0.3s ease;
     }
     h2 {
-      margin-bottom: 1rem;
+      margin-bottom: 1.8rem;
       color: #0072ff;
     }
     input {
@@ -141,15 +147,15 @@
       font-size: 0.9rem;
     }
     .toast {
+      width: 250px;
       visibility: hidden;
       position: fixed;
-      top: 20px;
-      left: 5%;
-      width: 15rem;
+      top: 10px;
+      left: 15%;
       transform: translateX(-50%);
       background: #0072ff;
       color: #fff;
-      padding: 1rem 2rem;
+      padding: 0.8rem 0.7rem;
       border-radius: var(--radius);
       font-size: 1rem;
       z-index: 1000;
@@ -175,6 +181,7 @@
       bottom: 0;
       
     }
+    
     @keyframes fadeInOut {
       0% { opacity: 0; transform: translateY(-20px); }
       10% { opacity: 1; transform: translateY(0); }
@@ -385,14 +392,14 @@
               setTimeout(() => window.location.href = "about.html", 1500);
             });
         })
-        .catch(err => showToast("Already registered or invaild email."));
+        .catch(err => showToast("Already registered or invaild email!"));
     } else {
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
           showToast("Login successful!");
           setTimeout(() => window.location.href = "about.html", 1500);
         })
-        .catch(err => showToast("Invaild user email or password"));
+        .catch(err => showToast("Invaild email or password!"));
     }
   });
 
