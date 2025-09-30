@@ -383,6 +383,13 @@ saveProfileBtn.onclick = () => {
 // Logout
 logoutBtn.onclick = () => { auth.signOut().then(()=>window.location.href="index.html"); };
 
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (!user) {
+    // User not logged in → send back to login
+    window.location.href = "index.html";
+  }
+});
+
 // Theme toggle
 function toggleTheme(){
   const root = document.documentElement;
