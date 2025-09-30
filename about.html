@@ -379,13 +379,6 @@ function toggleTheme(){
   localStorage.setItem("theme", newTheme);
 }
 
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (!user) {
-    // User not logged in → send back to login
-    window.location.href = "index.html";
-  }
-});
-
 //Loader overlay
 
 window.addEventListener('load',function(){
