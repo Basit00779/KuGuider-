@@ -196,6 +196,13 @@ function sendMessage(){
   chatInput.value=""; db.collection("typing").doc("status").delete();
 }
 
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (!user) {
+    // User not logged in → send back to login
+    window.location.href = "index.html";
+  }
+});
+
 // Remove menus
 function removeMenus(){document.querySelectorAll(".inlineMenu").forEach(m=>m.remove());}
 
