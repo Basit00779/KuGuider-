@@ -327,6 +327,13 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
     }
   });
 
+    onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is logged in → go to About page
+      window.location.href = "about.html";
+    }
+  });
+
   // Theme toggle
   function toggleTheme() {
     const root = document.documentElement;
