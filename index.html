@@ -316,6 +316,13 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
     }
   });
 
+    onAuthStateChanged(auth,(user) => {
+    if (user) {
+      window.location.href="about.html";
+    }
+  });
+    
+
   forgotPassword.addEventListener("click", async () => {
     const email = emailInput.value.trim();
     if (!email) return showToast("Enter your email first");
@@ -327,13 +334,7 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
     }
   });
 
-    onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is logged in → go to About page
-      window.location.href = "about.html";
-    }
-  });
-
+    
   // Theme toggle
   function toggleTheme() {
     const root = document.documentElement;
