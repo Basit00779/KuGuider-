@@ -11,9 +11,9 @@
   <meta name="twitter:card" content="summary_large_image">
   
   <!-- Browser Address Bar Color (Mobile) -->
-  <meta name="theme-color" content="#4a90e2" />
-  <meta name="msapplication-navbutton-color" content="#4a90e2" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="#4a90e2" />
+  <meta name="theme-color" content="#fff" />
+  <meta name="msapplication-navbutton-color" content="#fff" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Chat - KuGuider</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
@@ -21,9 +21,9 @@
 <style>
 *{box-sizing:border-box;}
 :root{
-  --primary:#0084ff; --text-dark:#333; --text-light:#fff;
+  --primary:#212121; --text-dark:#333; --text-light:#fff;
   --bg-light:#f0f2f5; --bg-dark:#1c1c1c;
-  --bubble-own:#0084ff; --bubble-other:#e5e5ea; --radius:20px;
+  --bubble-own:#212121; --bubble-other:#e5e5ea; --radius:20px;
 }
 body{margin:0;padding:0;font-family:'Poppins',sans-serif;background:var(--bg-light);color:var(--text-dark);display:flex;flex-direction:column;height:100vh;overflow:hidden;}
 body.dark{background:var(--bg-dark);color:var(--text-light);}
@@ -44,8 +44,8 @@ body.dark #chatContainer{background:#121212;}
 #chatMessages li .name{font-weight:600;font-size:0.8rem;margin-bottom:0.1rem; padding: 0;}
 
 /* Inline menu */
-.inlineMenu{width: 110px; position:absolute;top:-35px;right:0;background:#fff;border:1px solid #ccc;border-radius:8px;display:flex;z-index:500;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,0.2);}
-.inlineMenu button{border:none;background:none;color:#477EE7;padding:5px 10px;cursor:pointer;font-size:0.85rem;}
+.inlineMenu{position:absolute;top:-35px;right:0;background:#fff;border:1px solid #ccc;border-radius:8px;display:flex;z-index:500;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,0.2);}
+.inlineMenu button{border:none;background:none;color:#212121;padding:5px 10px;cursor:pointer;font-size:0.85rem;}
 .inlineMenu button:hover{background:#eee;}
 body.dark .inlineMenu{background:#222;color:#fff;}
 body.dark .inlineMenu button:hover{background:#333;}
@@ -133,8 +133,7 @@ body.dark #loadingOverlay {
 <div id="chatContainer">
   <div id="loadingOverlay">
     <div class="loader"></div>
-    <span>Loading chat...</span>
-  </div>
+    </div>
   <ul id="chatMessages"></ul>
 
 </div>

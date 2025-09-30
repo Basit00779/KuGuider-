@@ -11,9 +11,9 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <!-- Browser Address Bar Color (Mobile) -->
-<meta name="theme-color" content="#4a90e2" />
-<meta name="msapplication-navbutton-color" content="#4a90e2" />
-<meta name="apple-mobile-web-app-status-bar-style" content="#4a90e2" />
+<meta name="theme-color" content="#fff" />
+<meta name="msapplication-navbutton-color" content="#fff" />
+<meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>All Notes - KuGuider</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
@@ -24,239 +24,335 @@
   <script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-auth-compat.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <style>
-    :root {
-      --radius: 10px;
-       --primary: linear-gradient(90deg, hsla(192, 95%, 50%, 1) 0%, hsla(225, 89%, 47%, 1) 100%);
-      --nav-bg-light: #f0f4ff ;
-      --nav-bg-dark: #131313;
-      --bg-light: linear-gradient(to left, #eef2f3, #ffffff);
-      --bg-dark: linear-gradient(to right, #171717, #1A1110);
-      --text-light: #fff;
-      --text-dark: #000;
-      --card-light: #fff;
-      --card-dark: #1e1e1e;
-    
-    }
-    html[data-theme="dark"] {
-      --bg-light: var(--bg-dark);
-      --text-dark: var(--text-light);
-      --card-light: var(--card-dark);
-      --nav-bg-light: var(--nav-bg-dark);
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-    }
-    body {
-      background: var(--bg-light);
-      color: var(--text-dark);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height:;
-    }
-    .theme-toggle {
-      position: fixed;
-      right: 1rem;
-      top: 1rem;
-      height: 37px;
-      width: 37px;
-      background: #fff;
-      padding: 0.5rem;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .header-logo {
-      background: linear-gradient(to right, #4a90e2, #007bff);
-      color: white;
-      width: 100%;
-      padding: 2rem 1rem 3rem;
-      text-align: center;
-    }
-    .header-logo img {
-      width: 200px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: var(--radius);
-      margin-bottom: 1rem;
-    }
-    nav {
-      background: var(--nav-bg-light);
-      padding: 0.75rem;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    .nav-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.7rem;
-    }
-    nav a {
-      background: #fff;
-      color: #212121;
-      padding: 0.6rem 1rem;
-      border-radius: var(--radius);
-      text-decoration: none;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-    nav a.active {
-      background: var(--primary);
-      color: white;
-    }
-    h1 {
-      text-align: center;
-      margin: 2rem 0 1rem;
-      font-size: 1.4rem;
-      color: var(--primary);
-    }
-    .search-bar {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin: 1.5rem auto 2rem;
-      flex-wrap: wrap;
-      max-width: 90%;
-    }
-    .search-bar input,
-    .search-bar select {
-      padding: 0.7rem 1rem;
-      border-radius: var(--radius);
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      width: 220px;
-    }
+:root {
+  --radius: 10px;
+  --transition: 0.25s ease;
 
-    .notesbox{
-      height: ;
-      width: 90%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .notes-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 0.5rem;
-      padding: 1rem;
-      max-width: 100%;
-    }
-    .note-card {
-      background: var(--card-light);
-      backdrop-filter: blur(6px);
-      border-radius: var(--radius);
-      padding: 1.2rem;
-      max-width:20rem;
-      margin: 10px;
-      transition: transform 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .note-card:hover {
-      transform: scale(1.02);
-    }
-    .note-card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.4rem;
-    }
-    .note-card p {
-      font-size: 0.95rem;
-      margin-bottom: 0.6rem;
-    }
-    .note-card a {
-      background: var(--primary);
-      color: white;
-      width: 60%;
-      padding: 0.7rem 0.8rem;
-      border-radius: var(--radius);
-      font-size: 0.85rem;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
+  /* Light Theme */
+  --bg-light: #ffffff;
+  --card-light: #f7f7f8;
+  --text-light: #202123;
+  --subtext-light: #6b6c6f;
+  --border-light: #e5e5e7;
+  --nav-bg-light: #f9f9f9;
 
-    .loader-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.9);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 3000;
-    }
-    .loader-overlay.dark {
-      background: rgba(0, 0, 0, 0.85);
-    }
-    .loader-spinner {
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid #4a90e2;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin-bottom: 1rem;
-    }
-    .loader-text {
-      font-size: 1.1rem;
-      color: #4a90e2;
-      font-weight: bold;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+  /* Dark Theme */
+  --bg-dark: #131314;
+  --card-dark: #1e1f20;
+  --text-dark: #ececec;
+  --subtext-dark: #9e9ea0;
+  --border-dark: #2e2f32;
+  --nav-bg-dark: #1a1a1a;
+}
 
-    footer {
-      width: 100%;
-      background: var(--primary);
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      bottom: 0;
-      
-    }
-    
+/* Theme handling */
+html[data-theme="light"] {
+  --bg: var(--bg-light);
+  --card: var(--card-light);
+  --text: var(--text-light);
+  --subtext: var(--subtext-light);
+  --border: var(--border-light);
+  --nav-bg: var(--nav-bg-light);
 
+  --btn-bg: #000;
+  --btn-text: #fff;
+}
+html[data-theme="dark"] {
+  --bg: var(--bg-dark);
+  --card: var(--card-dark);
+  --text: var(--text-dark);
+  --subtext: var(--subtext-dark);
+  --border: var(--border-dark);
+  --nav-bg: var(--nav-bg-dark);
 
+  --btn-bg: #fff;
+  --btn-text: #000;
+}
 
+/* Global */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background var(--transition), color var(--transition);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  height: 40px;
+  width: 40px;
+  border: 1px solid var(--border);
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+.theme-toggle:hover {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+/* Header */
+.header-logo {
+  background: var(--nav-bg);
+  width: 100%;
+  padding: 1rem 3rem;
+  text-align: center;
+}
+.header-logo img {
+  width: 200px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+/* Navbar */
+nav {
+  background: var(--nav-bg);
+  padding: 0.75rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+}
+nav a {
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: var(--transition);
+
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+}
+nav a:hover {
+  opacity: 0.8;
+}
+
+/* Title */
+h1 {
+  text-align: center;
+  margin: 2rem 0 1rem;
+  font-size: 1.4rem;
+  color: var(--text);
+}
+
+/* Search bar */
+.search-bar {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1.5rem auto 2rem;
+  flex-wrap: wrap;
+  max-width: 90%;
+}
+.search-bar input,
+.search-bar select {
+  padding: 0.7rem 1rem;
+  width: 65%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  background: var(--card);
+  color: var(--text);
+  transition: var(--transition);
+}
+.search-bar input:focus,
+.search-bar select:focus {
+  outline: none;
+  border-color: var(--btn-bg);
+}
+
+.select {
+  background-color: #1e1e1e ;  /* Dark background */
+  color: #ffffff;             /* White text */
+  border: 1px solid #555;
+  border-radius: 8px;
+  padding: 10px;
+  appearance: none; /* Removes default browser style */
+}
+
+.notesbox {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;  /* or center if you want vertically */
+  width: 100%;
+  min-height: 80vh;
+  padding: 1rem;
+}
+
+.notes-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  width: fit-content;
+  width: 90%;
+  justify-content: center;
+}
+.note-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.note-card h3 {
+  font-size: 1.1rem;
+  text-transform: capitalize;
+  margin-bottom: 0.4rem;
+}
+.note-card p {
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+  color: var(--subtext);
+}
+.note-card a {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.8rem;
+  width: 65%;
+  font-size: 0.85rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: var(--transition);
+}
+.note-card a:hover {
+  opacity: 0.8;
+}
+
+.note-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+}
+.note-card p {
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+  color: var(--subtext);
+}
+.note-card a {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.8rem;
+  width: 65%;
+  font-size: 0.85rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: var(--transition);
+}
+.note-card a:hover {
+  opacity: 0.8;
+}
+
+/* Loader */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  transition: var(--transition);
+}
+.loader-spinner {
+  border: 6px solid var(--border);
+  border-top: 6px solid var(--btn-bg);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+.loader-text {
+  font-size: 1.1rem;
+  color: var(--btn-bg);
+  font-weight: bold;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Footer */
+footer {
+  width:100%;
+  background: var(--nav-bg);
+  color: var(--text);
+  text-align:center;
+  padding:0.8rem;
+  font-size:0.85rem;
+  border-top:1px solid var(--border);
+  margin-top:auto;
+}
+footer a { color: var(--btn-bg); text-decoration: underline; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav {
+    padding: 0.5rem;
+  }
+  nav a {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.7rem;
+  }
+  .search-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .notes-container {
+    grid-template-columns: 1fr;
+  }
+}
   </style>
 </head>
 <body>
 
 <div class="theme-toggle" onclick="toggleTheme()">
-  <i class="fa-solid fa-sun" style="color: #4a90e2;"></i>
+  <i class="fa-solid fa-sun" style=""></i>
 </div>
 
 <div class="loader-overlay" id="loaderOverlay">
   <div class="loader-spinner"></div>
-  <div class="loader-text">Loading notes...</div>
+
 </div>
 
 <div class="header-logo">
@@ -268,7 +364,7 @@
       <a href="about.html"><i class="fa-solid fa-address-card"></i><span>About</span></a>
       <a href="notes.html" class="active"><i class="fa-solid fa-file-lines"></i><span>Notes</span></a>
       <a href="papers.html"><i class="fa-solid fa-file-pdf"></i><span>Papers</span></a>
-      <a href="chat.html" style="background:red;"><i class="fa-solid fa-comments" style="color: #fff;"></i><span style="color: #fff;">Chat</span></a>
+      <a href="chat.html" style="background:orangered;"><i class="fa-solid fa-comments" style="color: #fff;"></i><span style="color: #fff;">Chat</span></a>
       <a href="profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a>
       
     </div>
@@ -278,7 +374,7 @@
 
 <div class="search-bar" data-aos="fade-up" data-aos-delay="100">
   <input type="text" id="searchSubject" placeholder="Search by Subject">
-  <select id="searchSemester">
+  <select class="select" id="searchSemester">
     <option value="">All Semesters</option>
     <option value="Semester 1">Semester 1</option>
     <option value="Semester 2">Semester 2</option>
@@ -296,7 +392,7 @@
 
 
 <footer>
-  Made with ❤️ by &nbsp; <a style="text-decoration: underline ; color: white ;" href="https://basifshafi.netlify.app/">Basif Shafi Wani.</a>
+  Made with ❤️ by &nbsp; <a style="" href="https://basifshafi.netlify.app/">Basif Shafi Wani.</a>
   </footer>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
