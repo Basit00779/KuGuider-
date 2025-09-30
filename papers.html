@@ -465,6 +465,13 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
     displayPapers(filtered);
   }
 
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (!user) {
+    // User not logged in → send back to login
+    window.location.href = "index.html";
+  }
+});
+
   // Theme toggle
 function toggleTheme() {
   const root = document.documentElement;
