@@ -316,11 +316,12 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
     }
   });
 
-    onAuthStateChanged(auth,(user) => {
-    if (user) {
-      window.location.href="about.html";
-    }
-  });
+    firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User not logged in → send back to login
+    window.location.href = "about.html";
+  }
+});
     
 
   forgotPassword.addEventListener("click", async () => {
