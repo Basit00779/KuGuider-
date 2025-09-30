@@ -301,7 +301,7 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         await userCredential.user.updateProfile({ displayName: name });
         showToast("Signup successful");
-        setTimeout(() => window.location.href = "ab.html", 1500);
+        setTimeout(() => window.location.href = "about.html", 1500);
       } catch (err) {
         showToast('Already registered or invaild email entered');
       }
