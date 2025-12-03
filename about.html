@@ -80,33 +80,12 @@ body {
   min-height: 100vh;
 }
 
-/* Theme Toggle */
-.theme-toggle {
-  position: fixed;
-  right: 1rem;
-  top: 1rem;
-  height: 40px;
-  width: 40px;
-  border: 1px solid var(--border);
-  background: transparent;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--transition);
-}
-.theme-toggle:hover {
-  background: var(--btn-bg);
-  color: var(--btn-text);
-}
-
-/* Header */
 .header-logo {
   background: var(--nav-bg);
   width: 100%;
-  padding: 0.7rem 3rem;
+  backdrop-filter: blur(5px);
+  padding: 1rem 3rem;
+  margin-top: 75px;
   text-align: center;
 }
 .header-logo img {
@@ -120,33 +99,109 @@ body {
 /* Navbar */
 nav {
   background: var(--nav-bg);
-  padding: 0.75rem;
+  padding: 0.65rem;
   width: 100%;
-  display: flex;
-  justify-content: center;
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 999;
 }
+
+/* TOP ROW: LOGO + HAMBURGER */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.logo img {
+  height: 32px;
+  width: 100px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 6px;
+}
+
+/* HAMBURGER */
+.hamburger {
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: none;
+  color: var(--text);
+  transition: 0.25s;
+}
+
+.hamburger:active {
+  transform: scale(0.85);
+}
+
+/* DESKTOP LINKS */
 .nav-links {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 0.6rem;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.6rem;
+  transition: 0.3s ease;
 }
+
 nav a {
-  padding: 0.55rem 0.8rem;
+  padding: 0.6rem 1rem;
   border-radius: var(--radius);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  transition: var(--transition);
-
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  border: none;
+  
+  background: var(--card);
+  color: var(--text);
+  transition: 0.25s ease;
+  border: 1px solid var(--border);
 }
+
 nav a:hover {
-  opacity: 0.8;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------------- MOBILE ---------------- */
+@media (max-width: 768px) {
+  
+  .hamburger {
+    display: block;
+  }
+  
+  /* HIDDEN MENU (initial) */
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 0.5rem;
+    transform: translateY(-10px);
+    transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* ACTIVE MENU */
+  .nav-links.show {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0px);
+    padding-top: 0.8rem;
+  }
 }
 
 .loader-overlay {
@@ -179,7 +234,7 @@ nav a:hover {
   100% { transform: rotate(360deg); }
 }
 
-/* Popup Overlay */
+/* Popup Overlay (old channel popup – unused but kept) */
 #channelPopupOverlay {
   position: fixed;
   top:0;
@@ -274,12 +329,11 @@ nav a:hover {
 .carousel-controls button:hover { background: rgba(0,0,0,0.7); }
 
 /*join channel*/
-
 .join-channel{
   height: 100px;
   width: 40px;
   padding: 5px 15px;
-  background:orangered;
+  background:#C9471A;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -289,8 +343,6 @@ nav a:hover {
   bottom: 40vh;
   right: 5px;
 }
-
-
 
 /* Footer */
 footer {
@@ -311,45 +363,159 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
   .carousel-item h2{font-size:1.2rem;}
   .carousel-item p{font-size:0.9rem;}
 }
+
+#homepagePopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
+}
+
+#popupBox {
+  width: 95%;
+  max-width: 380px;
+  background: var(--nav-bg);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.45s ease-out forwards;
+  position: relative;
+}
+
+/* Close Icon */
+#popupCloseBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  color: #C9471A;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.popup-icon-wrapper {
+  width: 70px;
+  height: 70px;
+  background: #ffe5d0;
+  border-radius: 50%;
+  margin: 0px auto 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.popup-icon-wrapper i {
+  font-size: 25px;
+  color: #ff9800;
+}
+
+.popup-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 28px;
+  height: 28px;
+  background: #C9471A;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+#popupMessageContainer {
+  max-height: 150px;
+  overflow-y: auto;
+  margin: 10px 0;
+}
+
+#popupMessage {
+  
+  padding: px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  text-align: start;
+  line-height: 1.4;
+}
+
+/* Checkbox */
+#popupDontShow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  margin-top: 10px;
+  cursor: pointer;
+  color: var(--text);
+}
 </style>
 </head>
 <body>
 
-<div class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun"></i></div>
-
+<nav>
+  <div class="nav-container">
+    <div class="logo">
+      <img src="/file_0000000042b861fd808de615ad3ddea5.png" alt="Logo">
+    </div>
+    
+    <div class="hamburger" id="hamburger">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+  </div>
+  
+  <div class="nav-links" id="navLinks">
+    <a href="about.html"><i class="fa-solid fa-address-card"></i> About</a>
+    <a href="notes.html"><i class="fa-solid fa-file-lines"></i> Notes</a>
+    <a href="papers.html"><i class="fa-solid fa-file-pdf"></i> Papers</a>
+    <a href="chat.html">
+      <i class="fa-solid fa-comments"></i> Chat
+    </a>
+    <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+    <a href="team.html"><i class="fa-solid fa-hat-cowboy"></i> Admins</a>
+    <a href="#" class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" style=""></i>Theme</a>
+  </div>
+</nav>
 <div class="header-logo">
   <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider Logo">
 </div>
 
-<nav>
-  <div class="nav-links">
-    <a href="about.html" class="active"><i class="fa-solid fa-address-card"></i><span>About</span></a>
-    <a href="notes.html"><i class="fa-solid fa-file-lines"></i><span>Notes</span></a>
-    <a href="papers.html"><i class="fa-solid fa-file-pdf"></i><span>Papers</span></a>
-    <a href="chat.html" style="background: orangered; color: white;"><i class="fa-solid fa-comments"></i><span>Chat</span></a>
-    <a href="profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a>
-  </div>
-</nav>
-
 <div class="loader-overlay" id="loaderOverlay">
   <div class="loader-spinner"></div>
-
 </div>
 
 <div class="carousel-container">
   <div class="carousel-slide" id="carouselSlide">
     <div class="carousel-item">
-      <img src="/learn.png" alt="Learn Better">
+      <img src="/learnbetter.png" alt="Learn Better">
       <h2>Learn Better</h2>
       <p>Access educational resources anytime, anywhere.</p>
     </div>
     <div class="carousel-item">
-      <img src="/guidance.png" alt="Expert Guidance">
+      <img src="/expert guidance.png" alt="Expert Guidance">
       <h2>Expert Guidance</h2>
       <p>Find papers, notes, and guides neatly categorized for easy study.</p>
     </div>
     <div class="carousel-item">
-      <img src="/success.png" alt="Success Together">
+      <img src="/success together.png" alt="Success Together">
       <h2>Success Together</h2>
       <p>Connect with peers and stay updated with latest academic resources.</p>
     </div>
@@ -361,46 +527,165 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
 </div>
 
 <div class="join-channel">
-  <a href="https://whatsapp.com/channel/0029Vb671B2It5rqAsKI3W3t"><i class="fa-brands fa-2xl fa-whatsapp" style="color: #33ff99;"></i></a>
-  <a href="https://t.me/kuguider"><i class="fa-brands fa-telegram fa-2xl" style="color: #74C0FC;"></i></a>
-  
+  <a href="https://whatsapp.com/channel/0029Vb671B2It5rqAsKI3W3t"><i class="fa-brands fa-2xl fa-whatsapp" style="color:#25D366;"></i></a>
+  <a href="https://t.me/kuguider"><i class="fa-brands fa-telegram fa-2xl" style="color:#0088cc;"></i></a>
 </div>
 
+<div id="homepagePopup">
+  <div id="popupBox">
+    
+    <!-- Close Icon -->
+    <button id="popupCloseBtn">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    
+    <!-- Icon + Badge -->
+    <div class="popup-icon-wrapper">
+      <i class="fa-solid fa-bell"></i>
+      <div class="popup-badge" id="popupBadge"></div>
+    </div>
+    
+  
+    <h2 id="popupTitle" style="font-size: 18px;"></h2>
+    
+
+    <div id="popupMessageContainer">
+      <p id="popupMessage"></p>
+    </div>
+    
+
+    <label id="popupDontShow">
+      <input type="checkbox" id="dontShowCheckbox">
+      Don't show again</label>
+    
+  </div>
+</div>
 
 <footer>
 Made with ❤️ by <a href="https://basifshafi.netlify.app/">Basif Shafi Wani</a>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
 <script>
-function toggleTheme(){
+
+// -------- THEME TOGGLE -------
+function toggleTheme() {
   const root = document.documentElement;
-  const newTheme = root.getAttribute("data-theme")==="dark"?"light":"dark";
+  const newTheme =
+    root.getAttribute("data-theme") === "dark" ? "light" : "dark";
   root.setAttribute("data-theme", newTheme);
   localStorage.setItem("theme", newTheme);
 }
 
-//Loader overlay
-
-window.addEventListener('DOMContentLoaded',function(){
-  let loaderOverlay=document.querySelector('.loader-overlay')
-  loaderOverlay.style.display='none'
-  
-})
-
-// Load saved theme
-document.addEventListener('DOMContentLoaded',()=>{
+// load saved theme immediately when page starts
+document.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem("theme");
-  if(savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+  if (savedTheme)
+    document.documentElement.setAttribute("data-theme", savedTheme);
 });
 
-// Carousel
+// ------ LOADER ---------
+window.addEventListener("load", () => {
+  document.querySelector(".loader-overlay").style.display = "none";
+});
+
+// ----- CAROUSEL -------
 const carouselSlide = document.getElementById("carouselSlide");
 const totalItems = document.querySelectorAll(".carousel-item").length;
 let counter = 0;
-function updateCarousel(){carouselSlide.style.transform=`translateX(-${counter*100}%)`;}
-document.getElementById("nextBtn").addEventListener("click",()=>{counter=(counter+1)%totalItems; updateCarousel();});
-document.getElementById("prevBtn").addEventListener("click",()=>{counter=(counter-1+totalItems)%totalItems; updateCarousel();});
-setInterval(()=>{counter=(counter+1)%totalItems; updateCarousel();},3000);
+
+function updateCarousel() {
+  carouselSlide.style.transform = `translateX(-${counter * 100}%)`;
+}
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  counter = (counter + 1) % totalItems;
+  updateCarousel();
+});
+
+document.getElementById("prevBtn").addEventListener("click", () => {
+  counter = (counter - 1 + totalItems) % totalItems;
+  updateCarousel();
+});
+
+// Auto slide
+setInterval(() => {
+  counter = (counter + 1) % totalItems;
+  updateCarousel();
+}, 3000);
+
+// ------ FIREBASE CONFIG ----------------
+firebase.initializeApp({
+  apiKey: "AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+  authDomain: "kuguider.firebaseapp.com",
+  projectId: "kuguider",
+  storageBucket: "kuguider.appspot.com",
+  messagingSenderId: "483181223164",
+  appId: "1:483181223164:web:e35d8ace05364b4d2d8b79",
+});
+
+const db = firebase.firestore();
+
+// -- POPUP LOADER ----------------
+function loadHomepagePopup() {
+  // Check local storage 
+  const blockUntil = localStorage.getItem("popup_block_until");
+  
+  if (blockUntil && Date.now() < Number(blockUntil)) {
+    return; // Dont show popup
+  }
+  
+  db.collection("popup")
+    .doc("homepage")
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        const d = doc.data();
+        
+        if (d.enabled) {
+          // Fill popup fields
+          document.getElementById("popupTitle").innerText = d.title || "";
+          document.getElementById("popupMessage").innerText = d.message || "";
+          document.getElementById("popupBadge").innerText = d.badge || "1";
+          
+          document.getElementById("homepagePopup").style.display = "flex";
+        }
+      }
+    })
+    .catch((err) => console.error("Popup load error:", err));
+}
+
+window.addEventListener("load", loadHomepagePopup);
+
+
+// Close button logic
+document.getElementById("popupCloseBtn").addEventListener("click", () => {
+  const dontShow = document.getElementById("dontShowCheckbox").checked;
+  
+  if (dontShow) {
+    const blockTime = Date.now() + 2 * 60 * 60 * 1000; 
+    localStorage.setItem("popup_block_until", blockTime.toString());
+  }
+  
+  document.getElementById("homepagePopup").style.display = "none";
+});
+
+const ham = document.getElementById("hamburger");
+  const links = document.getElementById("navLinks");
+
+  ham.addEventListener("click", () => {
+    links.classList.toggle("show");
+  });
+
+// Close popup
+document.getElementById("popupButton").onclick = () => {
+  document.getElementById("homepagePopup").style.display = "none";
+};
+
+
+
 </script>
 
 </body>
