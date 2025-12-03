@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
+  
+  <!-- META TAGS -->
+  <meta property="og:title" content="KuGuider - Smart Resource Portal">
+  <meta property="og:description" content="Access notes, papers, and academic resources instantly.">
+  <meta property="og:image" content="https://kuguider.netlify.app/file_0000000042b861fd808de615ad3ddea5.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Admin Team - KuGuider</title>
+
+  <!-- FONTS & ICONS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+
+  <style>
+/* ROOT & THEME */
+:root {
+  --radius: 10px;
+  --transition: 0.25s ease;
+
+  --bg-light: #ffffff;
+  --card-light: #f7f7f8;
+  --text-light: #202123;
+  --subtext-light: #6b6c6f;
+  --border-light: #e5e5e7;
+  --nav-bg-light: #f9f9f9;
+
+  --bg-dark: #131314;
+  --card-dark: #1e1f20;
+  --text-dark: #ececec;
+  --subtext-dark: #9e9ea0;
+  --border-dark: #2e2f32;
+  --nav-bg-dark: #1a1a1a;
+}
+
+html[data-theme="light"] {
+  --bg: var(--bg-light);
+  --card: var(--card-light);
+  --text: var(--text-light);
+  --subtext: var(--subtext-light);
+  --border: var(--border-light);
+  --nav-bg: var(--nav-bg-light);
+  --btn-bg: #000;
+  --btn-text: #fff;
+}
+html[data-theme="dark"] {
+  --bg: var(--bg-dark);
+  --card: var(--card-dark);
+  --text: var(--text-dark);
+  --subtext: var(--subtext-dark);
+  --border: var(--border-dark);
+  --nav-bg: var(--nav-bg-dark);
+  --btn-bg: #fff;
+  --btn-text: #000;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  transition: var(--transition);
+  width: 100%;
+  height: 100%;
+  margin:0; 
+  padding: 0;
+}
+
+/* Header */
+.header-logo {
+  background: var(--nav-bg);
+  width: 100%;
+  backdrop-filter: blur(5px);
+  padding: 1rem 3rem;
+  margin-top: 75px;
+  text-align: center;
+}
+.header-logo img {
+  width: 200px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+/* Navbar */
+nav {
+  background: var(--nav-bg);
+  padding: 0.65rem;
+  width: 100%;
+  top: 0;
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 999;
+}
+
+/* TOP ROW: LOGO + HAMBURGER */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.logo img {
+  height: 32px;
+  width: 100px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 6px;
+}
+
+/* HAMBURGER */
+.hamburger {
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: none;
+  color: var(--text);
+  transition: 0.25s;
+}
+
+.hamburger:active {
+  transform: scale(0.85);
+}
+
+/* DESKTOP LINKS */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.6rem;
+  transition: 0.3s ease;
+}
+
+nav a {
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  
+  background: var(--card);
+  color: var(--text);
+  transition: 0.25s ease;
+  border: 1px solid var(--border);
+}
+
+nav a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------------- MOBILE ---------------- */
+@media (max-width: 768px) {
+  
+  .hamburger {
+    display: block;
+  }
+  
+  /* HIDDEN MENU (initial) */
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 0.5rem;
+    transform: translateY(-10px);
+    transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* ACTIVE MENU */
+  .nav-links.show {
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0px);
+    padding-top: 0.8rem;
+  }
+}
+/* LOADER */
+.loader-overlay {
+  position:fixed; top:0; left:0;
+  width:100%; height:100%;
+  background:var(--bg);
+  display:flex; justify-content:center; align-items:center;
+  z-index:3000;
+}
+.loader-spinner {
+  width:50px; height:50px;
+  border-radius:50%;
+  border:6px solid var(--border);
+  border-top-color:var(--btn-bg);
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {100%{transform:rotate(360deg);}}
+
+footer {
+  width: 100% !important;
+  background: var(--nav-bg);
+  color: var(--text);
+  text-align: center;
+  padding: 0.8rem;
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  position: absolute;
+  left: 0;
+}
+
+footer a {
+  color: var(--btn-bg);
+  text-decoration: underline;
+}
+
+.admin-container {
+  max-width:1200px;
+  margin:2rem auto;
+  padding:0 1rem;
+}
+
+.admin-grid {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:1.5rem;
+}
+
+.admin-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.5rem;
+  width:280px;
+  text-align:center;
+  transition:.3s;
+  cursor:pointer;
+}
+.admin-card:hover {
+  transform:translateY(-7px);
+  box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+.admin-card img {
+  width:110px; height:110px;
+  object-fit:cover;
+  border-radius:50%;
+  border:3px solid var(--btn-bg);
+  transition:.3s;
+}
+.admin-card:hover img { transform:scale(1.05); }
+
+/* BADGES */
+.role-badge {
+  padding:4px 12px;
+  margin-top:8px;
+  margin-bottom:8px;
+  display:inline-block;
+  font-size:.8rem;
+  font-weight:600;
+  border-radius:20px;
+  color:#fff;
+}
+
+.founder-badge {
+  background:linear-gradient(135deg,#ff6b6b,#ff3d3d);
+}
+.moderator-badge {
+  background:linear-gradient(135deg,#4a6cf7,#3754d1);
+}
+.team-badge {
+  background:linear-gradient(135deg,#3ac27d,#2ea865);
+}
+
+/* SOCIAL ICONS */
+.social-icons {
+  display:flex;
+  justify-content:center;
+  gap:1rem;
+  margin-top:1rem;
+  font-size:1.5rem;
+}
+.social-icons i:hover {
+  transform:scale(1.25);
+}
+.fa-instagram{color:#E4405F;}
+.fa-facebook {color:#1877F2;}
+.fa-telegram {color:#0088cc;}
+.fa-whatsapp {color:#25D366;}
+
+/* MOBILE */
+@media(max-width:600px){
+  .admin-grid {
+    flex-direction:column;
+    align-items:center;
+  }
+  .admin-card {
+    width:100%;
+    max-width:350px;
+  }
+}
+
+
+.admin-modal {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  backdrop-filter:blur(3px);
+  z-index:5000;
+}
+.admin-modal-content {
+  background:var(--card);
+  width:85%; max-width:400px;
+  padding:10px;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  text-align:center;
+  animation:fadeIn .3s;
+}
+@keyframes fadeIn {from{opacity:0; transform:scale(0.9);} to{opacity:1; transform:scale(1);} }
+
+.close-btn {
+  float:right;
+  font-size:28px;
+  cursor:pointer;
+}
+.admin-modal-content img {
+  width:120px; height:120px;
+  border-radius:50%;
+  border:2px solid var(--btn-bg);
+  object-fit:cover;
+}
+.modal-name {
+  margin-top:10px;
+  font-size:1.3rem;
+  font-weight:700;
+}
+.modal-role { opacity:.8; }
+.modal-bio { color:var(--subtext); margin-top:10px; }
+
+.modal-socials i { margin:10px; font-size:1.5rem; }
+  </style>
+</head>
+
+<body>
+
+
+<!-- LOADER -->
+<div class="loader-overlay" id="loaderOverlay">
+  <div class="loader-spinner"></div>
+</div>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo">
+      <img src="/file_0000000042b861fd808de615ad3ddea5.png" alt="Logo">
+    </div>
+    
+    <div class="hamburger" id="hamburger">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+  </div>
+  
+  <div class="nav-links" id="navLinks">
+    <a href="about.html"><i class="fa-solid fa-address-card"></i> About</a>
+    <a href="notes.html"><i class="fa-solid fa-file-lines"></i> Notes</a>
+    <a href="papers.html"><i class="fa-solid fa-file-pdf"></i> Papers</a>
+    <a href="chat.html">
+      <i class="fa-solid fa-comments"></i> Chat
+    </a>
+    <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+    <a href="team.html"><i class="fa-solid fa-hat-cowboy"></i> Admins</a>
+    <a href="#" class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" style=""></i>Theme</a>
+  </div>
+</nav>
+<div class="header-logo">
+  <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider Logo">
+</div>
+
+
+<!-- ADMIN SECTION -->
+<div class="admin-container">
+
+
+  <div class="admin-grid">
+
+    <div class="admin-card" onclick="openAdminModal('/IMG_20241030_192351.jpg','Basif Shafi','Founder','Founder of KuGuider, responsible for the main development and design.')">
+      <img src="/IMG_20241030_192351.jpg">
+      <div class="admin-name">Basif Shafi</div>
+      <span class="role-badge founder-badge">Founder</span>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/___basifff__02?igsh=MXUyNXgyb2ExZXBicA=="><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook"></i></a> 
+        <a href="https://t.me/Basit84"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+
+    <div class="admin-card" onclick="openAdminModal('/IMG-20251130-WA0006.jpg','Tawheed Bashir','Co-Founder','Co-Founder who oversees platform development and student resources.')">
+      <img src="/IMG-20251130-WA0006.jpg">
+      <div class="admin-name">Tawheed Bashir</div>
+      <span class="role-badge moderator-badge">Co-Founder</span>
+      <div class="social-icons">
+    
+        <a href="https://www.instagram.com/e_h4___an__?igsh=Y2U3b29qOTR5NzZw"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://t.me/Yours_sun_shine"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+    
+     <div class="admin-card" onclick="openAdminModal('/SAVE_20251202_205931.jpg','Bilal (virus)','Director','I build the system, break the limits, and secure the network,from the backend shadows, vulnerabilities reveal themselves to me')">
+      <img src="/SAVE_20251202_205931.jpg">
+      <div class="admin-name">Bilal (virus)</div>
+      <span class="role-badge team-badge">Director</span>
+           <div class="social-icons">
+        <a href=""><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://t.me/lewisleuim"><i class="fa-brands fa-telegram"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+  </div>
+  
+
+
+<!-- POPUP MODAL -->
+<div id="adminModal" class="admin-modal">
+  <div class="admin-modal-content">
+    <span class="close-btn" onclick="closeAdminModal()">×</span>
+
+    <img id="modalImg">
+    <div id="modalName" class="modal-name"></div>
+    <div id="modalRole" class="modal-role"></div>
+    <p id="modalBio" class="modal-bio"></p>
+
+    <div class="modal-socials">
+      <i class="fa-brands fa-instagram"></i>
+      <i class="fa-brands fa-facebook"></i>
+      <i class="fa-brands fa-telegram"></i>
+      <i class="fa-brands fa-whatsapp"></i>
+    </div>
+  </div>
+</div>
+</div>
+
+<br />
+
+<!-- FOOTER -->
+<footer>
+  Made with ❤️ by <a href="https://basifshafi.netlify.app/">Basif Shafi Wani</a>
+</footer>
+
+
+<!-- SCRIPT -->
+<script>
+function toggleTheme(){
+  const r=document.documentElement;
+  const t=r.getAttribute("data-theme")==="dark"?"light":"dark";
+  r.setAttribute("data-theme",t);
+  localStorage.setItem("theme",t);
+}
+
+window.addEventListener("DOMContentLoaded",()=>{
+  const t=localStorage.getItem("theme");
+  if(t) document.documentElement.setAttribute("data-theme",t);
+  setTimeout(()=>{document.getElementById("loaderOverlay").style.display="none";},300);
+});
+
+const ham = document.getElementById("hamburger");
+  const links = document.getElementById("navLinks");
+
+  ham.addEventListener("click", () => {
+    links.classList.toggle("show");
+  });
+
+function openAdminModal(img,name,role,bio){
+  document.getElementById("modalImg").src=img;
+  document.getElementById("modalName").innerText=name;
+  document.getElementById("modalRole").innerText=role;
+  document.getElementById("modalBio").innerText=bio;
+  document.getElementById("adminModal").style.display="flex";
+}
+
+function closeAdminModal(){
+  document.getElementById("adminModal").style.display="none";
+}
+</script>
+
+</body>
+</html>
