@@ -659,6 +659,12 @@ function loadHomepagePopup() {
 
 window.addEventListener("load", loadHomepagePopup);
 
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (!user) {
+    // User not logged in → send back to login
+    window.location.href = "index.html";
+  }
+});
 
 // Close button logic
 document.getElementById("popupCloseBtn").addEventListener("click", () => {
@@ -683,6 +689,7 @@ const ham = document.getElementById("hamburger");
 document.getElementById("popupButton").onclick = () => {
   document.getElementById("homepagePopup").style.display = "none";
 };
+
 
 
 
