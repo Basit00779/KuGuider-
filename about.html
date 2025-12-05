@@ -659,12 +659,6 @@ function loadHomepagePopup() {
 
 window.addEventListener("load", loadHomepagePopup);
 
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (!user) {
-    // User not logged in → send back to login
-    window.location.href = "index.html";
-  }
-});
 
 // Close button logic
 document.getElementById("popupCloseBtn").addEventListener("click", () => {
@@ -691,7 +685,12 @@ document.getElementById("popupButton").onclick = () => {
 };
 
 
-
+firebase.auth().onAuthStateChanged(function(user) {
+  if (!user) {
+    // User not logged in → send back to login
+    window.location.href = "index.html";
+  }
+});
 
 </script>
 
