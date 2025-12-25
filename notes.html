@@ -86,21 +86,6 @@ body {
 }
 
 
-.header-logo {
-  background: var(--nav-bg);
-  width: 100%;
-  backdrop-filter: blur(5px);
-  padding: 1rem 3rem;
-  margin-top: 75px;
-  text-align: center;
-}
-.header-logo img {
-  width: 200px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: var(--radius);
-  margin-bottom: 1rem;
-}
 
 /* Navbar */
 nav {
@@ -132,11 +117,9 @@ nav {
   height: 32px;
   width: 100px;
   display: block;
-  object-fit: cover;
-  object-position: center;
+  object-fit: contain;
   border-radius: 6px;
 }
-
 /* HAMBURGER */
 .hamburger {
   font-size: 1.8rem;
@@ -366,19 +349,139 @@ h1 {
   100% { transform: rotate(360deg); }
 }
 
-/* Footer */
-footer {
-  width:100%;
-  background: var(--nav-bg);
-  color: var(--text);
-  text-align:center;
-  padding:0.8rem;
-  font-size:0.85rem;
-  border-top:1px solid var(--border);
-  margin-top:auto;
-}
-footer a { color: var(--btn-bg); text-decoration: underline; }
+.fa-instagram{color:#E4405F;}
+.fa-facebook {color:#1877F2;}
+.fa-telegram {color:#0088cc;}
+.fa-whatsapp {color:#25D366;}
 
+.modern-footer{
+  width:100%;
+  margin-top:5rem;
+  background: var(--nav-bg);
+  color:var(--text);
+}
+
+/* Glass container */
+.footer-glass{
+  max-width:1200px;
+  margin:auto;
+  padding:2.5rem 1.5rem;
+  display:flex;
+  justify-content:space-around;
+  gap:2rem;
+  flex-wrap:wrap;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  
+}
+
+/* Sections */
+.footer-section{
+  flex:1;
+  min-width:240px;
+}
+
+.footer-section h4{
+  font-size:1.05rem;
+  margin-bottom:0.7rem;
+  position:relative;
+}
+
+.footer-section h4::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:40px;
+  height:3px;
+  border-radius:6px;
+  background:linear-gradient(90deg,#CB441DF7,#141415);
+}
+
+.footer-section p{
+  font-size:0.85rem;
+  color:var(--subtext);
+  margin-top:0.6rem;
+}
+
+/* Links */
+.footer-section ul{
+  list-style:none;
+  margin-top:0.8rem;
+}
+
+.footer-section ul li{
+  margin-bottom:0.5rem;
+}
+
+.footer-section ul a{
+  color:var(--text);
+  font-size:0.85rem;
+  text-decoration:none;
+  opacity:0.85;
+  transition:0.25s;
+}
+
+.footer-section ul a:hover{
+  opacity:1;
+  padding-left:6px;
+}
+
+/* Social icons */
+.footer-socials{
+  margin-top:1rem;
+  display:flex;
+  gap:1rem;
+  font-size:1.6rem;
+}
+
+.footer-socials a{
+  color:var(--btn-bg);
+  transition:0.3s;
+}
+
+.footer-socials a:hover{
+  transform:translateY(-5px) scale(1.1);
+  filter:drop-shadow(0 6px 14px rgba(0,0,0,0.25));
+}
+
+/* Bottom credit */
+.footer-credit{
+  text-align:center;
+  padding:0.9rem;
+  font-size:0.8rem;
+  background: var(--nav-bg);
+}
+
+.footer-credit span{
+  color:#ff4d4d;
+}
+
+.footer-credit a{
+  color:var(--btn-bg);
+  text-decoration:none;
+  font-weight:600;
+}
+
+.footer-credit a:hover{
+  text-decoration:underline;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .footer-glass{
+    flex-direction:column;
+    text-align:center;
+  }
+  .footer-section h4::after{
+    left:50%;
+    transform:translateX(-50%);
+  }
+  .footer-socials{
+    justify-content:center;
+  }
+
+}
 /* Responsive */
 @media (max-width: 768px) {
   nav {
@@ -410,7 +513,7 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
 <nav>
   <div class="nav-container">
     <div class="logo">
-      <img src="/file_0000000042b861fd808de615ad3ddea5.png" alt="Logo">
+      <img src="/nav-logo.png" alt="Logo">
     </div>
     
     <div class="hamburger" id="hamburger">
@@ -430,9 +533,7 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
     <a href="#" class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" style=""></i>Theme</a>
   </div>
 </nav>
-<div class="header-logo">
-  <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider Logo">
-</div>
+
 
 <h1 data-aos="fade-up">All Notes</h1>
 
@@ -455,10 +556,61 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
 </div>
 
 
-<footer>
-  Made with ❤️ by &nbsp; <a style="" href="https://basifshafi.netlify.app/">Basif Shafi Wani.</a>
-  </footer>
+<footer class="modern-footer">
+  <div class="footer-glass">
 
+    <div class="footer-section">
+      <h4>Join Community</h4>
+      <p>Get updates, notes & announcements instantly.</p>
+
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://whatsapp.com/channel/0029Vb671B2It5rqAsKI3W3t" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://t.me/kuguider" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="notes.html">Notes</a></li>
+        <li><a href="papers.html">Papers</a></li>
+        <li><a href="chat.html">Chat</a></li>
+        <li><a href="profile.html">Profile</a></li>
+      </ul>
+    </div>
+    <div style="text-align:center; margin-top:12px;">
+  <a href="kuguider.apk"
+    download style="
+       display:inline-flex;
+       align-items:center;
+       gap:8px;
+       padding:8px 18px;
+       border-radius:24px;
+       font-size:0.85rem;
+       font-weight:600;
+       text-decoration:none;
+       background:linear-gradient(135deg,#CB441DF7,#212121);
+       color:#fff;
+       box-shadow:0 6px 18px rgba(0,0,0,0.25);
+       transition:0.3s ease;
+     "
+     onmouseover="this.style.transform='scale(1.08)'"
+     onmouseout="this.style.transform='scale(1)'"
+  >
+    <i class="fa-solid fa-mobile-screen-button"></i>
+     Download App
+  </a>
+</div>
+
+  </div>
+  
+
+  <div class="footer-credit">
+    Made with <span>❤</span> by 
+    <a href="https://basifshafi.netlify.app/">Basif Shafi</a>
+  </div>
+</footer>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>AOS.init();</script>
 <script>

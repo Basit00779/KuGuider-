@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - KuGuider</title>
+<link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+  body{
+  background:#0d0d0d;
+  color:#fff;
+  height: 100vh;
+  transition:0.3s;
+  overflow-x:hidden;}
+  header{text-align:center;padding:2rem 1rem 1rem;}
+  .header-img{width:180px;height:90px;object-fit:cover;border-radius:10%;margin-bottom:1rem;}
+  h1{text-align:center;font-size:1.8rem;margin-bottom:2rem;color:#fff;}
+
+  /* Cards Grid */
+  .container{padding:2rem 1rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;}
+  .card{background:#111; padding:2rem;border-radius:15px;text-align:center;position:relative;
+        overflow:hidden;transition:0.4s;}
+  .card:hover{transform:translateY(-6px);background:#1a1a1a;}
+  .card h2{font-size:1.1rem;margin-bottom:0.6rem;color:#ccc;}
+  .card p{font-size:2rem;font-weight:600;color:#0af;margin:0;}
+  .icon-bg{position:absolute;top:-10px;right:-10px;opacity:0.1;font-size:5rem;color:#fff;}
+
+
+  /* Animations */
+  @keyframes fadeIn {from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeSlide {from{opacity:0;transform:translateX(-20px);}to{opacity:1;transform:translateX(0);}}
+  .fadeIn{animation:fadeIn 0.8s ease-in-out;}
+  .count-up{transition:0.5s ease;}
+
+  footer{background:#111;color:#aaa;text-align:center;padding:1rem;font-size:0.9rem;margin-top:2rem;}
+  footer span{color:#fff;}
+
+  /* Responsive */
+  @media(max-width:600px){
+    h1{font-size:1.5rem;}
+    .card p{font-size:1.5rem;}
+    .user-item{font-size:0.85rem;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="Logo" class="header-img">
+</header>
+
+<section class="container">
+  <div class="card fadeIn">
+    <span class="material-icons icon-bg">article</span>
+    <h2>Total Notes</h2>
+    <p id="notesCount" class="count-up">0</p>
+  </div>
+  <div class="card fadeIn">
+    <span class="material-icons icon-bg">description</span>
+    <h2>Total Papers</h2>
+    <p id="papersCount" class="count-up">0</p>
+  </div>
+
+</section>
+
+
+<footer>Made with ❤️ by <span>Basif Shafi Wani</span></footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+<script>
+/* ===============================
+   FIREBASE INIT
+================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+  authDomain: "kuguider.firebaseapp.com",
+  projectId: "kuguider",
+  storageBucket: "kuguider.appspot.com",
+  messagingSenderId: "483181223164",
+  appId: "1:483181223164:web:e35d8ace05364b4d2d8b79"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+/* ===============================
+   AUTH CHECK
+================================ */
+auth.onAuthStateChanged(user => {
+  if (!user) {
+    alert("Unauthorized access!");
+    window.location.href = "index.html";
+  } else {
+    loadDashboard();
+  }
+});
+
+/* ===============================
+   COUNT ANIMATION
+================================ */
+function animateCount(element, target) {
+  let count = 0;
+  const step = Math.max(1, Math.floor(target / 60));
+
+  const interval = setInterval(() => {
+    count += step;
+    if (count >= target) {
+      count = target;
+      clearInterval(interval);
+    }
+    element.textContent = count;
+  }, 20);
+}
+
+/* ===============================
+   LOAD DASHBOARD DATA
+================================ */
+function loadDashboard() {
+
+  // Notes Count
+  db.collection("notes").get()
+    .then(snapshot => {
+      animateCount(
+        document.getElementById("notesCount"),
+        snapshot.size
+      );
+    })
+    .catch(err => console.error("Notes error:", err));
+
+  // Papers Count
+  db.collection("papers").get()
+    .then(snapshot => {
+      animateCount(
+        document.getElementById("papersCount"),
+        snapshot.size
+      );
+    })
+    .catch(err => console.error("Papers error:", err));
+
+}
+</script>
+
+</
+</body>
+</html>

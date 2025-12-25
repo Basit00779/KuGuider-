@@ -12,6 +12,11 @@
   <style>
     *{box-sizing:border-box;}
     body{
+      webkit-user-select: none;   /* Chrome, Android */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* IE */
+  user-select: none;           /* Standard */
+  -webkit-touch-callout: none;
       margin:0;
       padding:0;
       font-family:'Poppins',sans-serif;
@@ -104,6 +109,7 @@
       width:32px;height:32px;
       border-radius:50%;
       margin:0 5px;
+      object-fit: cover;
     }
 
     .inlineMenu{
@@ -206,7 +212,12 @@
 
     #loadingOverlay{
       position:absolute;
-      left:0;top:0;right:0;bottom:0;
+      left:0;
+      top:0;
+      right:0;
+      bottom:0;
+      width: 100%;
+      height: 100vh;
       background:rgba(255,255,255,0.8);
       display:flex;
       justify-content:center;
@@ -252,6 +263,111 @@
     #typingIndicator{
       display:none;
     }
+    
+.profile-popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.65);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  backdrop-filter:blur(4px);
+}
+
+.profile-popup.hidden{
+  display:none;
+}
+
+.popup-card{
+  background:#ffffff;
+  width:90%;
+  max-width:330px;
+  border-radius:18px;
+  padding:26px 20px 22px;
+  text-align:center;
+  position:relative;
+  animation:scaleIn .25s ease;
+  box-shadow:0 18px 45px rgba(0,0,0,0.35);
+}
+
+@keyframes scaleIn{
+  from{
+    transform:scale(0.88);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+.close-btn{
+  position:absolute;
+  top:12px;
+  right:14px;
+  font-size:22px;
+  cursor:pointer;
+  color:#888;
+  transition:0.2s;
+}
+
+.close-btn:hover{
+  color:#000;
+  transform:scale(1.1);
+}
+
+/* Avatar */
+.popup-avatar{
+  width:85%;
+  height:180px;
+  object-fit:cover;
+  object-position: top;
+  margin-bottom:14px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.25);
+}
+
+/* Name */
+#popupName{
+  margin:0px;
+  font-size:1.25rem;
+  font-weight:600;
+  color:#111;
+  letter-spacing:0.3px;
+}
+
+.popup-status{
+  font-size:15px;
+  margin:0px 0px 5px 0px;
+  color:#4caf50;
+  font-weight:500;
+}
+
+/* offline / last seen */
+.popup-status.offline{
+  color:#E64040;
+}
+
+/* Role badge */
+#popupRole{
+  display:inline-block;
+  font-size:0.75rem;
+  font-weight:600;
+  padding:7px 12px;
+  border-radius:20px;
+  margin:0px;
+  background:#0A0A0B;
+  color:#FFFFFF;
+}
+
+
+.popup-id{
+  font-size:0.75rem;
+  color:#888;
+  margin-top:8px;
+  word-break:break-all;
+  opacity:0.85;
+}
 
     @keyframes spin{to{transform:rotate(360deg);}}
     @keyframes fadeInUp{
@@ -287,6 +403,7 @@
   </button>
 </nav>
 
+
 <!-- reply preview -->
 <div id="replyPreview">
   <div id="replyPreviewContent"></div>
@@ -305,11 +422,26 @@
   <button id="sendBtn"><i class="fa fa-paper-plane"></i></button>
 </div>
 
+<!-- Profile Popup -->
+<div id="profilePopup" class="profile-popup hidden">
+  <div class="popup-card">
+    <span class="close-btn" id="closeProfile">&times;</span>
+
+    <img id="popupAvatar" class="popup-avatar" src="" alt="User">
+
+    <h2 id="popupName">Username</h2>
+    <p id="popupStatus" class="popup-status"></p>
+    <p id="popupRole">Role</p>
+    <p class="popup-id">ID: <span id="popupId"></span></p>
+  </div>
+</div>
+
 <audio id="msgSound" src="/notification.wav"></audio>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-auth-compat.js"></script>
+<script src="adm.js"></script>
 
 <script>
 const firebaseConfig={
@@ -342,6 +474,85 @@ const loadingOverlay = document.getElementById("loadingOverlay");
 const msgSound = document.getElementById("msgSound");
 const onlineCountEl = document.getElementById("onlineCount");
 const typingIndicatorEl = document.getElementById("typingIndicator");
+
+// ===== PROFILE POPUP =====
+const popup = document.getElementById("profilePopup");
+const closeBtn = document.getElementById("closeProfile");
+
+const popupAvatar = document.getElementById("popupAvatar");
+const popupName = document.getElementById("popupName");
+const popupRole = document.getElementById("popupRole");
+const popupId = document.getElementById("popupId");
+
+function openProfilePopup(data) {
+  popupAvatar.src = data.photo || "https://www.w3schools.com/howto/img_avatar.png";
+  popupName.textContent = data.name || "Unknown User";
+  
+  // ROLE
+  let role = "Student";
+  if (data.email && window.ADMINS.includes(data.email.toLowerCase())) {
+    role = "Admin";
+  }
+  popupRole.textContent = role;
+  popupRole.classList.toggle("admin", role === "Admin");
+  
+  popupId.textContent = data.uid || "—";
+  
+  // DEFAULT STATUS
+  popupStatus.textContent = "Loading...";
+  popupStatus.classList.remove("offline");
+  
+  popup.classList.remove("hidden");
+  
+  // NO UID → STOP
+  if (!data.uid) {
+    popupStatus.textContent = "Offline";
+    popupStatus.classList.add("offline");
+    return;
+  }
+  
+  // FETCH ONLINE STATUS
+  db.collection("users").doc(data.uid).get().then(doc => {
+    if (!doc.exists) {
+      popupStatus.textContent = "Offline";
+      popupStatus.classList.add("offline");
+      return;
+    }
+    
+    const user = doc.data();
+    
+    if (user.online) {
+      popupStatus.textContent = "Online";
+      popupStatus.classList.remove("offline");
+    } else if (user.lastActive) {
+      const time = user.lastActive.toDate();
+      popupStatus.textContent =
+        "Last seen " +
+        time.toLocaleString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          day: "2-digit",
+          month: "short"
+        });
+      popupStatus.classList.add("offline");
+    } else {
+      popupStatus.textContent = "Offline";
+      popupStatus.classList.add("offline");
+    }
+  });
+}
+
+/* close popup */
+closeBtn.addEventListener("click", () => {
+  popup.classList.add("hidden");
+});
+
+/* close on outside click */
+popup.addEventListener("click", (e) => {
+  if (e.target === popup) {
+    popup.classList.add("hidden");
+  }
+});
 
 
 // ---------------- HELPERS: TIME, STATUS, LIKE ----------------
@@ -377,7 +588,6 @@ function getLikeHTML(data){
 }
 
 
-// ---------------- SWIPE + LONG PRESS + DOUBLE TAP (scroll-safe) ----------------
 function enableSwipeAndGestures(li, data, docId){
   let startX=0, startY=0, diffX=0, diffY=0;
   let pressTimer=null;
@@ -396,12 +606,7 @@ function enableSwipeAndGestures(li, data, docId){
     scrolling=false;
 
     // long-press reply
-    pressTimer = setTimeout(()=>{
-      if(!swiping && !scrolling){
-        replyTo = data;
-        showReplyPreview(data);
-      }
-    }, 500);
+    
   });
 
   li.addEventListener("touchmove", e=>{
@@ -527,11 +732,13 @@ function showMenu(li, docId, data){
 
 
 // ---------------- SEND MESSAGE ----------------
-function sendMessage(){
-  const msg=chatInput.value.trim();
-  if(!msg) return;
-
-  let obj = {
+function sendMessage() {
+  const msg = chatInput.value.trim();
+  if (!msg) return;
+  
+  const obj = {
+    uid: currentUserId,
+    email: auth.currentUser.email, // ✅ IMPORTANT
     name: currentUserName,
     photo: currentUserPhoto,
     message: msg,
@@ -539,25 +746,31 @@ function sendMessage(){
     likedBy: [],
     seenBy: []
   };
-
-  if(replyTo){
+  
+  if (replyTo) {
     obj.reply = {
       name: replyTo.name,
       message: replyTo.message
     };
   }
-
-  if(editDocId){
-    db.collection("chat").doc(editDocId).update({message:msg});
-    editDocId=null;
+  
+  if (editDocId) {
+    db.collection("chat").doc(editDocId).update({ message: msg });
+    editDocId = null;
   } else {
     db.collection("chat").add(obj);
   }
-
-  chatInput.value="";
+  
+  chatInput.value = "";
   clearReplyPreview();
-  handleTypingState();
 }
+
+   
+window.ADMINS = [
+   "basifwani78@gmail.com",
+  "lewis@gmail.com",
+  "cloud.sync33@gmail.com"
+].map(e => e.toLowerCase());
 
 
 // ---------------- LOAD CHAT ----------------
@@ -580,26 +793,59 @@ function loadChat(){
         </div>`;
       }
 
-      li.innerHTML = `
-        <img class="avatar" src="${data.photo || currentUserPhoto}">
-        <div class="bubble">
-          <span class="name" style="font-weight:600;font-size:0.8rem;display:block;margin-bottom:2px;">${data.name}</span>
-          ${replyHTML}
-          <div>${data.message}</div>
-          <div class="meta-row">
-            ${getTimeHTML(data)}
-            ${getStatusHTML(data)}
-            ${getLikeHTML(data)}
-          </div>
-        </div>
-      `;
+   li.innerHTML = `
+  <img class="avatar" src="${data.photo || currentUserPhoto}">
+  <div class="bubble">
+    <span class="name" style="font-weight:600;font-size:0.8rem;display:block;margin-bottom:2px;">
+      ${data.name}
+    </span>
+    ${replyHTML}
+    <div>${data.message}</div>
+    <div class="meta-row">
+      ${getTimeHTML(data)}
+      ${getStatusHTML(data)}
+      ${getLikeHTML(data)}
+    </div>
+  </div>
+`;
 
+const avatar = li.querySelector(".avatar");
+
+avatar.addEventListener("click", (e) => {
+  e.stopPropagation();        // avoid hold / swipe / menu
+  openProfilePopup(data);    // 🔥 popup opens
+});
       // open menu on own message tap
-      li.addEventListener("click", ()=>{
-        if(li.classList.contains("own")){
-          showMenu(li, doc.id, data);
-        }
-      });
+let holdTimer;
+
+li.addEventListener("mousedown", () => {
+  holdTimer = setTimeout(() => {
+    if (li.classList.contains("own")) {
+      showMenu(li, doc.id, data);
+    }
+  }, 600); // hold time (ms)
+});
+
+li.addEventListener("mouseup", () => {
+  clearTimeout(holdTimer);
+});
+
+li.addEventListener("mouseleave", () => {
+  clearTimeout(holdTimer);
+});
+
+/* 📱 Mobile support */
+li.addEventListener("touchstart", () => {
+  holdTimer = setTimeout(() => {
+    if (li.classList.contains("own")) {
+      showMenu(li, doc.id, data);
+    }
+  }, 600);
+});
+
+li.addEventListener("touchend", () => {
+  clearTimeout(holdTimer);
+});
 
       enableSwipeAndGestures(li, data, doc.id);
 

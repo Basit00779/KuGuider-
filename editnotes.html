@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>View Notes - KuGuider Admin</title>
+  <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <style>
+    :root {
+      /* Dark Theme */
+      --bg-dark: #131314;
+      --card-dark: #1e1f20;
+      --text-dark: #ececec;
+      --subtext-dark: #9e9ea0;
+      --border-dark: #2e2f32;
+      --nav-bg-dark: #1a1a1a;
+      --btn-bg-dark: #fff;
+      --btn-text-dark: #000;
+
+      /* Light Theme (optional) */
+      --bg-light: #ffffff;
+      --card-light: #f7f7f8;
+      --text-light: #202123;
+      --subtext-light: #6b6c6f;
+      --border-light: #e5e5e7;
+      --nav-bg-light: #f9f9f9;
+      --btn-bg-light: #000;
+      --btn-text-light: #fff;
+    }
+
+    html[data-theme="dark"] {
+      --bg: var(--bg-dark);
+      --card: var(--card-dark);
+      --text: var(--text-dark);
+      --subtext: var(--subtext-dark);
+      --border: var(--border-dark);
+      --nav-bg: var(--nav-bg-dark);
+      --btn-bg: var(--btn-bg-dark);
+      --btn-text: var(--btn-text-dark);
+    }
+    html[data-theme="light"] {
+      --bg: var(--bg-light);
+      --card: var(--card-light);
+      --text: var(--text-light);
+      --subtext: var(--subtext-light);
+      --border: var(--border-light);
+      --nav-bg: var(--nav-bg-light);
+      --btn-bg: var(--btn-bg-light);
+      --btn-text: var(--btn-text-light);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    body { background: var(--bg); color: var(--text); min-height:100vh; }
+    header { background: var(--nav-bg); text-align:center; padding:2rem 1rem;  }
+    .header-img { width:180px; height:90px; object-fit:cover; border-radius:10%; }
+
+    .container {width: 100%; padding:2rem 1rem; display:grid;  grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1.2rem; }
+    .card { background:var(--card); padding:1.2rem; border-radius:10px; border:1px solid var(--border); transition:0.3s; }
+    .card:hover { transform:translateY(-3px); box-shadow:0 0 20px rgba(255,255,255,0.08); }
+    .card h2 { font-size:1.1rem; margin-bottom:0.3rem; color:#ffffff; }
+    .card p { font-size:0.9rem; color:var(--subtext); margin-bottom:0.8rem; }
+    .card a { color:#4da6ff; text-decoration:none; font-size:0.9rem; word-break:break-all; }
+    .actions { display:flex; justify-content:flex-end; gap:1.5rem; margin-top:1rem; }
+    .btn-icon { background:transparent; border:none; font-size:1.3rem; cursor:pointer; transition:0.2s; }
+    .btn-edit { color:#4da6ff; }
+    .btn-delete { color:#ff4d4d; }
+    .btn-icon:hover { transform:scale(1.2); }
+
+    footer { background: var(--nav-bg); color: var(--subtext); text-align:center; padding:1rem; font-size:0.9rem; border-top:1px solid var(--border); }
+
+    
+    .custom-alert { position:fixed; top:15px; left:50%; transform:translateX(-50%); background:var(--btn-bg); color:var(--btn-text); padding:0.9rem 1.2rem; border-radius:8px; display:none; align-items:center; gap:0.5rem; box-shadow:0 0 15px rgba(255,255,255,0.1); z-index:9999; font-size:0.9rem; }
+    .custom-alert.show { display:flex; animation: fadeInOut 3s ease-in-out forwards; }
+    @keyframes fadeInOut {0%{opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
+
+
+    .modal { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); display:none; justify-content:center; align-items:center; z-index:10000; }
+    .modal-content { background:var(--card); padding:2rem; width:90%; max-width:450px; border-radius:12px; color:var(--text); border:1px solid var(--border); }
+    .modal-content input, .modal-content select { width:100%; padding:0.8rem; margin-bottom:1rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--text); }
+    .modal-content .actions { display:flex; justify-content:space-between; margin-top:1rem; }
+    .modal-content .btn { background:var(--btn-bg); color:var(--btn-text); border:none; padding:0.6rem 1.5rem; border-radius:8px; cursor:pointer; transition:0.2s; }
+    .modal-content .btn.cancel { background:#444; color:#fff; }
+    .modal-content .btn:hover { opacity:0.9; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="Admin" class="header-img" />
+  </header>
+
+
+  <section class="container" id="notesContainer">
+    <p>Loading notes...</p>
+  </section>
+
+  <div class="custom-alert" id="alertBox">
+    <i class="fa-solid fa-circle-info"></i><span></span>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal" id="editModal">
+    <div class="modal-content">
+      <h3>Edit Note</h3>
+      <input type="text" id="editSubject" placeholder="Subject Name">
+      <select id="editSemester">
+        <option value="">-- Select Semester --</option>
+        <option>Semester 1</option>
+        <option>Semester 2</option>
+        <option>Semester 3</option>
+        <option>Semester 4</option>
+        <option>Semester 5</option>
+        <option>Semester 6</option>
+      </select>
+      <input type="text" id="editURL" placeholder="File URL">
+      <div class="actions">
+        <button class="btn" id="updateBtn">Update</button>
+        <button class="btn cancel" onclick="closeEditModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal" id="deleteModal">
+    <div class="modal-content">
+      <h3>Confirm Delete</h3>
+      <p>Are you sure you want to delete this note?</p>
+      <div class="actions">
+        <button class="btn" id="confirmDelete">Delete</button>
+        <button class="btn cancel" onclick="closeDeleteModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Made with ❤️ by Basif Shafi Wani</footer>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+      authDomain: "kuguider.firebaseapp.com",
+      projectId: "kuguider",
+      storageBucket: "kuguider.appspot.com",
+      messagingSenderId: "483181223164",
+      appId: "1:483181223164:web:e35d8ace05364b4d2d8b79"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const container = document.getElementById("notesContainer");
+    const alertBox = document.getElementById("alertBox");
+
+    let editId = "";
+    let deleteId = "";
+
+    function showAlert(msg) {
+      alertBox.querySelector("span").textContent = msg;
+      alertBox.classList.add("show");
+      setTimeout(() => alertBox.classList.remove("show"), 3000);
+    }
+
+    firebase.auth().onAuthStateChanged(user => {
+      if(!user){
+        showAlert("Unauthorized access!");
+        setTimeout(()=> window.location.href="index.html",2000);
+      } else loadNotes();
+    });
+
+    function logoutUser(){
+      firebase.auth().signOut().then(()=>{
+        showAlert("Logged out successfully!");
+        setTimeout(()=> window.location.href="index.html",1000);
+      });
+    }
+
+    function loadNotes(){
+      db.collection("notes").orderBy("uploadedAt","desc").onSnapshot(snapshot=>{
+        container.innerHTML="";
+        if(snapshot.empty){ container.innerHTML="<p>No notes found.</p>"; return; }
+
+        snapshot.forEach(doc=>{
+          const note = doc.data();
+          const card = document.createElement("div");
+          card.classList.add("card");
+          card.innerHTML = `
+            <h2>${note.subject}</h2>
+            <p>${note.semester}</p>
+            <a href="${note.fileURL}" target="_blank">${note.fileName}</a>
+            <div class="actions">
+              <button class="btn-icon btn-edit"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          `;
+
+          // safe event listeners
+          card.querySelector(".btn-edit").addEventListener("click", ()=>{
+            openEditModal(doc.id, note.subject, note.semester, note.fileURL);
+          });
+          card.querySelector(".btn-delete").addEventListener("click", ()=>{
+            openDeleteModal(doc.id);
+          });
+
+          container.appendChild(card);
+        });
+      });
+    }
+
+    function openEditModal(id, subject, semester, url){
+      editId=id
+      document.getElementById("editSubject").value = subject;
+      document.getElementById("editSemester").value = semester;
+      document.getElementById("editURL").value = url;
+      document.getElementById("editModal").style.display = "flex";
+    }
+
+    function closeEditModal(){
+      document.getElementById("editModal").style.display = "none";
+    }
+
+    document.getElementById("updateBtn").addEventListener("click", ()=>{
+      const subject = document.getElementById("editSubject").value.trim();
+      const semester = document.getElementById("editSemester").value;
+      const fileURL = document.getElementById("editURL").value.trim();
+      if(!subject || !semester || !fileURL){
+        showAlert("Please fill all fields.");
+        return;
+      }
+      db.collection("notes").doc(editId).update({
+        subject,
+        semester,
+        fileURL,
+        fileName: fileURL.split("/").pop()
+      }).then(()=>{
+        showAlert("Note updated!");
+        closeEditModal();
+      }).catch(err=>{
+        showAlert("Error: "+err.message);
+      });
+    });
+
+    // Delete Modal
+    function openDeleteModal(id){
+      deleteId = id;
+      document.getElementById("deleteModal").style.display = "flex";
+    }
+    function closeDeleteModal(){
+      document.getElementById("deleteModal").style.display = "none";
+    }
+    document.getElementById("confirmDelete").addEventListener("click", ()=>{
+      db.collection("notes").doc(deleteId).delete()
+        .then(()=>{
+          showAlert("Note deleted!");
+          closeDeleteModal();
+        })
+        .catch(err=>{
+          showAlert("Error: "+err.message);
+        });
+    });
+  </script>
+</body>
+</html>

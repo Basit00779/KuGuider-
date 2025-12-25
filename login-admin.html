@@ -1,134 +1,191 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Login</title>
-  
-  <!-- AOS Animation Library -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
     :root {
-      --radius: 8px;
+      --bg-dark: #131314;
+      --card-dark: #1e1f20;
+      --text-dark: #ececec;
+      --subtext-dark: #9e9ea0;
+      --border-dark: #2e2f32;
+      --nav-bg-dark: #1a1a1a;
+      --btn-bg: #fff;
+      --btn-text: #000;
     }
-    
-    body {
-      font-family: Arial, sans-serif;
+
+    html[data-theme="dark"] {
+      --bg: var(--bg-dark);
+      --card: var(--card-dark);
+      --text: var(--text-dark);
+      --subtext: var(--subtext-dark);
+      --border: var(--border-dark);
+      --nav-bg: var(--nav-bg-dark);
+      --btn-bg: #fff;
+      --btn-text: #000;
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
     }
-    
+
     .login-container {
-      background-color: #4a90e2;
-      width: 300px;
-      max-width: 350px;
+      background: var(--card);
+      width: 330px;
       padding: 2rem;
-      border-radius: var(--radius);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      color: white;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
       text-align: center;
+      border: 1px solid var(--border);
+      transition: transform 0.3s ease;
     }
-    
+
+    .login-container:hover {
+      transform: translateY(-4px);
+    }
+
     .login-container h2 {
+      color: var(--text);
       margin-bottom: 1rem;
+      font-size: 1.5rem;
     }
-    
+
     .login-container hr {
-      width: 9rem;
-      height: 2.5px;
-      background: #ff4d4d;
+      width: 60%;
+      height: 2px;
+      background: var(--btn-bg);
       border: none;
-      margin: 0 auto 1rem;
+      margin: 0 auto 1.5rem;
     }
-    
+
+    .input-group {
+      position: relative;
+      margin-bottom: 1.2rem;
+    }
+
+    .input-group i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--subtext);
+      font-size: 1rem;
+    }
+
     .login-container input {
-      width: 90%;
-      padding: 0.6rem;
-      margin: 0.5rem 0;
-      border-radius: var(--radius);
-      border: none;
+      width: 100%;
+      padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
       font-size: 1rem;
+      outline: none;
     }
-    
+
+    .login-container input:focus {
+      border-color: var(--btn-bg);
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    }
+
     .login-container button {
-      width: 95%;
-      padding: 0.6rem;
-      background-color: #ff4d4d;
-      color: white;
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--btn-bg);
+      color: var(--btn-text);
       border: none;
-      border-radius: var(--radius);
+      border-radius: 8px;
       font-size: 1rem;
-      margin-top: 1rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
     }
-    
+
     .login-container button:hover {
-      background-color: #e60000;
+      background: #e0e0e0;
+      transform: scale(1.03);
     }
-    
+
     .toast-alert {
       visibility: hidden;
       position: fixed;
       top: 15px;
       left: 50%;
       transform: translateX(-50%);
-      background: #4a90e2;
-      color: #fff;
-      padding: 1rem;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      padding: 0.9rem 1.2rem;
       border-radius: 10px;
-      z-index: 5000;
+      z-index: 9999;
       text-align: center;
-      font-size: 1rem;
-      min-width: 200px;
-      max-width: 90%;
+      font-size: 0.95rem;
+      min-width: 220px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
     }
-    
+
+    .toast-alert.show {
+      visibility: visible;
+      animation: fadeInOut 3s ease-in-out forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
     @media (max-width: 400px) {
       .login-container {
-        padding: 1rem;
+        width: 90%;
+        padding: 1.5rem;
       }
-      
+
       .login-container h2 {
-        font-size: 1.4rem;
-      }
-      
-      .login-container input,
-      .login-container button {
-        font-size: 0.9rem;
+        font-size: 1.3rem;
       }
     }
   </style>
 </head>
-
 <body>
   <div class="login-container" data-aos="zoom-in">
     <h2>Admin Login</h2>
     <hr />
-    <input type="email" id="adminEmail" placeholder="Email" />
-    <input type="password" id="adminPassword" placeholder="Password" />
-    <button onclick="loginAdmin()">Login</button>
+    <div class="input-group">
+      <i class="fa-solid fa-envelope"></i>
+      <input type="email" id="adminEmail" placeholder="Email" />
+    </div>
+    <div class="input-group">
+      <i class="fa-solid fa-lock"></i>
+      <input type="password" id="adminPassword" placeholder="Password" />
+    </div>
+    <button onclick="loginAdmin()"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
   </div>
-  
+
   <div id="toastAlert" class="toast-alert"></div>
-  
+
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  
-  <!-- AOS Animation Script -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
-  
+
   <script>
     // Firebase Configuration
     const firebaseConfig = {
@@ -136,25 +193,26 @@
       authDomain: "kuguider.firebaseapp.com",
       projectId: "kuguider"
     };
-    
-    // Initialize Firebase
+
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-    
+
     function showAlert(message) {
       const toast = document.getElementById("toastAlert");
       toast.textContent = message;
-      toast.style.visibility = "visible";
-      setTimeout(() => toast.style.visibility = "hidden", 3000);
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3000);
     }
-    
+
     function loginAdmin() {
       const email = document.getElementById("adminEmail").value.trim();
       const password = document.getElementById("adminPassword").value.trim();
+
       if (!email || !password) {
         showAlert("Please fill in all fields!");
         return;
       }
+
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
           showAlert("Login successful!");
@@ -165,7 +223,12 @@
           showAlert("Invalid Email or Password!");
         });
     }
+    
+    auth.onAuthStateChanged((user) => {
+    if (user) {
+      window.location.href = "adminpanel.html";
+    }
+  });
   </script>
 </body>
-
 </html>

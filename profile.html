@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
-  <!-- Meta Tags for Social Sharing -->
+
+  <!-- Meta Tags -->
   <meta property="og:title" content="KuGuider - Smart Resource Portal">
   <meta property="og:description" content="Access notes, papers, and academic resources instantly.">
   <meta property="og:image" content="https://kuguider.netlify.app/file_0000000042b861fd808de615ad3ddea5.png">
   <meta property="og:url" content="https://kuguider.netlify.app">
   <meta name="twitter:card" content="summary_large_image">
-  
-  <!-- Browser Address Bar Color (Mobile) -->
-  <meta name="theme-color" content="#fff" />
-  <meta name="msapplication-navbutton-color" content="#fff" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="theme-color" content="#fff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Profile - KuGuider</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
-  <style>
-:root {
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+</head>
+<style type="text/css" media="all">
+  :root {
   --radius: 10px;
   --transition: 0.25s ease;
 
@@ -48,7 +50,6 @@ html[data-theme="light"] {
   --subtext: var(--subtext-light);
   --border: var(--border-light);
   --nav-bg: var(--nav-bg-light);
-
   --btn-bg: #000;
   --btn-text: #fff;
 }
@@ -59,44 +60,26 @@ html[data-theme="dark"] {
   --subtext: var(--subtext-dark);
   --border: var(--border-dark);
   --nav-bg: var(--nav-bg-dark);
-
   --btn-bg: #fff;
   --btn-text: #000;
 }
 
-/* Global */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
 }
+
 body {
   background: var(--bg);
   color: var(--text);
   transition: background var(--transition), color var(--transition);
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 
-.header-logo {
-  background: var(--nav-bg);
-  width: 100%;
-  backdrop-filter: blur(5px);
-  padding: 1rem 3rem;
-  margin-top: 50px;
-  text-align: center;
-}
-.header-logo img {
-  width: 200px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: var(--radius);
-  margin-bottom: 1rem;
-}
-
-/* Navbar */
 nav {
   background: var(--nav-bg);
   padding: 0.65rem;
@@ -104,13 +87,6 @@ nav {
   box-sizing: border-box;
   position: fixed;
   z-index: 999;
-}
-
-/* TOP ROW: LOGO + HAMBURGER */
-.nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .logo {
@@ -126,12 +102,18 @@ nav {
   height: 32px;
   width: 100px;
   display: block;
-  object-fit: cover;
-  object-position: center;
+  object-fit: contain;
   border-radius: 6px;
 }
 
-/* HAMBURGER */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+
 .hamburger {
   font-size: 1.8rem;
   cursor: pointer;
@@ -144,7 +126,6 @@ nav {
   transform: scale(0.85);
 }
 
-/* DESKTOP LINKS */
 .nav-links {
   display: flex;
   justify-content: center;
@@ -157,7 +138,7 @@ nav {
 nav a {
   padding: 0.6rem 1rem;
   border-radius: var(--radius);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -174,14 +155,14 @@ nav a:hover {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
-/* ---------------- MOBILE ---------------- */
+
 @media (max-width: 768px) {
   
   .hamburger {
     display: block;
   }
   
-  /* HIDDEN MENU (initial) */
+  
   .nav-links {
     flex-direction: column;
     align-items: flex-start;
@@ -195,7 +176,7 @@ nav a:hover {
     transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
   }
   
-  /* ACTIVE MENU */
+
   .nav-links.show {
     max-height: 500px;
     opacity: 1;
@@ -203,154 +184,322 @@ nav a:hover {
     padding-top: 0.8rem;
   }
 }
-/* Loader */
-.loader-overlay {
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: var(--bg);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:3000;
-  transition: var(--transition);
-}
-.loader-spinner {
-  border: 5px solid var(--border);
-  border-top: 5px solid var(--btn-bg);
-  border-radius:50%;
-  width: 45px;
-  height:45px;
-  animation: spin 1s linear infinite;
-  margin-bottom:0.8rem;
-}
-.loader-text { font-size:1rem; color: var(--btn-bg); font-weight:600; }
-@keyframes spin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
 
 /* Profile Card */
 .profile-card {
   background: var(--card);
   width: 90%;
-  padding:1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 9rem auto 10px;
+  padding: 1.5rem;
   border-radius: var(--radius);
-  margin: 2rem auto;
-  text-align:center;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap: 0.6rem;
+  text-align: center;
+}
+
+/* Avatar + Camera */
+.avatar-wrapper {
+  position: relative;
+  width: 135px;
+  height: 135px;
+  margin: auto;
+}
+
+#profileAvatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.camera-icon {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 40px;
+  height: 40px;
+  background: var(--card);
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.camera-icon i {
+  font-size: 18px;
+  color: var(--text);
+}
+
+/* Name & Info */
+.profile-card h2 {
+  margin-top: 0.4rem;
+  font-size: 1.2rem;
+}
+
+.profile-card p {
+  font-size: 0.9rem;
+  color: var(--subtext);
+}
+
+/* Last Active */
+.last-active {
+  font-size: 0.85rem;
+  color: var(--subtext);
+}
+
+.status-dot {
+  color: #22c55e;
 }
 
 
-.profile-card img {
-  width:90px;
-  height:90px;
-  border-radius:50%;
+
+#editProfileBtn {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+#logoutBtn {
+  background:#CB441DF7;
+  color: #fff;
+}
+
+
+.profile-card button,
+.profile-card .admin-only {
+  width: 100%;
+  max-width: 250px;
+  margin-top: 0.6rem;
+  padding: 0.6rem 1rem;
+
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.profile-card .admin-only {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+
+.profile-card button:hover,
+.profile-card .admin-only:hover {
+  opacity: 0.9;
+}
+
+#editProfileModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background: var(--card);
+  padding: 1.2rem;
+  border-radius: var(--radius);
+  width: 280px;
+}
+
+.modalContent input {
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  opacity: 1;
+  pointer-events: all;
+}
+
+.loader-overlay.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader-spinner {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 4px solid #ddd;
+  border-top: 4px solid #000;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.fa-instagram{color:#E4405F;}
+.fa-facebook {color:#1877F2;}
+.fa-telegram {color:#0088cc;}
+.fa-whatsapp {color:#25D366;}
+
+.modern-footer{
+  width:100%;
+  margin-top:4rem;
+  background: var(--nav-bg);
+  color:var(--text);
+}
+
+/* Glass container */
+.footer-glass{
+  max-width:1200px;
+  margin:auto;
+  padding:2.5rem 1.5rem;
+  display:flex;
+  justify-content:space-around;
+  gap:2rem;
+  flex-wrap:wrap;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  
+}
+
+/* Sections */
+.footer-section{
+  flex:1;
+  min-width:240px;
+}
+
+.footer-section h4{
+  font-size:1.05rem;
+  margin-bottom:0.7rem;
+  position:relative;
+}
+
+.footer-section h4::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:40px;
+  height:3px;
+  border-radius:6px;
+  background:linear-gradient(90deg,#CB441DF7,#141415);
+}
+
+.footer-section p{
+  font-size:0.85rem;
+  color:var(--subtext);
+  margin-top:0.6rem;
+}
+
+/* Links */
+.footer-section ul{
+  list-style:none;
+  margin-top:0.8rem;
+}
+
+.footer-section ul li{
   margin-bottom:0.5rem;
 }
-.profile-card h2 {
-  margin:0.2rem 0;
-  font-size:1.2rem;
-}
-.profile-card p {
-  margin:0.2rem 0;
-  color: var(--subtext);
-  font-size:0.9rem;
-}
-.profile-card button {
-  padding:0.5rem 1rem;
-  border:none;
-  border-radius: var(--radius);
-  font-size:0.9rem;
-  font-weight:600;
-  cursor:pointer;
-  transition: var(--transition);
-}
-#editProfileBtn { background: var(--btn-bg); color: var(--btn-text); }
-#editProfileBtn:hover { opacity: 0.85; }
-#logoutBtn {
-  margin-top:0.5rem;
-  background:orangered;
-  color:#fff;
-}
-#logoutBtn:hover { opacity: 0.85; }
 
-/* Edit Modal */
-#editProfileModal {
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.4);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:100;
-}
-#editProfileModal .modalContent {
-  background: var(--card);
-  padding:1.2rem;
-  border-radius: var(--radius);
-  width:280px;
-  text-align:center;
-  color: var(--text);
-}
-#editProfileModal input[type="text"] {
-  width:100%;
-  padding:0.5rem;
-  margin-bottom:0.8rem;
-  border-radius: var(--radius);
-  border:1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-}
-#editProfileModal button {
-  padding:0.4rem 0.8rem;
-  border:none;
-  border-radius: var(--radius);
-  cursor:pointer;
-  font-weight:600;
+.footer-section ul a{
+  color:var(--text);
   font-size:0.85rem;
+  text-decoration:none;
+  opacity:0.85;
+  transition:0.25s;
 }
-#saveProfileBtn { background: var(--btn-bg); color: var(--btn-text); }
-#cancelProfileBtn { background:orangered; color:#fff; }
 
-/* Footer */
-footer {
-  width:100%;
+.footer-section ul a:hover{
+  opacity:1;
+  padding-left:6px;
+}
+
+/* Social icons */
+.footer-socials{
+  margin-top:1rem;
+  display:flex;
+  gap:1rem;
+  font-size:1.6rem;
+}
+
+.footer-socials a{
+  color:var(--btn-bg);
+  transition:0.3s;
+}
+
+.footer-socials a:hover{
+  transform:translateY(-5px) scale(1.1);
+  filter:drop-shadow(0 6px 14px rgba(0,0,0,0.25));
+}
+
+/* Bottom credit */
+.footer-credit{
+  text-align:center;
+  padding:0.9rem;
+  font-size:0.8rem;
   background: var(--nav-bg);
-  color: var(--text);
-  text-align:center;
-  padding:0.8rem;
-  font-size:0.85rem;
-  border-top:1px solid var(--border);
-  margin-top:auto;
-}
-footer a { color: var(--btn-bg); text-decoration: underline; }
-
-/* Responsive */
-@media(max-width: 480px){
-  .profile-card { width:90%; padding:1rem; }
-  .header-logo img { width:140px; height:70px; }
 }
 
-  </style>
-</head>
+.footer-credit span{
+  color:#ff4d4d;
+}
+
+.footer-credit a{
+  color:var(--btn-bg);
+  text-decoration:none;
+  font-weight:600;
+}
+
+.footer-credit a:hover{
+  text-decoration:underline;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .footer-glass{
+    flex-direction:column;
+    text-align:center;
+  }
+  .footer-section h4::after{
+    left:50%;
+    transform:translateX(-50%);
+  }
+  .footer-socials{
+    justify-content:center;
+  }
+
+}
+
+</style>
 <body>
-
-<div class="theme-toggle" onclick="toggleTheme()">
-  <i class="fa-solid fa-sun"></i>
-</div>
 
 <div class="loader-overlay" id="loaderOverlay">
   <div class="loader-spinner"></div>
-
 </div>
-
 <nav>
   <div class="nav-container">
     <div class="logo">
-      <img src="/file_0000000042b861fd808de615ad3ddea5.png" alt="Logo">
+      <img src="/nav-logo.png" alt="Logo">
     </div>
     
     <div class="hamburger" id="hamburger">
@@ -370,112 +519,314 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
     <a href="#" class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" style=""></i>Theme</a>
   </div>
 </nav>
-<div class="header-logo">
-  <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider Logo">
-</div>
-
 <div class="profile-card">
-  <img src="https://www.w3schools.com/howto/img_avatar.png" id="profileAvatar" alt="User Avatar">
+
+  <div class="avatar-wrapper">
+    <img src="https://www.w3schools.com/howto/img_avatar.png"
+         id="profileAvatar"
+         alt="User Avatar">
+
+    <div class="camera-icon">
+      <i class="fa-solid fa-camera"></i>
+    </div>
+  </div>
+
   <h2 id="profileName">Username</h2>
+
+  <p class="last-active">
+    <span class="status-dot">●</span>
+    <span>Active now</span>
+  </p>
+
   <p>ID: <span id="profileID">12345</span></p>
-  <button id="editProfileBtn"><i class="fa-solid fa-pen"></i> Edit Profile</button>
-  <button id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+
+  <!-- ROLE ONLY -->
+  <p class="user-role">
+    <i class="fa-solid fa-user-shield"></i>
+    <span id="userRole">Student</span>
+  </p>
+
+  <button id="editProfileBtn">
+    <i class="fa-solid fa-pen"></i> Edit Name
+  </button>
+
+  <button id="logoutBtn">
+    <i class="fa-solid fa-right-from-bracket"></i> Logout
+  </button>
+  
+  <a href="/login-admin.html" class="admin-only"> <i class="fa-solid fa-user-shield"></i> Admin Panel</a>
+
 </div>
 
+<!-- EDIT PROFILE MODAL (HTML ONLY) -->
 <div id="editProfileModal">
   <div class="modalContent">
-    <h3>Edit Name</h3>
+    <h3 style="margin: 10px 0px;">Edit Name</h3>
     <input type="text" id="editName" placeholder="Enter new name">
     <div>
-      <button id="saveProfileBtn">Save</button>
-      <button id="cancelProfileBtn">Cancel</button>
+      <button style="padding: 5px 15px; margin: 10px 20px 0px 0px ; border: none ; border-radius: 5px; cursor: pointer;" id="saveProfileBtn">Save</button>
+      <button style="padding: 5px 15px; margin: 10px 20px 0px 0px ; border: none ; border-radius: 5px; cursor: pointer; background:#CB441DF7; color: #fff;"  id="cancelProfileBtn">Cancel</button>
     </div>
   </div>
 </div>
 
-<footer>
-  Made with ❤️ by <a href="https://basifshafi.netlify.app/">Basif Shafi Wani.</a>
+<footer class="modern-footer">
+  <div class="footer-glass">
+
+    <div class="footer-section">
+      <h4>Join Community</h4>
+      <p>Get updates, notes & announcements instantly.</p>
+
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://whatsapp.com/channel/0029Vb671B2It5rqAsKI3W3t" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://t.me/kuguider" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="notes.html">Notes</a></li>
+        <li><a href="papers.html">Papers</a></li>
+        <li><a href="chat.html">Chat</a></li>
+        <li><a href="profile.html">Profile</a></li>
+      </ul>
+    </div>
+    <div style="text-align:center; margin-top:12px;">
+  <a href="kuguider.apk"
+    download style="
+       display:inline-flex;
+       align-items:center;
+       gap:8px;
+       padding:8px 18px;
+       border-radius:24px;
+       font-size:0.85rem;
+       font-weight:600;
+       text-decoration:none;
+       background:linear-gradient(135deg,#CB441DF7,#212121);
+       color:#fff;
+       box-shadow:0 6px 18px rgba(0,0,0,0.25);
+       transition:0.3s ease;
+     "
+     onmouseover="this.style.transform='scale(1.08)'"
+     onmouseout="this.style.transform='scale(1)'"
+  >
+    <i class="fa-solid fa-mobile-screen-button"></i>
+     Download App
+  </a>
+</div>
+
+  </div>
+  
+
+  <div class="footer-credit">
+    Made with <span>❤</span> by 
+    <a href="https://basifshafi.netlify.app/">Basif Shafi</a>
+  </div>
 </footer>
 
+</body>
+<script src="/adm.js" type="text/javascript" charset="utf-8"></script>
+<!-- Firebase Core -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
 <script>
-const firebaseConfig={
-  apiKey:"AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
-  authDomain:"kuguider.firebaseapp.com",
-  projectId:"kuguider"
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+  authDomain: "kuguider.firebaseapp.com",
+  projectId: "kuguider"
 };
 firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth();
+const auth = firebase.auth();
 
-// Elements
-const profileName=document.getElementById("profileName");
-const profileID=document.getElementById("profileID");
-const editProfileBtn=document.getElementById("editProfileBtn");
-const editProfileModal=document.getElementById("editProfileModal");
-const editName=document.getElementById("editName");
-const saveProfileBtn=document.getElementById("saveProfileBtn");
-const cancelProfileBtn=document.getElementById("cancelProfileBtn");
-const logoutBtn=document.getElementById("logoutBtn");
-const loaderOverlay=document.getElementById("loaderOverlay");
 
-// Loader
-loaderOverlay.style.display = "flex";
+const loaderOverlay   = document.getElementById("loaderOverlay");
+const profileName     = document.getElementById("profileName");
+const profileID       = document.getElementById("profileID");
+const profileAvatar   = document.getElementById("profileAvatar");
+const editProfileBtn  = document.getElementById("editProfileBtn");
+const editProfileModal= document.getElementById("editProfileModal");
+const editName        = document.getElementById("editName");
+const saveProfileBtn  = document.getElementById("saveProfileBtn");
+const cancelProfileBtn= document.getElementById("cancelProfileBtn");
+const logoutBtn       = document.getElementById("logoutBtn");
+const lastActiveText  = document.querySelector(".last-active span:last-child");
+const cameraIcon      = document.querySelector(".camera-icon");
+const ham             = document.getElementById("hamburger");
+const links           = document.getElementById("navLinks");
+const roleEl          = document.getElementById("userRole");
 
-// Auth state
-auth.onAuthStateChanged(user => {
-  if(!user) window.location.href="index.html";
-  else {
-    profileName.textContent = user.displayName || "Anonymous";
-    profileID.textContent = user.uid.substring(0,8);
-    loaderOverlay.style.display="none";
-  }
-});
 
-// Edit profile
-editProfileBtn.onclick = () => {
-  editName.value = profileName.textContent;
-  editProfileModal.style.display="flex";
-};
-cancelProfileBtn.onclick = () => { editProfileModal.style.display="none"; };
-saveProfileBtn.onclick = () => {
-  const user = auth.currentUser;
-  const newName = editName.value.trim();
-  if(!newName) return alert("Name cannot be empty");
-  user.updateProfile({displayName:newName})
-    .then(()=>{ profileName.textContent=newName; editProfileModal.style.display="none"; })
-    .catch(err=>alert(err.message));
-};
+if (loaderOverlay) loaderOverlay.classList.remove("hide");
 
-const ham = document.getElementById("hamburger");
-  const links = document.getElementById("navLinks");
 
-  ham.addEventListener("click", () => {
-    links.classList.toggle("show");
-  });
 
-// Logout
-logoutBtn.onclick = () => { auth.signOut().then(()=>window.location.href="index.html"); };
-
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (!user) {
-    // User not logged in → send back to login
-    window.location.href = "index.html";
-  }
-});
-
-// Theme toggle
-function toggleTheme(){
+function toggleTheme() {
   const root = document.documentElement;
-  const newTheme = root.getAttribute("data-theme")==="dark" ? "light":"dark";
+  const newTheme =
+    root.getAttribute("data-theme") === "dark" ? "light" : "dark";
   root.setAttribute("data-theme", newTheme);
   localStorage.setItem("theme", newTheme);
 }
-window.addEventListener("DOMContentLoaded",()=>{
+
+
+window.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem("theme");
-  if(savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+  if (savedTheme) {
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }
+});
+
+
+function resizeImage(file, maxSize = 400) {
+  return new Promise(resolve => {
+    const img = new Image();
+    const reader = new FileReader();
+
+    reader.onload = e => img.src = e.target.result;
+
+    img.onload = () => {
+      let { width, height } = img;
+
+      if (width > height && width > maxSize) {
+        height *= maxSize / width;
+        width = maxSize;
+      } else if (height > maxSize) {
+        width *= maxSize / height;
+        height = maxSize;
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(blob => resolve(blob), "image/jpeg", 0.7);
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+
+const CLOUD_NAME = "dk5nxooef";
+const UPLOAD_PRESET = "kuguider profiles";
+
+
+cameraIcon.onclick = () => {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+
+  input.onchange = async () => {
+    const file = input.files[0];
+    if (!file) return;
+
+    const resized = await resizeImage(file);
+
+    const formData = new FormData();
+    formData.append("file", resized);
+    formData.append("upload_preset", UPLOAD_PRESET);
+
+    try {
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+        { method: "POST", body: formData }
+      );
+
+      const data = await res.json();
+
+      if (data.secure_url) {
+        await auth.currentUser.updateProfile({
+          photoURL: data.secure_url
+        });
+
+        profileAvatar.src = data.secure_url.replace(
+          "/upload/",
+          "/upload/w_200,h_200,c_fill,q_auto,f_auto/"
+        );
+      }
+    } catch {
+      alert("Image upload failed");
+    }
+  };
+
+  input.click();
+};
+
+
+function updateLastActive() {
+  lastActiveText.textContent = "Active now";
+  window.addEventListener("blur", () => lastActiveText.textContent = "Offline");
+  window.addEventListener("focus", () => lastActiveText.textContent = "Active now");
+}
+
+
+auth.onAuthStateChanged(user => {
+
+  /* Hide loader */
+  if (loaderOverlay) loaderOverlay.classList.add("hide");
+
+  if (!user) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  profileName.textContent = user.displayName || "Anonymous";
+  profileID.textContent = user.uid.substring(0, 8);
+
+  if (user.photoURL) {
+    profileAvatar.src = user.photoURL.replace(
+      "/upload/",
+      "/upload/w_200,h_200,c_fill,q_auto,f_auto/"
+    );
+  }
+
+  updateLastActive();
+
+  /* Role */
+  if (ADMIN_EMAILS.includes(user.email)) {
+    roleEl.textContent = "Admin";
+  } else {
+    roleEl.textContent = "Student";
+    document.querySelectorAll(".admin-only").forEach(el => el.remove());
+  }
+});
+
+
+editProfileBtn.onclick = () => {
+  editName.value = profileName.textContent;
+  editProfileModal.style.display = "flex";
+};
+
+cancelProfileBtn.onclick = () => {
+  editProfileModal.style.display = "none";
+};
+
+saveProfileBtn.onclick = async () => {
+  const newName = editName.value.trim();
+  if (!newName) return alert("Name cannot be empty");
+
+  await auth.currentUser.updateProfile({ displayName: newName });
+  profileName.textContent = newName;
+  editProfileModal.style.display = "none";
+};
+
+
+logoutBtn.onclick = () => {
+  auth.signOut().then(() => window.location.href = "index.html");
+};
+
+
+ham.addEventListener("click", () => {
+  links.classList.toggle("show");
+});
+
+window.addEventListener("load", () => {
+  if (loaderOverlay) loaderOverlay.classList.add("hide");
 });
 </script>
-
-</body>
 </html>

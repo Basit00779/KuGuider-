@@ -96,7 +96,6 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Navbar */
 nav {
   background: var(--nav-bg);
   padding: 0.65rem;
@@ -104,13 +103,6 @@ nav {
   box-sizing: border-box;
   position: fixed;
   z-index: 999;
-}
-
-/* TOP ROW: LOGO + HAMBURGER */
-.nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .logo {
@@ -126,10 +118,17 @@ nav {
   height: 32px;
   width: 100px;
   display: block;
-  object-fit: cover;
-  object-position: center;
+  object-fit: contain;
   border-radius: 6px;
 }
+
+/* TOP ROW: LOGO + HAMBURGER */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 
 /* HAMBURGER */
 .hamburger {
@@ -157,7 +156,7 @@ nav {
 nav a {
   padding: 0.6rem 1rem;
   border-radius: var(--radius);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -203,7 +202,6 @@ nav a:hover {
     padding-top: 0.8rem;
   }
 }
-
 .loader-overlay {
   position: fixed;
   top: 0;
@@ -318,7 +316,7 @@ nav a:hover {
 }
 
 /* Carousel */
-.carousel-container { position:relative; max-width:90%; margin:2rem auto; overflow:hidden; border-radius:var(--radius); }
+.carousel-container { position:relative; max-width:90%; margin:9rem auto 0px; overflow:hidden; border-radius:var(--radius); }
 .carousel-slide { display:flex; transition: transform 0.5s ease-in-out; }
 .carousel-item { min-width:100%; background:var(--card); padding:2rem; text-align:center; border-radius:var(--radius); box-shadow:0 4px 10px rgba(0,0,0,0.1); }
 .carousel-item img { width:150px; height:150px; object-fit:cover; border-radius:var(--radius); margin-bottom:1rem; }
@@ -328,34 +326,6 @@ nav a:hover {
 .carousel-controls button { background: rgba(0,0,0,0.4); border:none; color:#fff; width:40px; height:40px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:0.3s; }
 .carousel-controls button:hover { background: rgba(0,0,0,0.7); }
 
-/*join channel*/
-.join-channel{
-  height: 100px;
-  width: 40px;
-  padding: 5px 15px;
-  background:#C9471A;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  border-radius: 10px;
-  align-items: center;
-  position: fixed;
-  bottom: 40vh;
-  right: 5px;
-}
-
-/* Footer */
-footer {
-  width:100%;
-  background: var(--nav-bg);
-  color: var(--text);
-  text-align:center;
-  padding:0.8rem;
-  font-size:0.85rem;
-  border-top:1px solid var(--border);
-  margin-top:auto;
-}
-footer a { color: var(--btn-bg); text-decoration: underline; }
 
 /* Responsive */
 @media(max-width:768px){
@@ -402,7 +372,7 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
   justify-content: center;
   align-items: center;
   background: none;
-  color: #C9471A;
+  color: #CB441DF7;
   border: none;
   font-size: 1.3rem;
   cursor: pointer;
@@ -432,7 +402,7 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
   right: -4px;
   width: 28px;
   height: 28px;
-  background: #C9471A;
+  background: #CB441DF7;
   color: #fff;
   border-radius: 50%;
   display: flex;
@@ -467,6 +437,140 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
   cursor: pointer;
   color: var(--text);
 }
+
+.fa-instagram{color:#E4405F;}
+.fa-facebook {color:#1877F2;}
+.fa-telegram {color:#0088cc;}
+.fa-whatsapp {color:#25D366;}
+
+.modern-footer{
+  width:100%;
+  margin-top:5rem;
+  background: var(--nav-bg);
+  color:var(--text);
+}
+
+/* Glass container */
+.footer-glass{
+  max-width:1200px;
+  margin:auto;
+  padding:2.5rem 1.5rem;
+  display:flex;
+  justify-content:space-around;
+  gap:2rem;
+  flex-wrap:wrap;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  
+}
+
+/* Sections */
+.footer-section{
+  flex:1;
+  min-width:240px;
+}
+
+.footer-section h4{
+  font-size:1.05rem;
+  margin-bottom:0.7rem;
+  position:relative;
+}
+
+.footer-section h4::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:40px;
+  height:3px;
+  border-radius:6px;
+  background:linear-gradient(90deg,#CB441DF7,#141415);
+}
+
+.footer-section p{
+  font-size:0.85rem;
+  color:var(--subtext);
+  margin-top:0.6rem;
+}
+
+/* Links */
+.footer-section ul{
+  list-style:none;
+  margin-top:0.8rem;
+}
+
+.footer-section ul li{
+  margin-bottom:0.5rem;
+}
+
+.footer-section ul a{
+  color:var(--text);
+  font-size:0.85rem;
+  text-decoration:none;
+  opacity:0.85;
+  transition:0.25s;
+}
+
+.footer-section ul a:hover{
+  opacity:1;
+  padding-left:6px;
+}
+
+/* Social icons */
+.footer-socials{
+  margin-top:1rem;
+  display:flex;
+  gap:1rem;
+  font-size:1.6rem;
+}
+
+.footer-socials a{
+  color:var(--btn-bg);
+  transition:0.3s;
+}
+
+.footer-socials a:hover{
+  transform:translateY(-5px) scale(1.1);
+  filter:drop-shadow(0 6px 14px rgba(0,0,0,0.25));
+}
+
+/* Bottom credit */
+.footer-credit{
+  text-align:center;
+  padding:0.9rem;
+  font-size:0.8rem;
+  background: var(--nav-bg);
+}
+
+.footer-credit span{
+  color:#ff4d4d;
+}
+
+.footer-credit a{
+  color:var(--btn-bg);
+  text-decoration:none;
+  font-weight:600;
+}
+
+.footer-credit a:hover{
+  text-decoration:underline;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .footer-glass{
+    flex-direction:column;
+    text-align:center;
+  }
+  .footer-section h4::after{
+    left:50%;
+    transform:translateX(-50%);
+  }
+  .footer-socials{
+    justify-content:center;
+  }
+
+}
 </style>
 </head>
 <body>
@@ -474,7 +578,7 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
 <nav>
   <div class="nav-container">
     <div class="logo">
-      <img src="/file_0000000042b861fd808de615ad3ddea5.png" alt="Logo">
+      <img src="/nav-logo.png" alt="Logo">
     </div>
     
     <div class="hamburger" id="hamburger">
@@ -494,9 +598,6 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
     <a href="#" class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" style=""></i>Theme</a>
   </div>
 </nav>
-<div class="header-logo">
-  <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider Logo">
-</div>
 
 <div class="loader-overlay" id="loaderOverlay">
   <div class="loader-spinner"></div>
@@ -526,10 +627,6 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
   </div>
 </div>
 
-<div class="join-channel">
-  <a href="https://whatsapp.com/channel/0029Vb671B2It5rqAsKI3W3t"><i class="fa-brands fa-2xl fa-whatsapp" style="color:#25D366;"></i></a>
-  <a href="https://t.me/kuguider"><i class="fa-brands fa-telegram fa-2xl" style="color:#0088cc;"></i></a>
-</div>
 
 <div id="homepagePopup">
   <div id="popupBox">
@@ -561,9 +658,61 @@ footer a { color: var(--btn-bg); text-decoration: underline; }
   </div>
 </div>
 
-<footer>
-Made with ❤️ by <a href="https://basifshafi.netlify.app/">Basif Shafi Wani</a>
-</footer>
+<footer class="modern-footer">
+  <div class="footer-glass">
+
+    <div class="footer-section">
+      <h4>Join Community</h4>
+      <p>Get updates, notes & announcements instantly.</p>
+
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://whatsapp.com/channel/0029Vb671B2It5rqAsKI3W3t" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://t.me/kuguider" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="notes.html">Notes</a></li>
+        <li><a href="papers.html">Papers</a></li>
+        <li><a href="chat.html">Chat</a></li>
+        <li><a href="profile.html">Profile</a></li>
+      </ul>
+    </div>
+    <div style="text-align:center; margin-top:12px;">
+  <a href="kuguider.apk"
+    download style="
+       display:inline-flex;
+       align-items:center;
+       gap:8px;
+       padding:8px 18px;
+       border-radius:24px;
+       font-size:0.85rem;
+       font-weight:600;
+       text-decoration:none;
+       background:linear-gradient(135deg,#CB441DF7,#212121);
+       color:#fff;
+       box-shadow:0 6px 18px rgba(0,0,0,0.25);
+       transition:0.3s ease;
+     "
+     onmouseover="this.style.transform='scale(1.08)'"
+     onmouseout="this.style.transform='scale(1)'"
+  >
+    <i class="fa-solid fa-mobile-screen-button"></i>
+     Download App
+  </a>
+</div>
+
+  </div>
+  
+
+  <div class="footer-credit">
+    Made with <span>❤</span> by 
+    <a href="https://basifshafi.netlify.app/">Basif Shafi</a>
+  </div>
+</footer> 
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -628,13 +777,13 @@ firebase.initializeApp({
 
 const db = firebase.firestore();
 
-// -- POPUP LOADER ----------------
+
 function loadHomepagePopup() {
-  // Check local storage 
+
   const blockUntil = localStorage.getItem("popup_block_until");
   
   if (blockUntil && Date.now() < Number(blockUntil)) {
-    return; // Dont show popup
+    return;
   }
   
   db.collection("popup")
@@ -685,12 +834,6 @@ document.getElementById("popupButton").onclick = () => {
 };
 
 
-firebase.auth().onAuthStateChanged(function(user) {
-  if (!user) {
-    // User not logged in → send back to login
-    window.location.href = "index.html";
-  }
-});
 
 </script>
 
