@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-  <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | KuGuider</title>
+
+<link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
   <!-- Meta Tags for Social Sharing -->
   <meta property="og:image" content="https://kuguider.netlify.app/file_0000000042b861fd808de615ad3ddea5.png">
   <meta property="og:url" content="https://kuguider.netlify.app">
@@ -24,7 +27,226 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
 
-  <style>
+
+<style>
+:root{
+  --bg:#f5f6f8;
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --border:#e5e7eb;
+  --btn:#000;
+  --radius:10px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+
+body{
+  height: 100vh;
+  width:100%;
+  background:var(--bg);
+  color:var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+img{
+  width:120px;
+  margin:0;
+}
+
+
+.card{
+  width:320px;
+  background:var(--card);
+  padding:1.5rem;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+}
+
+.card h2{
+  margin-bottom:1.1rem;
+  font-size:1.25rem;
+}
+
+input{
+  width:100%;
+  padding:0.75rem;
+  margin-bottom:0.75rem;
+  border-radius:7px;
+  border:1px solid var(--border);
+  font-size:0.9rem;
+}
+
+.password{
+  position:relative;
+}
+.password i{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  color:#555;
+}
+
+button{
+  width:100%;
+  padding:0.75rem;
+  border:none;
+  border-radius:7px;
+  background:var(--btn);
+  color:#fff;
+  font-size:0.9rem;
+  cursor:pointer;
+}
+button:hover{opacity:0.9;}
+
+.link{
+  background:none;
+  border:none;
+  color:#000;
+  text-align:left;
+  margin-top:0.4rem;
+  font-size:0.8rem;
+  cursor:pointer;
+  text-decoration:underline;
+}
+
+
+.toast{
+  visibility:hidden;
+  position:fixed;
+  top:15px;
+  left:70%;
+  width: 150px;
+  transform:translateX(-50%);
+  background:#000;
+  color:#fff;
+  padding:0.6rem 1rem;
+  border-radius:7px;
+  font-size:0.85rem;
+}
+.toast.show{visibility:visible}
+
+@media(min-width:900px){
+  .card{
+  width:450px;
+  background:var(--card);
+  padding:1.5rem;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+}
+
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+
+  <!-- RIGHT -->
+  <div class="card">
+     <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider">
+    <h2 id="title">Login</h2>
+
+    <input type="text" id="name" placeholder="Name" style="display:none">
+    <input type="email" id="email" placeholder="Email">
+
+    <div class="password">
+      <input type="password" id="password" placeholder="Password">
+      <i class="fa-solid fa-eye" id="toggle"></i>
+    </div>
+
+    <button id="action">Login</button>
+
+    <button class="link" id="switch">
+      Don't have an account? Signup
+    </button>
+
+    <button class="link" id="forgot">
+      Forgot Password?
+    </button>
+  </div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+  authDomain:"kuguider.firebaseapp.com",
+  projectId:"kuguider"
+});
+const auth=firebase.auth();
+
+const title=document.getElementById("title");
+const nameI=document.getElementById("name");
+const email=document.getElementById("email");
+const pass=document.getElementById("password");
+const toggle=document.getElementById("toggle");
+const action=document.getElementById("action");
+const sw=document.getElementById("switch");
+const toast=document.getElementById("toast");
+const forgot=document.getElementById("forgot");
+
+let signup=false;
+
+function msg(t){
+  toast.textContent=t;
+  toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"),3000);
+}
+
+toggle.onclick=()=>{pass.type=pass.type==="password"?"text":"password";};
+
+sw.onclick=()=>{
+  signup=!signup;
+  title.textContent=signup?"Signup":"Login";
+  action.textContent=signup?"Signup":"Login";
+  nameI.style.display=signup?"block":"none";
+  sw.textContent=signup?"Already have an account? Login":"Don't have an account? Signup";
+};
+
+action.onclick=async()=>{
+  if(!email.value||!pass.value) return msg("Fill all fields");
+  try{
+    if(signup){
+      if(!nameI.value) return msg("Enter name");
+      const u=await auth.createUserWithEmailAndPassword(email.value,pass.value);
+      await u.user.updateProfile({displayName:nameI.value});
+    }else{
+      await auth.signInWithEmailAndPassword(email.value,pass.value);
+    }
+    msg("Success");
+    setTimeout(()=>location.href="about.html",1200);
+  }catch{
+    msg("Incorrect email or password");
+  }
+};
+
+forgot.onclick=async()=>{
+  if(!email.value) return msg("Enter email");
+  await auth.sendPasswordResetEmail(email.value);
+  msg("Reset email sent");
+};
+
+auth.onAuthStateChanged(u=>{
+  if(u) location.href="about.html";
+});
+</script>
+
+</body>
+</html>  <style>
 :root {
   --radius: 10px;
   --transition: 0.25s ease;
