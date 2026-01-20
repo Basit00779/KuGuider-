@@ -833,7 +833,11 @@ document.getElementById("popupButton").onclick = () => {
   document.getElementById("homepagePopup").style.display = "none";
 };
 
-
+auth.onAuthStateChanged(user => {
+    if (!user) {
+      window.location.href = "index.html"; // Redirect if not logged in
+    }
+  });
 
 </script>
 
