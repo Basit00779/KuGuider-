@@ -868,10 +868,11 @@ li.addEventListener("touchend", () => {
     if(snapshot.docChanges().some(c=>c.type==="added"))
       msgSound.play();
   });
-
-  // auto scroll to bottom
 const chatContainer = document.getElementById("chatContainer");
-chatContainer.scrollTop = chatContainer.scrollHeight;
+
+setTimeout(()=>{
+   chatContainer.scrollTop = chatContainer.scrollHeight;
+},50);
 }
 
 
