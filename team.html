@@ -60,6 +60,7 @@ html[data-theme="dark"] {
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
+
 html,body {
   background: var(--bg);
   color: var(--text);
@@ -255,6 +256,10 @@ nav a:hover {
   background:linear-gradient(135deg,#3ac27d,#2ea865);
 }
 
+.contribute-badge {
+  background:linear-gradient(135deg,#1C1F1C,#000000);
+}
+
 /* SOCIAL ICONS */
 .social-icons {
   display:flex;
@@ -351,7 +356,7 @@ nav a:hover {
 /* Glass container */
 .footer-glass{
   max-width:1200px;
-  margin:auto;
+  margin:0 auto;
   padding:2.5rem 1.5rem;
   display:flex;
   justify-content:space-around;
@@ -547,6 +552,27 @@ nav a:hover {
   </div>
   
 
+<div class="admin-card" onclick="openAdminModal(
+'/Muzzamil.jpg',
+'Muzzamil',
+'Contributor — GDC Sopore',
+'From backend shadows, study materials are organized, managed, and delivered — keeping KuGuider’s knowledge system alive.'
+)">
+     
+<img src="/Muzzamil.jpg">
+
+<div class="admin-name">Muzzamil</div>
+
+<span class="role-badge contribute-badge">Contributor</span>
+
+<div class="social-icons">
+  <a href="https://www.instagram.com/muhammed.muzammil.13?igsh=MmxqdHJiZ2xtYnhz"><i class="fa-brands fa-instagram"></i></a>
+  <a href="https://www.facebook.com/share/1YBpHqWGh9/"><i class="fa-brands fa-facebook"></i></a>
+  <a href="#"><i class="fa-brands fa-telegram"></i></a>
+  <a href="https://wa.me/916006336130?text=Hii%20from%20KuGuider"><i class="fa-brands fa-whatsapp"></i></a>
+</div>
+
+</div>
 
 <!-- POPUP MODAL -->
 <div id="adminModal" class="admin-modal">
@@ -566,9 +592,49 @@ nav a:hover {
     </div>
   </div>
 </div>
+
+<div class="admin-card" onclick="openAdminModal(
+'/dawood.jpg',
+'Dawood',
+'Contributor — GDC Beerwah',
+'From backend shadows, study materials are organized, managed, and delivered — keeping KuGuider’s knowledge system alive.'
+)">
+     
+<img src="/dawood.jpg">
+
+<div class="admin-name">Dawood</div>
+
+<span class="role-badge contribute-badge">Contributor</span>
+
+<div class="social-icons">
+  <a href="https://www.instagram.com/itz_dk_dawood_?igsh=aXN1YnA3N2dvb3Ez"><i class="fa-brands fa-instagram"></i></a>
+  <a href="#"><i class="fa-brands fa-facebook"></i></a>
+  <a href="#"><i class="fa-brands fa-telegram"></i></a>
+  <a href="https://wa.me/916006127358?text=Hii%20from%20KuGuider"><i class="fa-brands fa-whatsapp"></i></a>
 </div>
 
-<br />
+</div>
+</div>
+
+
+<!-- POPUP MODAL -->
+<div id="adminModal" class="admin-modal">
+  <div class="admin-modal-content">
+    <span class="close-btn" onclick="closeAdminModal()">×</span>
+
+    <img id="modalImg">
+    <div id="modalName" class="modal-name"></div>
+    <div id="modalRole" class="modal-role"></div>
+    <p id="modalBio" class="modal-bio"></p>
+
+    <div class="modal-socials">
+      <i class="fa-brands fa-instagram"></i>
+      <i class="fa-brands fa-facebook"></i>
+      <i class="fa-brands fa-telegram"></i>
+      <i class="fa-brands fa-whatsapp"></i>
+    </div>
+  </div>
+</div>
 
 <footer class="modern-footer">
   <div class="footer-glass">
