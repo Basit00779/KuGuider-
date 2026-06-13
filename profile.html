@@ -13,7 +13,7 @@
   <meta name="google-adsense-account" content="ca-pub-2137400647468187">
   <meta name="theme-color" content="#fff">
 
-  <title>KuGuider Profile</title>
+  <title>KuGuider Profile </title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,8 +33,8 @@
       --subtext: #64748b;
       --border: rgba(0,0,0,0.06);
       --nav-height: 80px;
-      --radius-lg: 24px;
-      --radius-sm: 16px;
+      --radius-lg: 20px;
+      --radius-sm: 12px;
       --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
       --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -4px rgba(0,0,0,0.05);
       --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.05);
@@ -125,39 +125,25 @@
     /* --- HERO --- */
     .hero { 
       margin-top: var(--nav-height); 
-      width: 100%;
-      max-width: 1300px;
-      margin-inline: auto;
-      padding: clamp(30px, 5vh, 50px) 4% 10px; 
-      text-align: left;
+      margin-inline:auto;
+      padding: clamp(40px, 6vh, 60px) 5% 20px; 
     }
-    .hero h1 { font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; color: var(--text); }
-    .hero p { color: var(--subtext); margin-top: 8px; font-size: clamp(0.95rem, 1.5vw, 1.05rem); max-width: 600px; }
+    .hero h1 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; color: var(--text); }
+    .hero p { color: var(--subtext); margin-top: 10px; font-size: clamp(0.95rem, 2vw, 1.1rem); max-width: 600px; margin-inline: auto; }
 
-    /* --- MODERN RESPONSIVE PROFILE INTERFACE --- */
+    /* --- PROFILE MAIN CONTAINER --- */
     .main-content { 
-      width: 100%; 
-      max-width: 1300px; 
-      margin: 10px auto 60px; 
-      padding: 0 4%;
+      width: 90%; max-width: 600px; margin: 20px auto 60px; 
       flex-grow: 1;
     }
 
-    /* The Adaptive Dashboard Container */
-    .dashboard-layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 30px;
-      align-items: start;
-    }
-
-    /* Left Card Design */
     .profile-card {
       background: var(--card); border-radius: var(--radius-lg); padding: 40px 30px;
       border: 1px solid var(--border); box-shadow: var(--shadow-lg);
       display: flex; flex-direction: column; align-items: center; text-align: center;
     }
 
+    /* Avatar & Upload Element */
     .avatar-wrapper {
       position: relative; width: 140px; height: 140px; margin-bottom: 20px;
     }
@@ -176,6 +162,7 @@
     .camera-icon:hover { transform: scale(1.1); background: #b03614; }
     .camera-icon i { font-size: 0.95rem; }
 
+    /* Account Details Layout */
     .profile-card h2 { font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: 4px; letter-spacing: -0.5px; }
     
     .last-active { font-size: 0.85rem; font-weight: 600; color: var(--subtext); display: flex; align-items: center; gap: 6px; margin-bottom: 16px; }
@@ -188,80 +175,46 @@
     .user-role { 
       background: rgba(var(--primary-rgb), 0.08); color: var(--primary);
       padding: 6px 16px; border-radius: 50px; font-size: 0.8rem; font-weight: 700;
-      letter-spacing: 0.5px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 10px;
-    }
-
-    /* Right Dashboard Column Details */
-    .dashboard-details {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .section-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 30px;
-      box-shadow: var(--shadow-md);
-    }
-
-    .section-box h3 {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      letter-spacing: 0.5px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px;
     }
 
     /* Social Connections Grid */
     .social-profile-grid {
-      display: grid; 
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 16px;
+      width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+      padding: 24px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 30px;
     }
     .social-item {
-      display: flex; align-items: center; gap: 14px; background: var(--bg);
-      padding: 16px 20px; border-radius: var(--radius-sm); border: 1px solid var(--border);
-      font-size: 0.9rem; color: var(--text); font-weight: 500; transition: all 0.2s ease; text-align: left;
+      display: flex; align-items: center; gap: 12px; background: var(--bg);
+      padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+      font-size: 0.85rem; color: var(--text); font-weight: 500; transition: transform 0.2s; text-align: left;
     }
-    .social-item:hover { transform: translateY(-2px); border-color: rgba(var(--primary-rgb), 0.3); box-shadow: var(--shadow-sm); }
-    .social-item i { font-size: 1.4rem; width: 24px; text-align: center; }
-    .social-item div { display: flex; flex-direction: column; }
-    .social-item label { font-size: 0.75rem; color: var(--subtext); font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
-    .social-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; margin-top: 2px; }
+    .social-item:hover { transform: translateY(-2px); }
+    .social-item i { font-size: 1.2rem; width: 20px; text-align: center; }
+    .social-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     
     .social-item.instagram i { color: #E4405F; }
     .social-item.facebook i { color: #1877F2; }
     .social-item.gmail i { color: #EA4335; }
     .social-item.whatsapp i { color: #25D366; }
 
-    /* Core Actions Callouts Layout */
-    .actions-group { width: 100%; display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+    /* Core Actions Callouts */
+    .actions-group { width: 100%; display: flex; flex-direction: column; gap: 10px; align-items: center; }
     .btn {
-      width: 270px; padding: 14px 24px; border-radius: var(--radius-sm); border: none;
-      margin:auto;
+      width: 100%; max-width: 280px; padding: 12px 24px; border-radius: var(--radius-sm); border: none;
       font-weight: 600; cursor: pointer; transition: all 0.2s ease;
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      font-family: inherit; font-size: 0.95rem;
+      font-family: inherit; font-size: 0.9rem;
     }
     .btn-edit { background: var(--text); color: var(--card); }
-    .btn-edit:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: var(--shadow-sm); }
-    .btn-logout { background: #fee2e2; color: #ef4444; }
-    .btn-logout:hover { background: #fca5a5; transform: translateY(-2px); }
-    
-    html[data-theme="dark"] .btn-logout { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-    html[data-theme="dark"] .btn-logout:hover { background: rgba(239, 68, 68, 0.25); }
-
+    .btn-edit:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-logout { background: var(--primary); color: white; }
+    .btn-logout:hover { background: #b03614; transform: translateY(-1px); }
     .admin-only {
-      width:270px;
-      margin: auto;
-      padding: 14px 24px; border-radius: var(--radius-sm);
+      width: 100%; max-width: 280px; padding: 12px 24px; border-radius: var(--radius-sm);
       border: 1px solid var(--border); background: var(--bg); color: var(--text); font-weight: 600;
-      display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 0.95rem; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 0.9rem; transition: all 0.2s;
     }
-    .admin-only:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+    .admin-only:hover { border-color: var(--primary); color: var(--primary); }
 
     /* --- EXTENDED EDIT INTERFACE MODAL --- */
     #editProfileModal {
@@ -270,7 +223,7 @@
     }
     .modalContent {
       background: var(--card); padding: 30px; border-radius: var(--radius-lg);
-      width: 90%; max-width: 460px; box-shadow: var(--shadow-lg); border: 1px solid var(--border);
+      width: 90%; max-width: 440px; box-shadow: var(--shadow-lg); border: 1px solid var(--border);
     }
     .modalContent h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; color: var(--text); letter-spacing: -0.5px; }
     
@@ -279,7 +232,7 @@
     .form-group .input-wrapper { position: relative; display: flex; align-items: center; }
     .form-group .input-wrapper i { position: absolute; left: 14px; color: var(--subtext); font-size: 1rem; }
     .form-group input {
-      width: 100%; padding: 12px 14px 12px 40px; background: var(--bg); border: 1px solid var(--border);
+      width: 100%; padding: 11px 14px 11px 40px; background: var(--bg); border: 1px solid var(--border);
       color: var(--text); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.9rem; transition: border 0.2s;
     }
     .form-group input:focus { border-color: var(--primary); }
@@ -295,8 +248,8 @@
     .loader-overlay.hide { opacity: 0; pointer-events: none; }
     .loader-spinner {
       width: 46px; height: 46px; border-radius: 50%;
-      border: 4px solid var(--border); border-top: 4px solid var(--primary);
-      animation: spin 1s linear infinite;
+      border: 4px solid var(--border); border-top-4px-solid: var(--primary);
+      border-top: 4px solid var(--primary); animation: spin 1s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -323,19 +276,7 @@
       color: var(--subtext); font-size: 0.85rem;
     }
 
-    /* --- BREAKPOINTS & LAYER CONTROL ENGINE --- */
-    
-    /* Laptops & Desktop Upgrades */
-    @media (min-width: 992px) {
-      .dashboard-layout {
-        grid-template-columns: 340px 1fr; /* Profile Card stays Left, Dashboard spreads Right */
-        gap: 30px;
-      }
-      .actions-group {
-        margin-top: 20px;
-      }
-    }
-
+    /* --- RESPONSIVENESS BREAKPOINTS --- */
     @media (max-width: 1024px) {
       .footer-grid { grid-template-columns: 1.5fr repeat(3, 1fr); gap: 30px; }
     }
@@ -356,12 +297,9 @@
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
     }
 
-    /* Mobile Adaptations */
     @media (max-width: 600px) {
-      .social-profile-grid { grid-template-columns: 1fr; gap: 12px; }
+      .social-profile-grid { grid-template-columns: 1fr; gap: 10px; }
       .footer-grid { grid-template-columns: 1fr; gap: 30px; }
-      .section-box { padding: 20px; }
-      .profile-card { padding: 30px 20px; }
     }
   </style>
 </head>
@@ -396,85 +334,64 @@
 
 <div class="hero" data-aos="fade-up">
   <h1>Your Profile.</h1>
-  <p>Manage your account settings, credentials, and social platform links seamlessly across your devices.</p>
+  <p>Manage your account settings, credentials, and social platform links.</p>
 </div>
 
 <main class="main-content" data-aos="fade-up" data-aos-delay="50">
-  <div class="dashboard-layout">
-    
-    <div class="profile-card">
-      <div class="avatar-wrapper">
-        <img src="https://www.w3schools.com/howto/img_avatar.png" id="profileAvatar" alt="User Avatar">
-        <div class="camera-icon" aria-label="Change Avatar">
-          <i class="fa-solid fa-camera"></i>
-        </div>
-      </div>
-
-      <h2 id="profileName">Username</h2>
-
-      <p class="last-active">
-        <span class="status-dot">●</span>
-        <span id="activityStatus">Active now</span>
-      </p>
-
-      <div class="meta-details">
-        <span>ID: <strong id="profileID">12345</strong></span>
-      </div>
-
-      <p class="user-role">
-        <i class="fa-solid fa-shield-halved"></i>
-        <span id="userRole">Student</span>
-      </p>
-
-      <div class="actions-group">
-        <button class="btn btn-edit" id="editProfileBtn">
-          <i class="fa-solid fa-user-pen"></i> Edit Profile
-        </button>
-        <a href="/login-admin.html" class="admin-only" id="adminPanelLink">
-          <i class="fa-solid fa-chart-line"></i> Control Panel
-        </a>
-        <button class="btn btn-logout" id="logoutBtn">
-          <i class="fa-solid fa-power-off"></i> Sign Out
-        </button>
+  <div class="profile-card">
+    <div class="avatar-wrapper">
+      <img src="https://www.w3schools.com/howto/img_avatar.png" id="profileAvatar" alt="User Avatar">
+      <div class="camera-icon" aria-label="Change Avatar">
+        <i class="fa-solid fa-camera"></i>
       </div>
     </div>
 
-    <div class="dashboard-details">
-      <div class="section-box">
-        <h3><i class="fa-solid fa-link" style="color: var(--primary);"></i>Social Accounts</h3>
-        <div class="social-profile-grid">
-          <div class="social-item instagram">
-            <i class="fa-brands fa-instagram"></i>
-            <div>
-              <label>Instagram</label>
-              <span id="displayInstagram">Not connected</span>
-            </div>
-          </div>
-          <div class="social-item facebook">
-            <i class="fa-brands fa-facebook"></i>
-            <div>
-              <label>Facebook</label>
-              <span id="displayFacebook">Not connected</span>
-            </div>
-          </div>
-          <div class="social-item gmail">
-            <i class="fa-solid fa-envelope"></i>
-            <div>
-              <label>Email Address</label>
-              <span id="displayGmail">Not connected</span>
-            </div>
-          </div>
-          <div class="social-item whatsapp">
-            <i class="fa-brands fa-whatsapp"></i>
-            <div>
-              <label>WhatsApp</label>
-              <span id="displayWhatsapp">Not connected</span>
-            </div>
-          </div>
-        </div>
+    <h2 id="profileName">Username</h2>
+
+    <p class="last-active">
+      <span class="status-dot">●</span>
+      <span id="activityStatus">Active now</span>
+    </p>
+
+    <div class="meta-details">
+      <span>ID: <strong id="profileID">12345</strong></span>
+    </div>
+
+    <p class="user-role">
+      <i class="fa-solid fa-shield-halved"></i>
+      <span id="userRole">Student</span>
+    </p>
+
+    <div class="social-profile-grid">
+      <div class="social-item instagram">
+        <i class="fa-brands fa-instagram"></i>
+        <span id="displayInstagram">Not connected</span>
+      </div>
+      <div class="social-item facebook">
+        <i class="fa-brands fa-facebook"></i>
+        <span id="displayFacebook">Not connected</span>
+      </div>
+      <div class="social-item gmail">
+        <i class="fa-solid fa-envelope"></i>
+        <span id="displayGmail">Not connected</span>
+      </div>
+      <div class="social-item whatsapp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span id="displayWhatsapp">Not connected</span>
       </div>
     </div>
 
+    <div class="actions-group">
+      <button class="btn btn-edit" id="editProfileBtn">
+        <i class="fa-solid fa-user-pen"></i> Edit Profile
+      </button>
+      <a href="/login-admin.html" class="admin-only" id="adminPanelLink">
+        <i class="fa-solid fa-chart-line"></i> Control Panel
+      </a>
+      <button class="btn btn-logout" id="logoutBtn">
+        <i class="fa-solid fa-power-off"></i> Sign Out
+      </button>
+    </div>
   </div>
 </main>
 
@@ -515,7 +432,7 @@
     </div>
 
     <div class="form-group">
-      <label for="editWorkspace">WhatsApp Number</label>
+      <label for="editWhatsapp">WhatsApp Number</label>
       <div class="input-wrapper">
         <i class="fa-brands fa-whatsapp"></i>
         <input type="text" id="editWhatsapp" placeholder="+91 00000 00000">
@@ -540,7 +457,7 @@
       </div>
     </div>
     <div class="f-col">
-      <h4>Quick Links</h4>
+      <h4>Qick Links</h4>
       <ul>
         <li><a href="about.html">About</a></li>
         <li><a href="notes.html">Notes</a></li>
@@ -560,7 +477,7 @@
     <div class="f-col">
       <h4>Official</h4>
       <ul>
-        <li><a href="https://www.kashmiruniversity.net/">University</a></li>
+        <li><a href="https://www.kashmiruniversity.net/">University </a></li>
         <li><a href="https://egov.uok.edu.in/eservices/syllabus/prelogin/course.aspx?coursetype=UGP">Syllabus</a></li>
         <li><a href="https://egov.uok.edu.in/results/">Results</a></li>
       </ul>
@@ -808,8 +725,10 @@ document.getElementById("saveProfileBtn").onclick = async () => {
 
   try {
     const uid = auth.currentUser.uid;
+    // Update profile core name
     await auth.currentUser.updateProfile({ displayName: newName });
     
+    // Package and process meta updates
     const metaData = {
       displayName: newName,
       instagram: editInstagram.value.trim(),
@@ -820,6 +739,7 @@ document.getElementById("saveProfileBtn").onclick = async () => {
 
     await db.collection("users").doc(uid).set(metaData, { merge: true });
 
+    // Live refresh data onto fields
     profileName.textContent = newName;
     displayInstagram.textContent = metaData.instagram || "Not connected";
     displayFacebook.textContent  = metaData.facebook || "Not connected";
