@@ -271,12 +271,11 @@
     <a href="index.html" class="logo">KuGuider<span>.</span></a>
     <nav class="nav-menu">
       <ul class="nav-links" id="menu">
-         <li><a href="about.html">About</a></li>
+        <li><a href="about.html">About</a></li>
         <li><a href="notes.html">Notes</a></li>
         <li><a href="papers.html">Papers</a></li>
         <li><a href="chat.html">Chat</a></li>
         <li><a href="profile.html">Profile</a></li>
-       
       </ul>
       <div class="nav-actions">
         <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
@@ -327,13 +326,13 @@
       </div>
     </div>
     <div class="f-col">
-      <h4>Qick Links</h4>
+      <h4>Quick Links</h4>
       <ul>
         <li><a href="about.html">About</a></li>
         <li><a href="notes.html">Notes</a></li>
         <li><a href="papers.html">Papers</a></li>
         <li><a href="chat.html">Chat</a></li>
-        <li><a href="chat.html">Profile</a></li>
+        <li><a href="profile.html">Profile</a></li>
       </ul>
     </div>
     <div class="f-col">
@@ -396,15 +395,15 @@
     }).catch(err => console.warn("Analytics configuration skipped:", err));
   }
 
-  // Dynamic Router Link Tracker
+  // Optimized Router Link Tracker (Fixed URL Tracking Bugs)
   function handleActiveNavbarLogic() {
-    const currentPath = window.location.pathname.split("/").pop();
+    const currentPath = window.location.pathname.split("/").pop().toLowerCase();
     const navLinks = document.querySelectorAll('.nav-links a');
     
     let matched = false;
     navLinks.forEach(link => {
       link.classList.remove('active');
-      const hrefTarget = link.getAttribute('href');
+      const hrefTarget = link.getAttribute('href').toLowerCase();
       
       if (currentPath === hrefTarget || (currentPath === "" && hrefTarget === "index.html")) {
         link.classList.add('active');
@@ -412,7 +411,8 @@
       }
     });
 
-    if (!matched && navLinks.length > 0) {
+    // Fallback: Only match the index or about default tab if explicitly working domain indices
+    if (!matched && navLinks.length > 0 && (currentPath === "index.html" || currentPath === "")) {
       navLinks[0].classList.add('active');
     }
   }
@@ -434,7 +434,6 @@
     const burgerIcon = document.querySelector('#burgerBtn i');
     menu.classList.toggle('active');
     
-    // Smooth swapping out from structural layout state values
     if (menu.classList.contains('active')) {
       burgerIcon.className = "fa-solid fa-xmark";
     } else {
@@ -536,7 +535,6 @@
 
     if (totalPages <= 1) return;
 
-    // Helper Function to cleanly pass page routing target events
     const navigateTo = (targetPage) => {
       currentPage = targetPage;
       render();
@@ -544,7 +542,6 @@
       window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
     };
 
-    // 1. Create PREVIOUS Button
     const prevBtn = document.createElement('button');
     prevBtn.className = 'page-btn';
     prevBtn.innerHTML = `<i class="fa-solid fa-chevron-left"></i> <span>Prev</span>`;
@@ -552,7 +549,6 @@
     prevBtn.onclick = () => navigateTo(currentPage - 1);
     container.appendChild(prevBtn);
 
-    // 2. Compute Segmented Truncation Architecture Arrays
     const range = 1; 
     let pages = [];
     pages.push(1);
@@ -566,7 +562,6 @@
     }
     if (totalPages > 1) pages.push(totalPages);
 
-    // 3. Render Numeric Content Blocks
     pages.forEach(page => {
       if (page === '...') {
         const ellipsis = document.createElement('span');
@@ -582,7 +577,6 @@
       }
     });
 
-    // 4. Create NEXT Button
     const nextBtn = document.createElement('button');
     nextBtn.className = 'page-btn';
     nextBtn.innerHTML = `<span>Next</span> <i class="fa-solid fa-chevron-right"></i>`;
