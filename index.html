@@ -6,17 +6,17 @@
 <title>Login | KuGuider</title>
 
 <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
-  <!-- Meta Tags for Social Sharing -->
-  <meta property="og:image" content="https://kuguider.netlify.app/file_0000000042b861fd808de615ad3ddea5.png">
-  <meta property="og:url" content="https://kuguider.netlify.app">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="google-adsense-account" content="ca-pub-2137400647468187">
-  <!-- Browser Address Bar Color (Mobile) -->
-  <meta name="theme-color" content="#fff" />
-  <meta name="msapplication-navbutton-color" content="#fff" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KuGuider - Free Notes & Previous Year Papers for Kashmir University UG Students</title>
+<!-- Meta Tags for Social Sharing -->
+<meta property="og:image" content="https://kuguider.netlify.app/file_0000000042b861fd808de615ad3ddea5.png">
+<meta property="og:url" content="https://kuguider.netlify.app">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="google-adsense-account" content="ca-pub-2137400647468187">
+<!-- Browser Address Bar Color (Mobile) -->
+<meta name="theme-color" content="#fff" />
+<meta name="msapplication-navbutton-color" content="#fff" />
+<meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KuGuider - Free Notes & Previous Year Papers for Kashmir University UG Students</title>
 <meta name="description" content="KuGuider offers free undergraduate notes, previous year papers, and study materials for students of Kashmir University. Access easy and reliable online resources for your coursework and exam preparation.">
 <meta name="keywords" content="Kashmir University Notes, Free UG Notes, KU Previous Year Papers, KU Study Materials, Kashmir University Exam Resources, Free Notes for KU Students">
 <meta name="robots" content="index, follow">
@@ -24,164 +24,223 @@
 <meta property="og:description" content="Access free undergraduate notes, previous year papers, and study materials for Kashmir University students on KuGuider. Study smarter with reliable resources.">
 <meta property="og:url" content="https://kuguider.netlify.app/">
 <meta property="og:type" content="website">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
 
+  <style>
+    :root {
+      --primary: #CB441D;
+      --primary-rgb: 203, 68, 29;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --subtext: #64748b;
+      --border: rgba(0,0,0,0.06);
+      --radius-lg: 10px;
+      --radius-sm: 12px;
+      --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.05);
+    }
 
-<style>
-:root{
-  --bg:#f5f6f8;
-  --card:#ffffff;
-  --text:#1f2937;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --btn:#000;
-  --radius:10px;
-}
+    html[data-theme="dark"] {
+      --bg: #030712;
+      --card: #0b0f19;
+      --text: #f9fafb;
+      --subtext: #9ca3af;
+      --border: rgba(255,255,255,0.06);
+    }
 
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,sans-serif;}
+    * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
 
-body{
-  height: 100vh;
-  width:100%;
-  background:var(--bg);
-  color:var(--text);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+    body { 
+      background: var(--bg); 
+      color: var(--text); 
+      font-family: 'Poppins', sans-serif; 
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: background 0.4s ease;
+    }
 
+    /* --- AUTH CARD --- */
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      padding: 35px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
-img{
-  width:120px;
-  margin:0;
-}
+    .logo-img {
+      width: 100px;
+      height:200px;
+      height: auto;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+    }
 
+    .card h2 {
+      font-family: 'Outfit', sans-serif;
+      margin-bottom: 24px;
+      font-size: 1.6rem;
+      font-weight: 500; /* Refined boldness */
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
 
-.card{
-  width:320px;
-  background:var(--card);
-  padding:1.5rem;
-  border-radius:var(--radius);
-  border:1px solid var(--border);
-}
+    /* --- INPUTS --- */
+    .input-group { width: 100%; margin-bottom: 14px; }
 
-.card h2{
-  margin-bottom:1.1rem;
-  font-size:1.25rem;
-}
+    input {
+      width: 100%;
+      padding: 13px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
 
-input{
-  width:100%;
-  padding:0.75rem;
-  margin-bottom:0.75rem;
-  border-radius:7px;
-  border:1px solid var(--border);
-  font-size:0.9rem;
-}
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+    }
 
-.password{
-  position:relative;
-}
-.password i{
-  position:absolute;
-  right:10px;
-  top:50%;
-  transform:translateY(-50%);
-  cursor:pointer;
-  color:#555;
-}
+    .password { position: relative; width: 100%; }
+    .password i {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--subtext);
+      font-size: 0.9rem;
+    }
 
-button{
-  width:100%;
-  padding:0.75rem;
-  border:none;
-  border-radius:7px;
-  background:var(--btn);
-  color:#fff;
-  font-size:0.9rem;
-  cursor:pointer;
-}
-button:hover{opacity:0.9;}
+    /* --- BUTTONS & LINKS --- */
+    button#action {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: var(--primary);
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.2s ease;
+    }
 
-.link{
-  background:none;
-  border:none;
-  color:#000;
-  text-align:left;
-  margin-top:0.4rem;
-  font-size:0.8rem;
-  cursor:pointer;
-  text-decoration:underline;
-}
+    button#action:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
 
+    .link {
+      background: none;
+      border: none;
+      color: var(--text); /* Matched to primary color */
+      text-decoration: underline;
+      text-align: left;
+      margin-top: 15px;
+      font-size: 0.85rem;
+      font-weight: 400;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      transition: opacity 0.2s;
+    }
 
-.toast{
-  visibility:hidden;
-  position:fixed;
-  top:15px;
-  left:70%;
-  width: 150px;
-  transform:translateX(-50%);
-  background:#000;
-  color:#fff;
-  padding:0.6rem 1rem;
-  border-radius:7px;
-  font-size:0.85rem;
-}
-.toast.show{visibility:visible}
+    .link:hover {
+      
+      opacity: 0.8;
+    }
 
-@media(min-width:900px){
-  .card{
-  width:450px;
-  background:var(--card);
-  padding:1.5rem;
-  border-radius:var(--radius);
-  border:1px solid var(--border);
-}
+    /* --- TOAST --- */
+    .toast {
+      visibility: hidden;
+      position: fixed;
+      top: 24px;
+      wwidth: 60%;
+      right: 24px;
+      background: var(--card);
+      color: var(--text);
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      z-index: 9999;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
 
-}
-</style>
+    .toast.show { visibility: visible; opacity: 1; transform: translateX(0); }
+
+    @media(max-width: 480px) {
+      .card { padding: 30px 20px; }
+      .toast { right: 10px; left: 10px; top: 10px; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="page">
+<div class="card">
+  <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider" class="logo-img">
+  <h2 id="title">Login</h2>
 
-
-  <!-- RIGHT -->
-  <div class="card">
-     <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider">
-    <h2 id="title">Login</h2>
-
-    <input type="text" id="name" placeholder="Name" style="display:none">
-    <input type="email" id="email" placeholder="Email">
-
-    <div class="password">
-      <input type="password" id="password" placeholder="Password">
-      <i class="fa-solid fa-eye" id="toggle"></i>
-    </div>
-
-    <button id="action">Login</button>
-
-    <button class="link" id="switch">
-      Don't have an account? Signup
-    </button>
-
-    <button class="link" id="forgot">
-      Forgot Password?
-    </button>
+  <div class="input-group" id="nameContainer" style="display:none">
+    <input type="text" id="name" placeholder="Full Name">
+  </div>
+  
+  <div class="input-group">
+    <input type="email" id="email" placeholder="Email Address">
   </div>
 
+  <div class="input-group password">
+    <input type="password" id="password" placeholder="Password">
+    <i class="fa-solid fa-eye" id="toggle"></i>
+  </div>
+
+  <button id="action">Login</button>
+
+  <button class="link" id="switch">
+    Don't have an account? Signup
+  </button>
+
+  <button class="link" id="forgot">
+    Forgot Password?
+  </button>
 </div>
 
 <div id="toast" class="toast"></div>
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
 <script>
+// Theme Sync
+const syncTheme = () => {
+  const theme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+};
+syncTheme();
+window.addEventListener('storage', syncTheme);
+
+// Firebase
 firebase.initializeApp({
   apiKey:"AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
   authDomain:"kuguider.firebaseapp.com",
@@ -191,6 +250,7 @@ const auth=firebase.auth();
 
 const title=document.getElementById("title");
 const nameI=document.getElementById("name");
+const nameContainer=document.getElementById("nameContainer");
 const email=document.getElementById("email");
 const pass=document.getElementById("password");
 const toggle=document.getElementById("toggle");
@@ -199,50 +259,57 @@ const sw=document.getElementById("switch");
 const toast=document.getElementById("toast");
 const forgot=document.getElementById("forgot");
 
-let signup=false;
+let isSignup = false;
 
 function msg(t){
   toast.textContent=t;
   toast.classList.add("show");
-  setTimeout(()=>toast.classList.remove("show"),3000);
+  setTimeout(()=>toast.classList.remove("show"), 3000);
 }
 
-toggle.onclick=()=>{pass.type=pass.type==="password"?"text":"password";};
+toggle.onclick=()=>{
+  const type = pass.type === "password" ? "text" : "password";
+  pass.type = type;
+  toggle.className = type === "password" ? "fa-solid fa-eye" : "fa-solid fa-eye-slash";
+};
 
 sw.onclick=()=>{
-  signup=!signup;
-  title.textContent=signup?"Signup":"Login";
-  action.textContent=signup?"Signup":"Login";
-  nameI.style.display=signup?"block":"none";
-  sw.textContent=signup?"Already have an account? Login":"Don't have an account? Signup";
+  isSignup = !isSignup;
+  title.textContent = isSignup ? "Signup" : "Login";
+  action.textContent = isSignup ? "Signup" : "Login";
+  nameContainer.style.display = isSignup ? "block" : "none";
+  sw.textContent = isSignup ? "Already have an account? Login" : "Don't have an account? Signup";
+  forgot.style.display = isSignup ? "none" : "block";
 };
 
 action.onclick=async()=>{
-  if(!email.value||!pass.value) return msg("Fill all fields");
+  if(!email.value || !pass.value) return msg("Please fill all fields");
   try{
-    if(signup){
-      if(!nameI.value) return msg("Enter name");
-      const u=await auth.createUserWithEmailAndPassword(email.value,pass.value);
-      await u.user.updateProfile({displayName:nameI.value});
-    }else{
-      await auth.signInWithEmailAndPassword(email.value,pass.value);
+    if(isSignup){
+      if(!nameI.value) return msg("Please enter your name");
+      const res = await auth.createUserWithEmailAndPassword(email.value, pass.value);
+      await res.user.updateProfile({displayName: nameI.value});
+    } else {
+      await auth.signInWithEmailAndPassword(email.value, pass.value);
     }
-    msg("Success");
-    setTimeout(()=>location.href="about.html",1200);
-  }catch{
-    msg("Incorrect email or password");
+    msg("Success! Redirecting...");
+    setTimeout(()=>location.href="about.html", 1000);
+  } catch(e) {
+    msg(e.message);
   }
 };
 
 forgot.onclick=async()=>{
-  if(!email.value) return msg("Enter email");
-  await auth.sendPasswordResetEmail(email.value);
-  msg("Reset email sent");
+  if(!email.value) return msg("Please enter your email first");
+  try {
+    await auth.sendPasswordResetEmail(email.value);
+    msg("Reset link sent to your email");
+  } catch(e) {
+    msg("Error: " + e.code);
+  }
 };
 
-auth.onAuthStateChanged(u=>{
-  if(u) location.href="about.html";
-});
+auth.onAuthStateChanged(user => { if(user) location.href="about.html"; });
 </script>
 
 </body>

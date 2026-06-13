@@ -2,739 +2,625 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
-  <!-- Meta Tags for Social Sharing -->
-<meta property="og:title" content="KuGuider - Smart Resource Portal">
-<meta property="og:description" content="Access notes, papers, and academic resources instantly.">
-<meta property="og:image" content="https://kuguider.netlify.app/file_0000000042b861fd808de615ad3ddea5.png">
-<meta property="og:url" content="https://kuguider.netlify.app">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="google-adsense-account" content="ca-pub-2137400647468187">
-<!-- Browser Address Bar Color (Mobile) -->
-<meta name="theme-color" content="#fff" />
-<meta name="msapplication-navbutton-color" content="#fff" />
-<meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>All Notes - KuGuider</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+  <title>KuGuider | Notes</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-auth-compat.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
   <style>
-:root {
-  --radius: 10px;
-  --transition: 0.25s ease;
+    :root {
+      --primary: #CB441D;
+      --primary-rgb: 203, 68, 29;
+      --accent: #FF8C00;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --card-rgb: 255, 255, 255;
+      --text: #0f172a;
+      --subtext: #64748b;
+      --border: rgba(0,0,0,0.06);
+      --nav-height: 80px;
+      --radius-lg: 20px;
+      --radius-sm: 12px;
+      --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -4px rgba(0,0,0,0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.05);
+    }
 
-  /* Light Theme */
-  --bg-light: #ffffff;
-  --card-light: #f7f7f8;
-  --text-light: #202123;
-  --subtext-light: #6b6c6f;
-  --border-light: #e5e5e7;
-  --nav-bg-light: #f9f9f9;
+    html[data-theme="dark"] {
+      --bg: #030712;
+      --card: #0b0f19;
+      --card-rgb: 11, 15, 25;
+      --text: #f9fafb;
+      --subtext: #9ca3af;
+      --border: rgba(255,255,255,0.06);
+    }
 
-  /* Dark Theme */
-  --bg-dark: #131314;
-  --card-dark: #1e1f20;
-  --text-dark: #ececec;
-  --subtext-dark: #9e9ea0;
-  --border-dark: #2e2f32;
-  --nav-bg-dark: #1a1a1a;
-}
-
-/* Theme handling */
-html[data-theme="light"] {
-  --bg: var(--bg-light);
-  --card: var(--card-light);
-  --text: var(--text-light);
-  --subtext: var(--subtext-light);
-  --border: var(--border-light);
-  --nav-bg: var(--nav-bg-light);
-
-  --btn-bg: #000;
-  --btn-text: #fff;
-}
-html[data-theme="dark"] {
-  --bg: var(--bg-dark);
-  --card: var(--card-dark);
-  --text: var(--text-dark);
-  --subtext: var(--subtext-dark);
-  --border: var(--border-dark);
-  --nav-bg: var(--nav-bg-dark);
-
-  --btn-bg: #fff;
-  --btn-text: #000;
-}
-
-/* Global */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-}
-body {
-  background: var(--bg);
-  color: var(--text);
-  transition: background var(--transition), color var(--transition);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-
-
-/* Navbar */
-nav {
-  background: var(--nav-bg);
-  padding: 0.65rem;
-  width: 100%;
-  box-sizing: border-box;
-  position: fixed;
-  z-index: 999;
-}
-
-/* TOP ROW: LOGO + HAMBURGER */
-.nav-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.logo img {
-  height: 32px;
-  width: 100px;
-  display: block;
-  object-fit: contain;
-  border-radius: 6px;
-}
-/* HAMBURGER */
-.hamburger {
-  font-size: 1.8rem;
-  cursor: pointer;
-  display: none;
-  color: var(--text);
-  transition: 0.25s;
-}
-
-.hamburger:active {
-  transform: scale(0.85);
-}
-
-/* DESKTOP LINKS */
-.nav-links {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.7rem;
-  margin-top: 0.6rem;
-  transition: 0.3s ease;
-}
-
-nav a {
-  padding: 0.6rem 1rem;
-  border-radius: var(--radius);
-  font-size: 0.9rem;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  
-  background: var(--card);
-  color: var(--text);
-  transition: 0.25s ease;
-  border: 1px solid var(--border);
-}
-
-nav a:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-/* ---------------- MOBILE ---------------- */
-@media (max-width: 768px) {
-  
-  .hamburger {
-    display: block;
-  }
-  
-  /* HIDDEN MENU (initial) */
-  .nav-links {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+    body { 
+      background: var(--bg); 
+      color: var(--text); 
+      font-family: 'Poppins', sans-serif; 
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
     
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    padding: 0 0.5rem;
-    transform: translateY(-10px);
-    transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
-  }
-  
-  /* ACTIVE MENU */
-  .nav-links.show {
-    max-height: 500px;
-    opacity: 1;
-    transform: translateY(0px);
-    padding-top: 0.8rem;
-  }
-}
-/* Title */
-h1 {
-  text-align: center;
-  margin: 2rem 0 1rem;
-  font-size: 1.4rem;
-  color: var(--text);
-}
+    h1, h2, h3, h4, .logo, .nav-links a, .page-btn { font-family: 'Outfit', sans-serif; }
 
-/* Search bar */
-.search-bar {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin: 1.5rem auto 2rem;
-  flex-wrap: wrap;
-  max-width: 90%;
-}
-.search-bar input,
-.search-bar select {
-  padding: 0.7rem 1rem;
-  width: 65%;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  font-size: 1rem;
-  background: var(--card);
-  color: var(--text);
-  transition: var(--transition);
-}
-.search-bar input:focus,
-.search-bar select:focus {
-  outline: none;
-  border-color: var(--btn-bg);
-}
+    /* --- NAVBAR --- */
+    header {
+      height: var(--nav-height);
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      padding: 0 4%;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-.select {
-  background-color: #1e1e1e ;  /* Dark background */
-  color: #ffffff;             /* White text */
-  border: 1px solid #555;
-  border-radius: 8px;
-  padding: 10px;
-  appearance: none; /* Removes default browser style */
-}
+    header.scrolled {
+      height: 70px;
+      background: rgba(var(--card-rgb), 0.75);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
 
-.notesbox {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;  /* or center if you want vertically */
-  width: 100%;
-  min-height: 80vh;
-  padding: 1rem;
-}
+    header.nav-hidden { transform: translateY(-100%); }
 
-.notes-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  width: fit-content;
-  width: 90%;
-  justify-content: center;
-}
-.note-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.2rem;
-  transition: var(--transition);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.note-card h3 {
-  font-size: 1.1rem;
-  text-transform: capitalize;
-  margin-bottom: 0.4rem;
-}
-.note-card p {
-  font-size: 0.95rem;
-  margin-bottom: 0.6rem;
-  color: var(--subtext);
-}
-.note-card a {
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  border-radius: var(--radius);
-  padding: 0.6rem 0.8rem;
-  width: 65%;
-  font-size: 0.85rem;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  transition: var(--transition);
-}
-.note-card a:hover {
-  opacity: 0.8;
-}
+    .nav-container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.note-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.4rem;
-}
-.note-card p {
-  font-size: 0.95rem;
-  margin-bottom: 0.6rem;
-  color: var(--subtext);
-}
-.note-card a {
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  border-radius: var(--radius);
-  padding: 0.6rem 0.8rem;
-  width: 65%;
-  font-size: 0.85rem;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  transition: var(--transition);
-}
-.note-card a:hover {
-  opacity: 0.8;
-}
+    .logo { 
+      font-size: 1.6rem; font-weight: 800; color: var(--text); 
+      text-decoration: none; letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--primary); }
 
-/* Loader */
-.loader-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--bg);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 3000;
-  transition: var(--transition);
-}
-.loader-spinner {
-  border: 6px solid var(--border);
-  border-top: 6px solid var(--btn-bg);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
-  margin-bottom: 1rem;
-}
-.loader-text {
-  font-size: 1.1rem;
-  color: var(--btn-bg);
-  font-weight: bold;
-}
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+    .nav-menu { display: flex; align-items: center; gap: 30px; }
+    .nav-links { display: flex; gap: 6px; list-style: none; align-items: center; }
+    
+    .nav-links a {
+      padding: 8px 18px; border-radius: 50px; text-decoration: none;
+      color: var(--subtext); font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); background: rgba(var(--primary-rgb), 0.08); }
+    .nav-links a.active { background: var(--primary); color: white !important; }
 
-.fa-instagram{color:#E4405F;}
-.fa-facebook {color:#1877F2;}
-.fa-telegram {color:#0088cc;}
-.fa-whatsapp {color:#25D366;}
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    
+    .icon-btn {
+      width: 40px; height: 40px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+      background: var(--card); color: var(--text); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    .icon-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
 
-.modern-footer{
-  width:100%;
-  margin-top:5rem;
-  background: var(--nav-bg);
-  color:var(--text);
-}
+    .burger { background: transparent; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text); display: none; }
 
-/* Glass container */
-.footer-glass{
-  max-width:1200px;
-  margin:auto;
-  padding:2.5rem 1.5rem;
-  display:flex;
-  justify-content:space-around;
-  gap:2rem;
-  flex-wrap:wrap;
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-  
-}
+    /* --- HERO --- */
+    .hero { 
+      margin-top: var(--nav-height); 
+      margin-inline: auto;
+      padding: clamp(40px, 8vh, 80px) 5% 40px; 
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; color: var(--text); }
+    .hero p { color: var(--subtext); margin-top: 15px; font-size: clamp(0.95rem, 2vw, 1.1rem); max-width: 600px; margin-inline: auto; }
 
-/* Sections */
-.footer-section{
-  flex:1;
-  min-width:240px;
-}
+    /* --- SEARCH FILTERS --- */
+    .filter-wrapper {
+      max-width: 650px; margin: 40px auto 0; display: flex; gap: 10px;
+      background: var(--card); padding: 8px; border-radius: var(--radius-lg); border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg); align-items: center;
+    }
+    .search-block { flex: 2; display: flex; align-items: center; padding-left: 14px; gap: 10px; }
+    .search-block i { color: var(--subtext); }
+    .search-input { width: 100%; padding: 10px 0; border: none; background: transparent; font-size: 0.95rem; color: var(--text); }
+    .filter-select {
+      padding: 10px 20px; border-radius: calc(var(--radius-lg) - 4px); border: 1px solid var(--border);
+      background: var(--bg); color: var(--text); font-family: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.3s;
+    }
+    .filter-select:focus { border-color: var(--primary); }
 
-.footer-section h4{
-  font-size:1.05rem;
-  margin-bottom:0.7rem;
-  position:relative;
-}
+    /* --- MAIN BODY CONTAINER --- */
+    .main-content { 
+      width: 90%; max-width: 1400px; margin: 40px auto 0; 
+      flex-grow: 1;
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
 
-.footer-section h4::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-6px;
-  width:40px;
-  height:3px;
-  border-radius:6px;
-  background:linear-gradient(90deg,#CB441DF7,#141415);
-}
+    /* --- CARDS --- */
+    .note-card {
+      background: var(--card); border-radius: var(--radius-lg); padding: 14px;
+      border: 1px solid var(--border); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex; flex-direction: column; box-shadow: var(--shadow-sm);
+    }
+    .note-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: rgba(var(--primary-rgb), 0.2); }
 
-.footer-section p{
-  font-size:0.85rem;
-  color:var(--subtext);
-  margin-top:0.6rem;
-}
+    .banner {
+      width: 100%; height: 180px; border-radius: calc(var(--radius-lg) - 4px); overflow: hidden;
+      margin-bottom: 16px; position: relative; 
+    }
+    .banner img { width: 90%; height: 250px; object-fit: cover; transition: transform 0.6s ease; }
+    .note-card:hover .banner img { transform: scale(1.05); }
+    
+    .new-tag {
+      position: absolute; top: 12px; left: 12px; background: #ef4444; color: white;
+      padding: 5px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; z-index: 5;
+    }
 
-/* Links */
-.footer-section ul{
-  list-style:none;
-  margin-top:0.8rem;
-}
+    .card-info { display: flex; flex-direction: column; flex-grow: 1; }
+    .card-info h3 { font-size: 1.15rem; margin-bottom: 6px; font-weight: 700; color: var(--text); line-height: 1.3; }
+    
+    .stats-row { display: flex; gap: 16px; color: var(--subtext); font-size: 0.8rem; margin-bottom: 20px; font-weight: 500; }
+    .stats-row span i { color: var(--primary); margin-right: 4px; }
 
-.footer-section ul li{
-  margin-bottom:0.5rem;
-}
+    .actions { display: flex; gap: 10px; margin-top: auto; }
+    .btn {
+      padding: 11px 16px; border-radius: var(--radius-sm); border: none;
+      font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      font-family: inherit; font-size: 0.85rem; flex: 1;
+    }
 
-.footer-section ul a{
-  color:var(--text);
-  font-size:0.85rem;
-  text-decoration:none;
-  opacity:0.85;
-  transition:0.25s;
-}
+    .btn-like { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+    .btn-like:hover { background: rgba(239, 68, 68, 0.05); border-color: #ef4444; color: #ef4444; }
+    .btn-like.liked { background: #ef4444; color: white; border-color: #ef4444; }
 
-.footer-section ul a:hover{
-  opacity:1;
-  padding-left:6px;
-}
+    .btn-view { background: var(--primary); color: white; text-decoration: none; }
+    .btn-view:hover { background: #b03614; }
 
-/* Social icons */
-.footer-socials{
-  margin-top:1rem;
-  display:flex;
-  gap:1rem;
-  font-size:1.6rem;
-}
+    /* --- ADVANCED PAGINATION --- */
+    .pagination {
+      margin: 60px 0; display: flex; justify-content: center; align-items: center; gap: 8px;
+    }
+    .page-btn {
+      min-width: 40px; height: 40px; padding: 0 12px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+      background: var(--card); color: var(--text); cursor: pointer;
+      font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .page-btn:hover:not(.active):not(:disabled) { border-color: var(--primary); color: var(--primary); }
+    .page-btn.active { 
+      background: var(--primary); color: white; border-color: var(--primary); 
+      box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.25);
+    }
+    .page-btn:disabled {
+      opacity: 0.4; cursor: not-allowed; background: var(--border); color: var(--subtext);
+    }
+    .page-link-separator {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 40px; font-family: 'Outfit', sans-serif;
+      user-select: none; color: var(--subtext); font-weight: 600;
+    }
 
-.footer-socials a{
-  color:var(--btn-bg);
-  transition:0.3s;
-}
+    /* --- FOOTER --- */
+    footer { 
+      background: var(--card); border-top: 1px solid var(--border); 
+      padding: 60px 5% 30px; margin-top: auto;
+    }
+    .footer-grid {
+      max-width: 1400px; margin: 0 auto; display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr); gap: 40px;
+    }
+    .f-col h2 { font-size: 1.6rem; color: var(--primary); margin-bottom: 16px; font-weight: 800; }
+    .f-col h4 { margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.8rem; color: var(--text); font-weight: 700; }
+    .f-col p { color: var(--subtext); line-height: 1.6; margin-bottom: 16px; font-size: 0.9rem; max-width: 320px; }
+    .f-col ul { list-style: none; }
+    .f-col li { margin-bottom: 10px; }
+    .f-col a { color: var(--subtext); text-decoration: none; transition: all 0.2s; font-size: 0.9rem; }
+    .f-col a:hover { color: var(--primary); }
 
-.footer-socials a:hover{
-  transform:translateY(-5px) scale(1.1);
-  filter:drop-shadow(0 6px 14px rgba(0,0,0,0.25));
-}
+    .footer-bottom {
+      max-width: 1400px; margin: 40px auto 0; padding-top: 20px;
+      border-top: 1px solid var(--border); text-align: center;
+      color: var(--subtext); font-size: 0.85rem;
+    }
 
-/* Bottom credit */
-.footer-credit{
-  text-align:center;
-  padding:0.9rem;
-  font-size:0.8rem;
-  background: var(--nav-bg);
-}
+    /* --- RESPONSIVENESS BREAKPOINTS --- */
+    @media (max-width: 1024px) {
+      .footer-grid { grid-template-columns: 1.5fr repeat(3, 1fr); gap: 30px; }
+    }
 
-.footer-credit span{
-  color:#ff4d4d;
-}
+    @media (max-width: 900px) {
+      .burger { display: block; z-index: 2001; }
+      
+      .nav-links {
+        position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+        background: var(--card); flex-direction: column; padding: 100px 24px; 
+        transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+        box-shadow: -10px 0 30px rgba(0,0,0,0.05); z-index: 1999;
+        align-items: flex-start; gap: 15px; border-left: 1px solid var(--border);
+      }
+      .nav-links.active { right: 0; }
+      .nav-links a { width: 100%; padding: 12px 20px; font-size: 1.05rem; display: block; }
+      
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
 
-.footer-credit a{
-  color:var(--btn-bg);
-  text-decoration:none;
-  font-weight:600;
-}
-
-.footer-credit a:hover{
-  text-decoration:underline;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-  .footer-glass{
-    flex-direction:column;
-    text-align:center;
-  }
-  .footer-section h4::after{
-    left:50%;
-    transform:translateX(-50%);
-  }
-  .footer-socials{
-    justify-content:center;
-  }
-
-}
-/* Responsive */
-@media (max-width: 768px) {
-  nav {
-    padding: 0.5rem;
-  }
-  nav a {
-    font-size: 0.8rem;
-    padding: 0.5rem 0.7rem;
-  }
-  .search-bar {
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
-  }
-  .notes-container {
-    grid-template-columns: 1fr;
-  }
-}
+    @media (max-width: 600px) {
+      .filter-wrapper { flex-direction: column; align-items: stretch; border-radius: var(--radius-lg); padding: 12px; }
+      .search-block { padding-left: 6px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+      .page-btn span { display: none; } /* Hide 'Prev'/'Next' words on small mobile viewports */
+    }
   </style>
 </head>
 <body>
 
-
-<div class="loader-overlay" id="loaderOverlay">
-  <div class="loader-spinner"></div>
-
-</div>
-
-<nav>
+<header>
   <div class="nav-container">
-    <div class="logo">
-      <img src="/nav-logo.png" alt="Logo">
-    </div>
-    
-    <div class="hamburger" id="hamburger">
-      <i class="fa-solid fa-bars"></i>
-    </div>
-  </div>
-  
-  <div class="nav-links" id="navLinks">
-    <a href="about.html"><i class="fa-solid fa-address-card"></i> About</a>
-    <a href="notes.html"><i class="fa-solid fa-file-lines"></i> Notes</a>
-    <a href="papers.html"><i class="fa-solid fa-file-pdf"></i> Papers</a>
-    <a href="chat.html">
-      <i class="fa-solid fa-comments"></i> Chat
-    </a>
-    <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
-    <a href="team.html"><i class="fa-solid fa-hat-cowboy"></i> Admins</a>
-    <a href="#" class="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-sun" style=""></i>Theme</a>
-  </div>
-</nav>
-
-
-<h1 data-aos="fade-up">All Notes</h1>
-
-<div class="search-bar" data-aos="fade-up" data-aos-delay="100">
-  <input type="text" id="searchSubject" placeholder="Search by Subject">
-  <select class="select" id="searchSemester">
-    <option value="">All Semesters</option>
-    <option value="Semester 1">Semester 1</option>
-    <option value="Semester 2">Semester 2</option>
-    <option value="Semester 3">Semester 3</option>
-    <option value="Semester 4">Semester 4</option>
-    <option value="Semester 5">Semester 5</option>
-    <option value="Semester 6">Semester 6</option>
-  </select>
-</div>
-
-
-<div class="notesbox">
-  <div class="notes-container" id="notesList"></div>
-</div>
-
-
-<footer class="modern-footer">
-  <div class="footer-glass">
-
-    <div class="footer-section">
-      <h4>Join Community</h4>
-      <p>Get updates, notes & announcements instantly.</p>
-
-      <div class="footer-socials">
-        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://whatsapp.com/channel/0029Vb671B2It5rqAsKI3W3t" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-        <a href="https://t.me/kuguider" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
-      </div>
-    </div>
-
-    <div class="footer-section">
-      <h4>Quick Links</h4>
-      <ul>
+    <a href="index.html" class="logo">KuGuider<span>.</span></a>
+    <nav class="nav-menu">
+      <ul class="nav-links" id="menu">
+         <li><a href="about.html">About</a></li>
         <li><a href="notes.html">Notes</a></li>
         <li><a href="papers.html">Papers</a></li>
         <li><a href="chat.html">Chat</a></li>
         <li><a href="profile.html">Profile</a></li>
+       
       </ul>
+      <div class="nav-actions">
+        <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+          <i id="theme-icon" class="fa-solid fa-moon"></i>
+        </button>
+        <button class="burger" onclick="toggleMenu()" aria-label="Toggle Menu" id="burgerBtn">
+          <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" data-aos="fade-up">
+  <h1>The Future of Learning.</h1>
+  <p>Your premium gateway to curated notes, previous year papers, and academic excellence.</p>
+  
+  <div class="filter-wrapper">
+    <div class="search-block">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" class="search-input" placeholder="Search by subject name...">
     </div>
-    <div style="text-align:center; margin-top:12px;">
-  <a href="kuguider.apk"
-    download style="
-       display:inline-flex;
-       align-items:center;
-       gap:8px;
-       padding:8px 18px;
-       border-radius:24px;
-       font-size:0.85rem;
-       font-weight:600;
-       text-decoration:none;
-       background:linear-gradient(135deg,#CB441DF7,#212121);
-       color:#fff;
-       box-shadow:0 6px 18px rgba(0,0,0,0.25);
-       transition:0.3s ease;
-     "
-     onmouseover="this.style.transform='scale(1.08)'"
-     onmouseout="this.style.transform='scale(1)'"
-  >
-    <i class="fa-solid fa-mobile-screen-button"></i>
-     Download App
-  </a>
+    <select id="semFilter" class="filter-select">
+      <option value="">All Semesters</option>
+      <option value="Semester 1">Semester 1</option>
+      <option value="Semester 2">Semester 2</option>
+      <option value="Semester 3">Semester 3</option>
+      <option value="Semester 4">Semester 4</option>
+      <option value="Semester 5">Semester 5</option>
+      <option value="Semester 6">Semester 6</option>
+    </select>
+  </div>
 </div>
 
-  </div>
-  
+<main class="main-content">
+  <div class="grid" id="notesGrid"></div>
+  <div class="pagination" id="pagination"></div>
+</main>
 
-  <div class="footer-credit">
-    Made with <span>❤</span> by 
-    <a href="https://basifshafi.netlify.app/">Basif Shafi</a>
+<footer>
+  <div class="footer-grid">
+    <div class="f-col">
+      <h2>KuGuider<span>.</span></h2>
+      <p>Empowering students with the best digital resources to succeed in their academic journey.</p>
+      <div class="nav-actions" style="margin-top: 20px; justify-content: flex-start;">
+        <a href="https://t.me/kuguider" class="icon-btn" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+        <a href="https://whatsapp.com/channel/0029Vb671B2It5rqAsKI3W3t" class="icon-btn" aria-label="Whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="f-col">
+      <h4>Qick Links</h4>
+      <ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="notes.html">Notes</a></li>
+        <li><a href="papers.html">Papers</a></li>
+        <li><a href="chat.html">Chat</a></li>
+        <li><a href="chat.html">Profile</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Contribution</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Official</h4>
+      <ul>
+        <li><a href="https://www.kashmiruniversity.net/">University </a></li>
+        <li><a href="https://egov.uok.edu.in/eservices/syllabus/prelogin/course.aspx?coursetype=UGP">Syllabus</a></li>
+        <li><a href="https://egov.uok.edu.in/results/">Results</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2024 Made with heart by Basif Shafi.
   </div>
 </footer>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init();</script>
+
 <script>
+  // --- FIREBASE INITIALIZATION ---
   const firebaseConfig = {
-    apiKey: "AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+    apiKey: "YOUR_API_KEY",
     authDomain: "kuguider.firebaseapp.com",
-    projectId: "kuguider"
+    projectId: "kuguider",
+    storageBucket: "kuguider.appspot.com"
   };
-  firebase.initializeApp(firebaseConfig);
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
-  const auth = firebase.auth();
 
-  // Checks if user is logged in, otherwise redirect to index.html
-  auth.onAuthStateChanged(user => {
-    if (!user) {
-      window.location.href = "index.html"; // Redirect if not authenticated
-    }
+  // --- STATE MANAGEMENT ---
+  let allNotes = [];
+  let currentPage = 1;
+  const notesPerPage = 12;
+  let lastScroll = 0;
+
+  // --- GLOBAL INITIALIZATION SYSTEMS ---
+  window.addEventListener('DOMContentLoaded', () => {
+    trackWebsiteVisit();
+    handleActiveNavbarLogic();
   });
 
-  const notesList = document.getElementById("notesList");
-  const loaderOverlay = document.getElementById("loaderOverlay");
-
-  function showAlert(message, type = "info") {
-    const toast = document.getElementById("toastAlert");
-    let icon = "info";
-    if (type === "success") icon = "check_circle";
-    else if (type === "error") icon = "error";
-    toast.innerHTML = `<span class="material-icons">${icon}</span>${message}`;
-    toast.style.visibility = "visible";
-    setTimeout(() => toast.style.visibility = "hidden", 3000);
+  // Fixed Analytic Counter Logic
+  function trackWebsiteVisit() {
+    const globalAnalyticsRef = db.collection("analytics").doc("global");
+    
+    globalAnalyticsRef.get().then((doc) => {
+      if (doc.exists) {
+        globalAnalyticsRef.update({
+          websiteVisits: firebase.firestore.FieldValue.increment(1)
+        });
+      } else {
+        globalAnalyticsRef.set({ websiteVisits: 1 });
+      }
+    }).catch(err => console.warn("Analytics configuration skipped:", err));
   }
 
-  
+  // Dynamic Router Link Tracker
+  function handleActiveNavbarLogic() {
+    const currentPath = window.location.pathname.split("/").pop();
+    const navLinks = document.querySelectorAll('.nav-links a');
+    
+    let matched = false;
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      const hrefTarget = link.getAttribute('href');
+      
+      if (currentPath === hrefTarget || (currentPath === "" && hrefTarget === "index.html")) {
+        link.classList.add('active');
+        matched = true;
+      }
+    });
 
-  let notesData = [];
-
-  function displayNotes(notes) {
-    notesList.innerHTML = '';
-    if (notes.length === 0) {
-      notesList.innerHTML = '<p style="text-align:center;">No matching notes found.</p>';
-      return;
+    if (!matched && navLinks.length > 0) {
+      navLinks[0].classList.add('active');
     }
-    notes.forEach(note => {
-      const card = document.createElement("div");
-      card.className = "note-card";
-      card.setAttribute("data-aos", "fade-up");
-      card.innerHTML = `
-  <img src="notes.png" alt="Notes Image" style="
-    width: 100%;
-    height: 110px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 10px;
-  ">
-  
-  <h3>${note.subject}</h3>
-  <p>${note.semester}</p>
-
-  <a href="${note.fileURL}" target="_blank">
-    <span class="material-icons" style="font-size: 18px;">download</span>
-    Download
-  </a>
-`;
-      notesList.appendChild(card);
-    });
   }
 
-  db.collection("notes").orderBy("uploadedAt", "desc").get()
-    .then(snapshot => {
-      notesData = snapshot.docs.map(doc => doc.data());
-      loaderOverlay.style.display = "none";
-      displayNotes(notesData);
-    })
-    .catch(() => {
-      loaderOverlay.style.display = "none";
-      notesList.innerHTML = '<p>Error loading notes.</p>';
-    });
+  // --- HEADER & MENU INTERACTION ENGINE ---
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll > 40) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
 
-  document.getElementById("searchSubject").addEventListener("input", filterNotes);
-  document.getElementById("searchSemester").addEventListener("change", filterNotes);
-
-  function filterNotes() {
-    const subjectVal = document.getElementById("searchSubject").value.toLowerCase();
-    const semesterVal = document.getElementById("searchSemester").value;
-    const filtered = notesData.filter(note =>
-      note.subject.toLowerCase().includes(subjectVal) &&
-      (semesterVal === "" || note.semester === semesterVal)
-    );
-    displayNotes(filtered);
-  }
-
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (!user) {
-    // User not logged in → send back to login
-    window.location.href = "index.html";
-  }
-});
-
-const ham = document.getElementById("hamburger");
-  const links = document.getElementById("navLinks");
-
-  ham.addEventListener("click", () => {
-    links.classList.toggle("show");
+    if (currentScroll > lastScroll && currentScroll > 150) header.classList.add('nav-hidden');
+    else header.classList.remove('nav-hidden');
+    lastScroll = currentScroll;
   });
 
+  function toggleMenu() {
+    const menu = document.getElementById('menu');
+    const burgerIcon = document.querySelector('#burgerBtn i');
+    menu.classList.toggle('active');
+    
+    // Smooth swapping out from structural layout state values
+    if (menu.classList.contains('active')) {
+      burgerIcon.className = "fa-solid fa-xmark";
+    } else {
+      burgerIcon.className = "fa-solid fa-bars-staggered";
+    }
+  }
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('menu').classList.remove('active');
+      document.querySelector('#burgerBtn i').className = "fa-solid fa-bars-staggered";
+    });
+  });
+
+  // --- LIGHT/DARK THEME MANAGEMENT ---
   function toggleTheme() {
     const root = document.documentElement;
-    const newTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    root.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-    if (newTheme === "dark") {
-      loaderOverlay.classList.add("dark");
+    const target = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', target);
+    localStorage.setItem('kg-theme', target);
+    document.getElementById('theme-icon').className = target === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  }
+  const savedTheme = localStorage.getItem('kg-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.getElementById('theme-icon').className = savedTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+
+  // --- DATA SYNCING STREAM ---
+  db.collection("notes").orderBy("uploadedAt", "desc").onSnapshot(snap => {
+    allNotes = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    render();
+  });
+
+  // --- COMPONENT DISPLAY GRAPHICS ---
+  function render() {
+    const grid = document.getElementById('notesGrid');
+    grid.innerHTML = "";
+
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const sem = document.getElementById('semFilter').value;
+
+    const filtered = allNotes.filter(n => {
+      const matchSearch = n.subject ? n.subject.toLowerCase().includes(search) : false;
+      const matchSem = sem === "" || n.semester === sem;
+      return matchSearch && matchSem;
+    });
+
+    const start = (currentPage - 1) * notesPerPage;
+    const paginated = filtered.slice(start, start + notesPerPage);
+
+    if (paginated.length === 0) {
+      grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color: var(--subtext); padding: 60px 0; font-size:0.95rem;">No items found matching the search criteria.</div>`;
+      renderPagination(0);
+      return;
+    }
+
+    paginated.forEach((note, index) => {
+      const isLiked = localStorage.getItem(`liked_${note.id}`) === 'true';
+      const isNew = note.uploadedAt ? (new Date() - note.uploadedAt.toDate()) / 86400000 < 7 : false;
+
+      const card = document.createElement('div');
+      card.className = 'note-card';
+      card.setAttribute('data-aos', 'fade-up');
+      card.setAttribute('data-aos-delay', index * 50);
+      
+      card.innerHTML = `
+        <div class="banner">
+          ${isNew ? '<span class="new-tag">NEW ADDED</span>' : ''}
+          <img src="${note.coverImage || '/notes.png'}" alt="${note.subject || 'Academic Document'}">
+        </div>
+        <div class="card-info">
+          <h3>${note.subject || 'Untitled Subject'}</h3>
+          <p style="color:var(--subtext); margin-bottom:5px;">${note.semester}</p>
+          <div class="stats-row">
+            <span><i class="fa-solid fa-download"></i> ${note.views || 0}</span>
+            <span><i class="fa-solid fa-heart"></i> ${note.likes || 0}</span>
+          </div>
+          <div class="actions">
+            <button class="btn btn-like ${isLiked ? 'liked' : ''}" onclick="handleLike('${note.id}', event)">
+              <i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+              <span>${isLiked ? 'Liked' : 'Like'}</span>
+            </button>
+            <a href="${note.fileURL || '#'}" target="_blank" class="btn btn-view" onclick="trackView('${note.id}')">
+              <i class="fa-solid fa-download"></i> Get PDF
+            </a>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    renderPagination(filtered.length);
+  }
+
+  // --- ADVANCED SLIDING PAGINATION WITH PREV/NEXT ARROWS ---
+  function renderPagination(totalItems) {
+    const container = document.getElementById('pagination');
+    container.innerHTML = "";
+    const totalPages = Math.ceil(totalItems / notesPerPage);
+
+    if (totalPages <= 1) return;
+
+    // Helper Function to cleanly pass page routing target events
+    const navigateTo = (targetPage) => {
+      currentPage = targetPage;
+      render();
+      const scrollTarget = document.querySelector('.hero').offsetHeight - 20;
+      window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+    };
+
+    // 1. Create PREVIOUS Button
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'page-btn';
+    prevBtn.innerHTML = `<i class="fa-solid fa-chevron-left"></i> <span>Prev</span>`;
+    if (currentPage === 1) prevBtn.disabled = true;
+    prevBtn.onclick = () => navigateTo(currentPage - 1);
+    container.appendChild(prevBtn);
+
+    // 2. Compute Segmented Truncation Architecture Arrays
+    const range = 1; 
+    let pages = [];
+    pages.push(1);
+
+    for (let i = 2; i < totalPages; i++) {
+      if (i >= currentPage - range && i <= currentPage + range) {
+        pages.push(i);
+      } else if (pages[pages.length - 1] !== '...') {
+        pages.push('...');
+      }
+    }
+    if (totalPages > 1) pages.push(totalPages);
+
+    // 3. Render Numeric Content Blocks
+    pages.forEach(page => {
+      if (page === '...') {
+        const ellipsis = document.createElement('span');
+        ellipsis.className = 'page-link-separator';
+        ellipsis.innerText = '...';
+        container.appendChild(ellipsis);
+      } else {
+        const btn = document.createElement('button');
+        btn.className = `page-btn ${page === currentPage ? 'active' : ''}`;
+        btn.innerText = page;
+        btn.onclick = () => navigateTo(page);
+        container.appendChild(btn);
+      }
+    });
+
+    // 4. Create NEXT Button
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'page-btn';
+    nextBtn.innerHTML = `<span>Next</span> <i class="fa-solid fa-chevron-right"></i>`;
+    if (currentPage === totalPages) nextBtn.disabled = true;
+    nextBtn.onclick = () => navigateTo(currentPage + 1);
+    container.appendChild(nextBtn);
+  }
+
+  // --- REQUISITE FIREBASE RECORD ACTIONS ---
+  async function handleLike(id, event) {
+    const btn = event.currentTarget;
+    const isCurrentlyLiked = btn.classList.contains('liked');
+    const docRef = db.collection("notes").doc(id);
+
+    if(isCurrentlyLiked) {
+      btn.classList.remove('liked');
+      btn.querySelector('span').textContent = 'Like';
+      btn.querySelector('i').className = 'fa-regular fa-heart';
+      localStorage.setItem(`liked_${id}`, 'false');
+      await docRef.update({ likes: firebase.firestore.FieldValue.increment(-1) }).catch(err => console.error(err));
     } else {
-      loaderOverlay.classList.remove("dark");
+      btn.classList.add('liked');
+      btn.querySelector('span').textContent = 'Liked';
+      btn.querySelector('i').className = 'fa-solid fa-heart';
+      localStorage.setItem(`liked_${id}`, 'true');
+      await docRef.update({ likes: firebase.firestore.FieldValue.increment(1) }).catch(err => console.error(err));
     }
   }
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      document.documentElement.setAttribute("data-theme", savedTheme);
-      if (savedTheme === "dark") loaderOverlay.classList.add("dark");
-    }
-  });
+  function trackView(id) {
+    db.collection("notes").doc(id).update({ views: firebase.firestore.FieldValue.increment(1) });
+  }
+
+  document.getElementById('searchInput').addEventListener('input', () => { currentPage = 1; render(); });
+  document.getElementById('semFilter').addEventListener('change', () => { currentPage = 1; render(); });
 </script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init({ once: true, offset: 40 });</script>
 </body>
 </html>
