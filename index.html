@@ -6,30 +6,23 @@
 <title>Login | KuGuider</title>
 
 <link rel="icon" href="file_0000000042b861fd808de615ad3ddea5.png" type="image/png">
-<!-- Meta Tags for Social Sharing -->
 <meta property="og:image" content="https://kuguider.netlify.app/file_0000000042b861fd808de615ad3ddea5.png">
 <meta property="og:url" content="https://kuguider.netlify.app">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="google-adsense-account" content="ca-pub-2137400647468187">
-<!-- Browser Address Bar Color (Mobile) -->
 <meta name="theme-color" content="#fff" />
 <meta name="msapplication-navbutton-color" content="#fff" />
 <meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>KuGuider - Free Notes & Previous Year Papers for Kashmir University UG Students</title>
-<meta name="description" content="KuGuider offers free undergraduate notes, previous year papers, and study materials for students of Kashmir University. Access easy and reliable online resources for your coursework and exam preparation.">
-<meta name="keywords" content="Kashmir University Notes, Free UG Notes, KU Previous Year Papers, KU Study Materials, Kashmir University Exam Resources, Free Notes for KU Students">
+<meta name="description" content="KuGuider offers free undergraduate notes and previous year papers for Kashmir University.">
+<meta name="keywords" content="Kashmir University Notes, Free UG Notes, KU Previous Year Papers">
 <meta name="robots" content="index, follow">
-<meta property="og:title" content="KuGuider - Free Notes & Previous Year Papers for Kashmir University UG Students">
-<meta property="og:description" content="Access free undergraduate notes, previous year papers, and study materials for Kashmir University students on KuGuider. Study smarter with reliable resources.">
-<meta property="og:url" content="https://kuguider.netlify.app/">
-<meta property="og:type" content="website">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
 
-  <style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght=500;600;700&family=Poppins:wght=400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
+
+<style>
     :root {
       --primary: #CB441D;
       --primary-rgb: 203, 68, 29;
@@ -62,42 +55,82 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      transition: background 0.4s ease;
+      transition: background 0.4s ease, color 0.4s ease;
     }
 
-    /* --- AUTH CARD --- */
     .card {
       width: 100%;
       max-width: 420px;
       background: var(--card);
-      padding: 35px;
+      padding: 10px 35px ;
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
       box-shadow: var(--shadow-lg);
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    /* Header Container for Logo & Theme Toggle */
+    .card-header {
+      width: 100%;
+      height:50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
 
     .logo-img {
       width: 100px;
-      height:200px;
       height: auto;
-      margin-bottom: 20px;
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+    }
+
+    .theme-toggle {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      border-color: var(--primary);
     }
 
     .card h2 {
       font-family: 'Outfit', sans-serif;
       margin-bottom: 24px;
-      font-size: 1.6rem;
-      font-weight: 500; /* Refined boldness */
+      font-size: 1.4rem;
+      font-weight: 500;
       color: var(--text);
       letter-spacing: -0.5px;
     }
 
-    /* --- INPUTS --- */
-    .input-group { width: 100%; margin-bottom: 14px; }
+    .input-group { 
+      width: 100%; 
+      margin-bottom: 16px; 
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--subtext);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
     input {
       width: 100%;
@@ -127,7 +160,6 @@
       font-size: 0.9rem;
     }
 
-    /* --- BUTTONS & LINKS --- */
     button#action {
       width: 100%;
       padding: 14px;
@@ -143,16 +175,49 @@
       transition: all 0.2s ease;
     }
 
-    button#action:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
+    /* --- GOOGLE BUTTON & DIVIDER --- */
+    .divider {
+      width: 100%;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      line-height: 0.1em;
+      margin: 25px 0;
     }
+    .divider span {
+      background: var(--card);
+      padding: 0 10px;
+      color: var(--subtext);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: background 0.4s ease;
+    }
+
+    .google-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .google-btn img { width: 18px; }
+    .google-btn:hover { background: var(--bg); }
 
     .link {
       background: none;
       border: none;
-      color: var(--text); /* Matched to primary color */
-      text-decoration: underline;
+      color: var(--text);
+      text-decoration: none;
       text-align: left;
       margin-top: 15px;
       font-size: 0.85rem;
@@ -162,17 +227,10 @@
       transition: opacity 0.2s;
     }
 
-    .link:hover {
-      
-      opacity: 0.8;
-    }
-
-    /* --- TOAST --- */
     .toast {
       visibility: hidden;
       position: fixed;
       top: 24px;
-      wwidth: 60%;
       right: 24px;
       background: var(--card);
       color: var(--text);
@@ -187,35 +245,56 @@
       opacity: 0;
       transition: all 0.3s ease;
     }
-
-    .toast.show { visibility: visible; opacity: 1; transform: translateX(0); }
+    .toast.show { visibility: visible; opacity: 1; }
 
     @media(max-width: 480px) {
       .card { padding: 30px 20px; }
-      .toast { right: 10px; left: 10px; top: 10px; text-align: center; }
     }
-  </style>
+</style>
 </head>
 <body>
 
 <div class="card">
-  <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider" class="logo-img">
+  <div class="card-header">
+    <img src="file_0000000042b861fd808de615ad3ddea5.png" alt="KuGuider" class="logo-img">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+  </div>
+
   <h2 id="title">Login</h2>
 
   <div class="input-group" id="nameContainer" style="display:none">
-    <input type="text" id="name" placeholder="Full Name">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" placeholder="User xyz">
   </div>
   
   <div class="input-group">
-    <input type="email" id="email" placeholder="Email Address">
+    <label for="email">Email Address</label>
+    <input type="email" id="email" placeholder="example@gmail.com">
   </div>
 
-  <div class="input-group password">
-    <input type="password" id="password" placeholder="Password">
-    <i class="fa-solid fa-eye" id="toggle"></i>
+  <div class="input-group">
+    <label for="password">Password</label>
+    <div class="password">
+      <input type="password" id="password" placeholder="••••••••">
+      <i class="fa-solid fa-eye" id="toggle"></i>
+    </div>
+  </div>
+
+  <div class="input-group" id="confirmContainer" style="display:none">
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="password" id="confirmPassword" placeholder="••••••••">
   </div>
 
   <button id="action">Login</button>
+
+  <div class="divider"><span>OR</span></div>
+
+  <button id="googleAction" class="google-btn">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+    Continue with Google
+  </button>
 
   <button class="link" id="switch">
     Don't have an account? Signup
@@ -232,74 +311,123 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
 <script>
-// Theme Sync
+// Firebase Configuration
+firebase.initializeApp({
+  apiKey: "AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
+  authDomain: "kuguider.firebaseapp.com",
+  projectId: "kuguider"
+});
+const auth = firebase.auth();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+// DOM Elements
+const title = document.getElementById("title");
+const nameI = document.getElementById("name");
+const nameContainer = document.getElementById("nameContainer");
+const email = document.getElementById("email");
+const pass = document.getElementById("password");
+const confirmContainer = document.getElementById("confirmContainer");
+const confirmPass = document.getElementById("confirmPassword");
+const toggle = document.getElementById("toggle");
+const action = document.getElementById("action");
+const googleAction = document.getElementById("googleAction");
+const sw = document.getElementById("switch");
+const toast = document.getElementById("toast");
+const forgot = document.getElementById("forgot");
+const themeToggle = document.getElementById("themeToggle");
+
+let isSignup = false;
+let isRedirecting = false;
+
+// Helpers
+function msg(t) {
+  toast.textContent = t;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 3000);
+}
+
+// Theme Sync & Toggle Functions
+const updateToggleIcon = (theme) => {
+  const icon = themeToggle.querySelector('i');
+  if (theme === 'dark') {
+    icon.className = 'fa-solid fa-sun';
+  } else {
+    icon.className = 'fa-solid fa-moon';
+  }
+};
+
 const syncTheme = () => {
   const theme = localStorage.getItem('theme') || 'light';
   document.documentElement.setAttribute('data-theme', theme);
+  updateToggleIcon(theme);
 };
 syncTheme();
-window.addEventListener('storage', syncTheme);
 
-// Firebase
-firebase.initializeApp({
-  apiKey:"AIzaSyBmbFYqpuqaWCxmh7VqKTb_8CUvyEohzbw",
-  authDomain:"kuguider.firebaseapp.com",
-  projectId:"kuguider"
-});
-const auth=firebase.auth();
+themeToggle.onclick = () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  updateToggleIcon(newTheme);
+};
 
-const title=document.getElementById("title");
-const nameI=document.getElementById("name");
-const nameContainer=document.getElementById("nameContainer");
-const email=document.getElementById("email");
-const pass=document.getElementById("password");
-const toggle=document.getElementById("toggle");
-const action=document.getElementById("action");
-const sw=document.getElementById("switch");
-const toast=document.getElementById("toast");
-const forgot=document.getElementById("forgot");
-
-let isSignup = false;
-
-function msg(t){
-  toast.textContent=t;
-  toast.classList.add("show");
-  setTimeout(()=>toast.classList.remove("show"), 3000);
-}
-
-toggle.onclick=()=>{
+// Toggle Password Visibility
+toggle.onclick = () => {
   const type = pass.type === "password" ? "text" : "password";
   pass.type = type;
   toggle.className = type === "password" ? "fa-solid fa-eye" : "fa-solid fa-eye-slash";
 };
 
-sw.onclick=()=>{
+// Switch Between Login/Signup
+sw.onclick = () => {
   isSignup = !isSignup;
   title.textContent = isSignup ? "Signup" : "Login";
   action.textContent = isSignup ? "Signup" : "Login";
   nameContainer.style.display = isSignup ? "block" : "none";
+  confirmContainer.style.display = isSignup ? "block" : "none";
   sw.textContent = isSignup ? "Already have an account? Login" : "Don't have an account? Signup";
   forgot.style.display = isSignup ? "none" : "block";
 };
 
-action.onclick=async()=>{
+// Email/Password Auth
+action.onclick = async () => {
   if(!email.value || !pass.value) return msg("Please fill all fields");
-  try{
-    if(isSignup){
+  try {
+    if(isSignup) {
       if(!nameI.value) return msg("Please enter your name");
+      if(pass.value !== confirmPass.value) return msg("Passwords do not match");
+      
+      isRedirecting = true;
       const res = await auth.createUserWithEmailAndPassword(email.value, pass.value);
       await res.user.updateProfile({displayName: nameI.value});
     } else {
+      isRedirecting = true;
       await auth.signInWithEmailAndPassword(email.value, pass.value);
     }
     msg("Success! Redirecting...");
-    setTimeout(()=>location.href="about.html", 1000);
+    setTimeout(() => location.href="about.html", 1500);
   } catch(e) {
+    isRedirecting = false;
     msg(e.message);
   }
 };
 
-forgot.onclick=async()=>{
+// Google Auth
+googleAction.onclick = async () => {
+  try {
+    isRedirecting = true;
+    await auth.signInWithPopup(googleProvider);
+    msg("Success! Redirecting...");
+    setTimeout(() => location.href="about.html", 1500);
+  } catch(e) {
+    isRedirecting = false;
+    msg(e.message);
+  }
+};
+
+// Forgot Password
+forgot.onclick = async () => {
   if(!email.value) return msg("Please enter your email first");
   try {
     await auth.sendPasswordResetEmail(email.value);
@@ -309,7 +437,13 @@ forgot.onclick=async()=>{
   }
 };
 
-auth.onAuthStateChanged(user => { if(user) location.href="about.html"; });
+// Auth State Observer
+auth.onAuthStateChanged(user => { 
+    if(user && !isRedirecting) { 
+      msg("Already logged in. Redirecting...");
+      setTimeout(() => location.href="about.html", 1500); 
+    }
+});
 </script>
 
 </body>
