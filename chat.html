@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 
  <style>
-    :root {
+:root {
       --primary: #CB441D;
       --primary-rgb: 203, 68, 29;
       --accent: #FF8C00;
@@ -58,29 +58,43 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      margin: 0;
     }
     
     h1, h2, h3, h4, .logo, .nav-menu h3, .btn, .popup-card h2 { font-family: 'Outfit', sans-serif; }
 
-    /* --- PREMIUM NAVBAR --- */
     header {
       height: var(--nav-height);
+      position:fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg) ;
+      margin :auto;
+      width: 100%;
+      max-width: 800px;
+      align-items: center;
       position: fixed;
-      top: 0; left: 0; width: 100%;
       z-index: 2000;
       display: flex;
       align-items: center;
       padding: 0 4%;
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      transition: all 0.4s ease;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    header.scrolled {
+  height: 60px;
+  width: 100%; 
+  background: rgba(var(--card-rgb), 0.85);
+  box-shadow: var(--shadow-md);
+}
+
+    header.nav-hidden { 
+      transform: translate(-50%, -120%); 
     }
 
     .nav-container {
       width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -103,17 +117,25 @@
     }
     .icon-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
 
-    /* --- CHAT WORKSPACE SCENARIO --- */
+    /* --- RESPONSIVE ADJUSTMENTS --- */
+    @media (max-width: 768px) {
+      header { height: 70px; padding: 0 16px; width: 100%; }
+      header.scrolled { height: 60px; }
+      .nav-identity h3 { font-size: 1rem; }
+      .nav-identity .sub { font-size: 0.7rem; }
+      .icon-btn { width: 36px; height: 36px; }
+    }
+
+    /* --- CHAT OFFSET --- */
     #chatContainer {
       flex: 1;
-      margin-top: var(--nav-height);
       margin-bottom: 90px;
       width: 100%;
       max-width: 800px;
-      padding: 15px;
+      padding: 20px 15px;
       align-self: center;
       overflow-y: auto;
-      overflow-x: hidden; /* Prevent sideways scrolling within the chat bubble viewport loop */
+      overflow-x: hidden;
       position: relative;
       scroll-behavior: smooth;
     }
@@ -123,7 +145,7 @@
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 15px;
       width: 100%;
     }
 
@@ -131,7 +153,7 @@
       display: flex;
       align-items: flex-end;
       gap: 12px;
-      max-width: 85%; /* Slightly widened for better mobile presentation space usage */
+      max-width: 85%;
       position: relative;
       animation: fadeInUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -149,17 +171,17 @@
       box-shadow: var(--shadow-sm);
       transition: transform 0.2s;
       border: 2px solid var(--card);
-      flex-shrink: 0; /* Keep avatar circular when text forces squeeze alterations */
+      flex-shrink: 0;
     }
     .avatar:hover { transform: scale(1.1); }
 
     .bubble {
-      padding: 12px 18px;
+      padding: 10px 18px;
       border-radius: 18px;
       font-size: 0.95rem;
       line-height: 1.5;
       word-wrap: break-word;
-      word-break: break-word; /* Ensure deep text patterns wrap cleanly */
+      word-break: break-word;
       position: relative;
       box-shadow: var(--shadow-sm);
     }
@@ -288,14 +310,16 @@
 
     .input-row {
       display: flex; align-items: center; background: var(--card);
-      padding: 6px 8px 6px 18px; border-radius: 50px; border: 1px solid var(--border);
+      padding: 5px; 
+      margin: 0;
+border-radius: 50px; border: 1px solid var(--border);
       box-shadow: var(--shadow-lg); width: 100%; gap: 10px;
     }
     
-    /* FIXED: Removed width: 70% to let flexgrow fill the parent input container correctly */
     #chatInput {
       flex: 1;
       width:60%;
+      padding: 5px;
       border: none;
       background: transparent; color: var(--text);
       font-size: 0.95rem; font-family: inherit;
@@ -625,10 +649,10 @@ async function openProfilePopup(data) {
     }
 
     // Configure Social Links fields
-    if (user.instagram) setSocialElement("popLinkIG", "popTxtIG", user.instagram, `https://instagram.com/${user.instagram.replace('@','')}`);
-    if (user.facebook) setSocialElement("popLinkFB", "popTxtFB", user.facebook, user.facebook.includes('http') ? user.facebook : `https://facebook.com/${user.facebook}`);
-    if (user.gmail) setSocialElement("popLinkMail", "popTxtMail", user.gmail, `mailto:${user.gmail}`);
-    if (user.whatsapp) setSocialElement("popLinkWA", "popTxtWA", "WhatsApp", `https://wa.me/${user.whatsapp.replace(/[^0-9]/g, '')}`);
+    if (user.instagram) setSocialElement("popLinkIG", "popTxtIG","Instagram", `https://instagram.com/${user.instagram.replace('@','')}`);
+    if (user.facebook) setSocialElement("popLinkFB", "popTxtFB","Facebook", user.facebook.includes('http') ? user.facebook : `https://facebook.com/${user.facebook}`);
+    if (user.gmail) setSocialElement("popLinkMail", "popTxtMail","Mail", `mailto:${user.gmail}`);
+    if (user.whatsapp) setSocialElement("popLinkWA", "popTxtWA", "Whatsapp", `https://wa.me/${user.whatsapp.replace(/[^0-9]/g, '')}`);
 
   } catch (e) {
     popupStatusText.textContent = "Offline Reference";
@@ -1027,6 +1051,30 @@ function handleTypingState(){
   if(isTyping){
     typingTimeout = setTimeout(() => { typingDocRef.set({isTyping:false},{merge:true}); }, 3000);
   }
+}
+
+const header = document.querySelector('header');
+const chatContainer = document.getElementById('chatContainer');
+let lastScrollTop = 0;
+
+if (chatContainer) {
+  chatContainer.addEventListener('scroll', () => {
+    let scrollTop = chatContainer.scrollTop;
+
+    if (scrollTop > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
+      header.classList.add('nav-hidden');
+    } else {
+      header.classList.remove('nav-hidden');
+    }
+    
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+  });
 }
 
 // --- GATEKEEPER MONITOR CHECK ---
