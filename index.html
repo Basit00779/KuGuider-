@@ -264,8 +264,6 @@
     </button>
   </div>
 
-  <h2 id="title">Login</h2>
-
   <div class="input-group" id="nameContainer" style="display:none">
     <label for="name">Full Name</label>
     <input type="text" id="name" placeholder="User xyz">
@@ -384,8 +382,6 @@ toggle.onclick = () => {
 // Switch Between Login/Signup
 sw.onclick = () => {
   isSignup = !isSignup;
-  title.textContent = isSignup ? "Signup" : "Login";
-  action.textContent = isSignup ? "Signup" : "Login";
   nameContainer.style.display = isSignup ? "block" : "none";
   confirmContainer.style.display = isSignup ? "block" : "none";
   sw.textContent = isSignup ? "Already have an account? Login" : "Don't have an account? Signup";
@@ -408,7 +404,7 @@ action.onclick = async () => {
       await auth.signInWithEmailAndPassword(email.value, pass.value);
     }
     msg("Success! Redirecting...");
-    setTimeout(() => location.href="about.html", 1500);
+    setTimeout(() => location.href="about.html", 1000);
   } catch(e) {
     isRedirecting = false;
     msg(e.message);
@@ -420,8 +416,8 @@ googleAction.onclick = async () => {
   try {
     isRedirecting = true;
     await auth.signInWithPopup(googleProvider);
-    msg("Success! Redirecting...");
-    setTimeout(() => location.href="about.html", 1500);
+    msg("Success! Redirecting..");
+    setTimeout(() => location.href="about.html", 1000);
   } catch(e) {
     isRedirecting = false;
     msg(e.message);
