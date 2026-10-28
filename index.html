@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,189 +10,259 @@
 <meta property="og:url" content="https://kuguider.netlify.app">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="google-adsense-account" content="ca-pub-2137400647468187">
-<meta name="theme-color" content="#fff" />
-<meta name="msapplication-navbutton-color" content="#fff" />
-<meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
+<meta name="theme-color" content="#ffffff" />
 <meta name="description" content="KuGuider offers free undergraduate notes and previous year papers for Kashmir University.">
-<meta name="keywords" content="Kashmir University Notes, Free UG Notes, KU Previous Year Papers">
-<meta name="robots" content="index, follow">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght=500;600;700&family=Poppins:wght=400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght=400;500;600;700&family=Poppins:wght=400;500&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet"/>
 
 <style>
     :root {
+      /* Brand */
       --primary: #CB441D;
-      --primary-rgb: 203, 68, 29;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #0f172a;
-      --subtext: #64748b;
-      --border: rgba(0,0,0,0.06);
-      --radius-lg: 10px;
-      --radius-sm: 12px;
-      --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.05);
+      --primary-hover: #b33916;
+      
+      /* Light Theme */
+      --body-bg: #f3f4f6;
+      --surface: #ffffff;
+      --text: #111827;
+      --subtext: #6b7280;
+      --border: #e5e7eb;
+      --input-bg: #f9fafb;
+      --btn-text: #ffffff;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
     }
 
     html[data-theme="dark"] {
-      --bg: #030712;
-      --card: #0b0f19;
+      /* Dark Theme */
+      --body-bg: #09090b;
+      --surface: #18181b;
       --text: #f9fafb;
-      --subtext: #9ca3af;
-      --border: rgba(255,255,255,0.06);
+      --subtext: #a1a1aa;
+      --border: #27272a;
+      --input-bg: #09090b;
+      --btn-text: #ffffff;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
 
     body { 
-      background: var(--bg); 
+      background-color: var(--body-bg);
       color: var(--text); 
       font-family: 'Poppins', sans-serif; 
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
       padding: 20px;
-      transition: background 0.4s ease, color 0.4s ease;
     }
 
-    .card {
+    /* Centered Card Layout for Desktop */
+    .card-container {
+      display: flex;
       width: 100%;
-      max-width: 420px;
-      background: var(--card);
-      padding: 10px 35px ;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-lg);
+      max-width: 850px; /* Compact width */
+      min-height: 520px;
+      background: var(--surface);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    /* Left Side: Minimal Image Panel */
+    .image-panel {
+      flex: 1;
+      background: url('/topimg.png') top/cover no-repeat;
+      position: relative;
+      
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      transition: background 0.4s ease, border-color 0.4s ease;
+      justify-content: space-between;
+      padding: 2.5rem;
+    }
+    
+    .image-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.25);
     }
 
-    /* Header Container for Logo & Theme Toggle */
+    .image-content {
+      position: relative;
+      z-index: 2;
+      color: #ffffff;
+    }
+
+    .image-content h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.75rem; /* Reduced */
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.25rem;
+    }
+    
+    .image-content p {
+      font-size: 0.85rem; /* Reduced */
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+    /* Right Side: Form Panel */
+    .form-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px; /* Reduced */
+      position: relative;
+      max-width: 450px;
+    }
+
+    .form-wrapper {
+      width: 100%;
+      margin: 0 auto;
+    }
+
     .card-header {
       width: 100%;
-      height:50px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 1.5rem; /* Reduced */
     }
 
-    .card-header .logo { 
-      font-size: 1.6rem; font-weight: 800; color: var(--text); 
-      text-decoration: none; letter-spacing: -0.5px;
+    .logo { 
+      font-size: 1.5rem; /* Reduced */
+      font-weight: 700; 
+      color: var(--text); 
+      text-decoration: none; 
+      letter-spacing: -1px;
+      font-family: 'Outfit', sans-serif;
     }
     .logo span { color: var(--primary); }
     
-
     .theme-toggle {
-      background: var(--bg);
+      background: transparent;
       border: 1px solid var(--border);
       color: var(--text);
-      width: 30px;
-      height: 30px; 
-      padding:5px;
+      width: 32px; /* Smaller */
+      height: 32px; 
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
     }
     
     .theme-toggle:hover {
-      transform: scale(1.05);
-      border-color: var(--primary);
+      border-color: var(--text);
     }
 
-    .card h2 {
+    .form-title {
       font-family: 'Outfit', sans-serif;
-      margin-bottom: 24px;
-      font-size: 1.4rem;
-      font-weight: 500;
-      color: var(--text);
+      font-size: 1.5rem; /* Reduced */
+      font-weight: 600;
+      margin-bottom: 0.25rem;
       letter-spacing: -0.5px;
+    }
+
+    .form-subtitle {
+      color: var(--subtext);
+      font-size: 0.85rem; /* Reduced */
+      margin-bottom: 1.5rem; /* Reduced */
     }
 
     .input-group { 
       width: 100%; 
-      margin-bottom: 16px; 
+      margin-bottom: 0.85rem; /* Tighter margins */
     }
 
     .input-group label {
       display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--subtext);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-size: 0.75rem; /* Reduced */
+      font-weight: 500;
+      margin-bottom: 0.35rem;
+      color: var(--text);
     }
 
     input {
       width: 100%;
-      padding: 13px 16px;
-      border-radius: var(--radius-sm);
+      padding: 10px 14px; /* Reduced */
+      border-radius: 6px;
       border: 1px solid var(--border);
-      background: var(--bg);
+      background: var(--input-bg);
       color: var(--text);
       font-family: 'Poppins', sans-serif;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
+      font-size: 0.85rem; /* Reduced */
+      transition: all 0.2s ease;
+    }
+
+    input::placeholder {
+      color: var(--subtext);
+      opacity: 0.6;
     }
 
     input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+      background: var(--surface);
+      box-shadow: 0 0 0 3px rgba(203, 68, 29, 0.1);
     }
 
     .password { position: relative; width: 100%; }
     .password i {
       position: absolute;
-      right: 16px;
+      right: 14px;
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
       color: var(--subtext);
       font-size: 0.9rem;
+      transition: color 0.2s;
     }
+    .password i:hover { color: var(--text); }
 
     button#action {
       width: 100%;
-      padding: 14px;
+      padding: 12px; /* Reduced */
       border: none;
-      border-radius: var(--radius-sm);
+      border-radius: 6px;
       background: var(--primary);
-      color: white;
+      color: var(--btn-text);
       font-family: 'Outfit', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
+      font-size: 0.9rem; /* Reduced */
+      font-weight: 500;
       cursor: pointer;
-      margin-top: 10px;
-      transition: all 0.2s ease;
+      margin-top: 0.5rem;
+      transition: background 0.2s ease;
+    }
+    button#action:hover {
+      background: var(--primary-hover);
     }
 
-    /* --- GOOGLE BUTTON & DIVIDER --- */
     .divider {
-      width: 100%;
+      display: flex;
+      align-items: center;
       text-align: center;
-      border-bottom: 1px solid var(--border);
-      line-height: 0.1em;
-      margin: 25px 0;
-    }
-    .divider span {
-      background: var(--card);
-      padding: 0 10px;
+      margin: 1.25rem 0; /* Reduced */
       color: var(--subtext);
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      transition: background 0.4s ease;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid var(--border);
+    }
+    .divider span {
+      padding: 0 12px;
     }
 
     .google-btn {
@@ -200,109 +270,159 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      padding: 12px;
-      background: var(--card);
+      gap: 10px;
+      padding: 10px; /* Reduced */
+      background: transparent;
       border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
+      border-radius: 6px;
       color: var(--text);
       font-family: 'Poppins', sans-serif;
       font-weight: 500;
-      font-size: 0.9rem;
+      font-size: 0.85rem; /* Reduced */
       cursor: pointer;
       transition: all 0.2s ease;
     }
     .google-btn img { width: 18px; }
-    .google-btn:hover { background: var(--bg); }
+    .google-btn:hover { 
+      background: var(--input-bg); 
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.25rem; /* Reduced */
+    }
 
     .link {
       background: none;
       border: none;
-      color: var(--text);
+      color: var(--subtext);
       text-decoration: none;
-      text-align: left;
-      margin-top: 15px;
-      font-size: 0.85rem;
-      font-weight: 400;
+      font-size: 0.8rem; /* Reduced */
       cursor: pointer;
       font-family: 'Poppins', sans-serif;
-      transition: opacity 0.2s;
+      transition: color 0.2s ease;
     }
+    .link:hover { color: var(--text); }
+    .link b { color: var(--text); font-weight: 500; }
 
     .toast {
       visibility: hidden;
       position: fixed;
       top: 24px;
       right: 24px;
-      background: var(--card);
-      color: var(--text);
+      background: var(--text);
+      color: var(--body-bg);
       padding: 12px 20px;
-      border-radius: var(--radius-sm);
+      border-radius: 6px;
       font-size: 0.85rem;
       font-weight: 500;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--primary);
       z-index: 9999;
       opacity: 0;
+      transform: translateY(-10px);
       transition: all 0.3s ease;
     }
-    .toast.show { visibility: visible; opacity: 1; }
+    .toast.show { 
+      visibility: visible; 
+      opacity: 1; 
+      transform: translateY(0);
+    }
 
-    @media(max-width: 480px) {
-      .card { padding: 30px 20px; }
+    /* Mobile Responsive - Removes Card Effect */
+    @media(max-width: 768px) {
+      body {
+        padding: 0;
+        background-color: var(--surface); /* Match body to form surface */
+      }
+      .card-container {
+        flex-direction: column;
+        max-width: 100%;
+        min-height: 100vh;
+        border-radius: 0; /* Remove rounded corners */
+        box-shadow: none; /* Remove card shadow */
+      }
+      .image-panel {
+        flex: none;
+        height: 220px; /* Shortened image banner for mobile */
+        padding: 1.5rem;
+      }
+      .form-panel {
+        padding: 2rem 1.5rem;
+        max-width: 100%;
+      }
     }
 </style>
 </head>
 <body>
 
-<div class="card">
-  <div class="card-header">
-      <a href="index.html" class="logo">KuGuider<span>.</span></a>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
-      <i class="fa-solid fa-moon"></i>
-    </button>
-  </div>
-
-  <div class="input-group" id="nameContainer" style="display:none">
-    <label for="name">Full Name</label>
-    <input type="text" id="name" placeholder="User xyz">
-  </div>
+<div class="card-container">
   
-  <div class="input-group">
-    <label for="email">Email Address</label>
-    <input type="email" id="email" placeholder="example@gmail.com">
-  </div>
-
-  <div class="input-group">
-    <label for="password">Password</label>
-    <div class="password">
-      <input type="password" id="password" placeholder="••••••••">
-      <i class="fa-solid fa-eye" id="toggle"></i>
+  <!-- Left Side Image Panel -->
+  <div class="image-panel">
+    <div class="image-overlay"></div>
+    <div></div> <!-- Spacer -->
+    <div class="image-content">
+      <h2>Welcome back.</h2>
+      <p>Access your undergraduate notes and previous year papers instantly.</p>
     </div>
   </div>
 
-  <div class="input-group" id="confirmContainer" style="display:none">
-    <label for="confirmPassword">Confirm Password</label>
-    <input type="password" id="confirmPassword" placeholder="••••••••">
+  <!-- Right Side Form Panel -->
+  <div class="form-panel">
+    <div class="form-wrapper">
+      <div class="card-header">
+          <a href="index.html" class="logo">KuGuider<span>.</span></a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+
+      <h1 class="form-title" id="formTitle">Log in</h1>
+      <p class="form-subtitle" id="formSubtitle">Enter your details to access your account.</p>
+
+      <div class="input-group" id="nameContainer" style="display:none">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="John Doe">
+      </div>
+      
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="name@example.com">
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <div class="password">
+          <input type="password" id="password" placeholder="••••••••">
+          <i class="fa-solid fa-eye" id="toggle"></i>
+        </div>
+      </div>
+
+      <div class="input-group" id="confirmContainer" style="display:none">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="••••••••">
+      </div>
+
+      <button id="action">Log in</button>
+
+      <div class="divider"><span>OR</span></div>
+
+      <button id="googleAction" class="google-btn">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+        Continue with Google
+      </button>
+
+      <div class="footer-links">
+        <button class="link" id="switch">
+          No account? <b>Sign up</b>
+        </button>
+        <button class="link" id="forgot">
+          Forgot password?
+        </button>
+      </div>
+    </div>
   </div>
-
-  <button id="action">Login</button>
-
-  <div class="divider"><span>OR</span></div>
-
-  <button id="googleAction" class="google-btn">
-    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-    Continue with Google
-  </button>
-
-  <button class="link" id="switch">
-    Don't have an account? Signup
-  </button>
-
-  <button class="link" id="forgot">
-    Forgot Password?
-  </button>
 </div>
 
 <div id="toast" class="toast"></div>
@@ -321,7 +441,6 @@ const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 // DOM Elements
-const title = document.getElementById("title");
 const nameI = document.getElementById("name");
 const nameContainer = document.getElementById("nameContainer");
 const email = document.getElementById("email");
@@ -335,6 +454,8 @@ const sw = document.getElementById("switch");
 const toast = document.getElementById("toast");
 const forgot = document.getElementById("forgot");
 const themeToggle = document.getElementById("themeToggle");
+const formTitle = document.getElementById("formTitle");
+const formSubtitle = document.getElementById("formSubtitle");
 
 let isSignup = false;
 let isRedirecting = false;
@@ -357,7 +478,7 @@ const updateToggleIcon = (theme) => {
 };
 
 const syncTheme = () => {
-  const theme = localStorage.getItem('theme') || 'light';
+  const theme = localStorage.getItem('theme') || 'light'; 
   document.documentElement.setAttribute('data-theme', theme);
   updateToggleIcon(theme);
 };
@@ -384,7 +505,12 @@ sw.onclick = () => {
   isSignup = !isSignup;
   nameContainer.style.display = isSignup ? "block" : "none";
   confirmContainer.style.display = isSignup ? "block" : "none";
-  sw.textContent = isSignup ? "Already have an account? Login" : "Don't have an account? Signup";
+  
+  formTitle.textContent = isSignup ? "Create account" : "Log in";
+  formSubtitle.textContent = isSignup ? "Sign up to start accessing materials." : "Enter your details to access your account.";
+  action.textContent = isSignup ? "Sign up" : "Log in";
+  
+  sw.innerHTML = isSignup ? "Have an account? <b>Log in</b>" : "No account? <b>Sign up</b>";
   forgot.style.display = isSignup ? "none" : "block";
 };
 
@@ -438,7 +564,7 @@ forgot.onclick = async () => {
 // Auth State Observer
 auth.onAuthStateChanged(user => { 
     if(user && !isRedirecting) { 
-      msg("Already logged in. Redirecting...");
+      msg("Redirecting...");
       setTimeout(() => location.href="about.html", 1500); 
     }
 });
